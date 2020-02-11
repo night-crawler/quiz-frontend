@@ -1,5 +1,8 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+
 plugins {
     kotlin("js") version "1.3.61"
+    id("org.jlleitschuh.gradle.ktlint") version "9.1.1"
 }
 
 apply {
@@ -41,7 +44,6 @@ dependencies {
 
     implementation("com.ccfraser.muirwik:muirwik-components:0.4.1")
 
-
     testImplementation(kotlin("test-js"))
 }
 
@@ -75,5 +77,26 @@ kotlin {
         implementation(npm("@material-ui/icons"))
         implementation(npm("styled-components"))
         implementation(npm("inline-style-prefixer"))
+    }
+}
+
+ktlint {
+    verbose.set(true)
+    android.set(false)
+    outputToConsole.set(true)
+    outputColorName.set("RED")
+    ignoreFailures.set(true)
+    enableExperimentalRules.set(true)
+    additionalEditorconfigFile.set(file("./.editorconfig"))
+
+    disabledRules.set(setOf("experimental:multiline-if-else"))
+
+    reporters {
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.CHECKSTYLE)
+    }
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
     }
 }

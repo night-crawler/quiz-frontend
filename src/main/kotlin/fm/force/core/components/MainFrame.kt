@@ -8,6 +8,7 @@ import com.ccfraser.muirwik.components.list.mListItemText
 import com.ccfraser.muirwik.components.styles.Breakpoint
 import com.ccfraser.muirwik.components.styles.down
 import com.ccfraser.muirwik.components.styles.up
+import kotlin.properties.Delegates.observable
 import kotlinext.js.js
 import kotlinext.js.jsObject
 import kotlinx.css.*
@@ -15,7 +16,6 @@ import react.*
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
-import kotlin.properties.Delegates.observable
 
 interface MainFrameProps : RProps {
     var onThemeTypeChange: (themeType: String) -> Unit
@@ -41,7 +41,7 @@ class MainFrame(props: MainFrameProps) : RComponent<MainFrameProps, RState>(prop
 
         val drawerWidth = 180.px
 
-        themeContext.Consumer {theme ->
+        themeContext.Consumer { theme ->
             styledDiv {
                 css {
                     flexGrow = 1.0
@@ -54,7 +54,12 @@ class MainFrame(props: MainFrameProps) : RComponent<MainFrameProps, RState>(prop
 
                 styledDiv {
                     // App Frame
-                    css { overflow = Overflow.hidden; position = Position.relative; display = Display.flex; width = 100.pct}
+                    css {
+                        overflow = Overflow.hidden
+                        position = Position.relative
+                        display = Display.flex
+                        width = 100.pct
+                    }
 
                     mAppBar(position = MAppBarPosition.absolute) {
                         css {
@@ -62,21 +67,36 @@ class MainFrame(props: MainFrameProps) : RComponent<MainFrameProps, RState>(prop
                         }
                         mToolbar {
                             mHidden(mdUp = true, implementation = MHiddenImplementation.css) {
-                                mIconButton("menu", color = MColor.inherit, onClick = { setState { responsiveDrawerOpen = true }})
+                                mIconButton(
+                                    "menu",
+                                    color = MColor.inherit,
+                                    onClick = { setState { responsiveDrawerOpen = true } }
+                                )
                             }
                             mToolbarTitle("App title - $currentView")
-                            mIconButton("lightbulb_outline", onClick = {
-                                themeColor = if (themeColor == "light") "dark" else "light"
-                                props.onThemeTypeChange(themeColor)
-                            })
+                            mIconButton(
+                                "lightbulb_outline",
+                                onClick = {
+                                    themeColor = if (themeColor == "light") "dark" else "light"
+                                    props.onThemeTypeChange(themeColor)
+                                }
+                            )
                         }
                     }
 
                     val p: MPaperProps = jsObject { }
-                    p.asDynamic().style = js { position = "relative"; width = drawerWidth.value; display = "block"; height = "100%"; minHeight = "100vh" }
+                    p.asDynamic().style = js {
+                        position = "relative"; width = drawerWidth.value; display = "block"; height =
+                            "100%"; minHeight = "100vh"
+                    }
                     mHidden(mdUp = true) {
-                        mDrawer(responsiveDrawerOpen, MDrawerAnchor.left, MDrawerVariant.temporary, paperProps = p,
-                            onClose = { setState { responsiveDrawerOpen = !responsiveDrawerOpen }}) {
+                        mDrawer(
+                            responsiveDrawerOpen,
+                            MDrawerAnchor.left,
+                            MDrawerVariant.temporary,
+                            paperProps = p,
+                            onClose = { setState { responsiveDrawerOpen = !responsiveDrawerOpen } }
+                        ) {
                             spacer()
                             demoItems()
                         }
@@ -118,10 +138,10 @@ class MainFrame(props: MainFrameProps) : RComponent<MainFrameProps, RState>(prop
     }
 
     private fun RBuilder.demoItems() {
-        fun RBuilder.addListItem(caption: String): Unit {
+        fun RBuilder.addListItem(caption: String) {
 //            mListItem(caption, onClick = {setState {currentView = caption}})
             // We want to get rid of the extra right padding, so must use the longer version as below
-            mListItem(true, onClick = { setState { currentView = caption; responsiveDrawerOpen = false }}) {
+            mListItem(true, onClick = { setState { currentView = caption; responsiveDrawerOpen = false } }) {
                 mListItemText(caption) {
                     css {
                         paddingRight = 0.px
@@ -166,10 +186,9 @@ fun RBuilder.spacer() {
         styledDiv {
             css(themeStyles.toolbar)
         }
-        mDivider {  }
+        mDivider { }
     }
 }
-
 
 fun RBuilder.mainFrame(initialView: String, onThemeTypeChange: (themeType: String) -> Unit) = child(MainFrame::class) {
     attrs.onThemeTypeChange = onThemeTypeChange

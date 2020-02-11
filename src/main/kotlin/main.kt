@@ -1,7 +1,6 @@
 import fm.force.core.components.app
-import react.dom.*
-import react.dom.render
 import kotlin.browser.document
+import react.dom.render
 
 fun main() {
     render(document.getElementById("root")) {

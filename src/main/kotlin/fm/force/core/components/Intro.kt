@@ -1,6 +1,5 @@
 package fm.force.core.components
 
-
 import com.ccfraser.muirwik.components.MTypographyVariant
 import com.ccfraser.muirwik.components.mTypography
 import com.ccfraser.muirwik.components.spacingUnits
@@ -16,7 +15,6 @@ import styled.StyleSheet
 import styled.css
 import styled.styledDiv
 
-
 class Intro : RComponent<RProps, RState>() {
 
     private object ComponentStyles : StyleSheet("ComponentStyles", isStatic = true) {
@@ -27,7 +25,6 @@ class Intro : RComponent<RProps, RState>() {
     }
 
     override fun RBuilder.render() {
-
         styledDiv {
             css {
                 padding(3.spacingUnits)
@@ -48,8 +45,8 @@ class Intro : RComponent<RProps, RState>() {
 
             mTypography(
                 "This project is a test/playground area for the Muirwik components. It is modeled loosely " +
-                        "off the Material UI demo pages and uses their source as a reference, however some pages have a bit " +
-                        "more experimentation going on at the expense of a highly tuned visual experience."
+                    "off the Material UI demo pages and uses their source as a reference, however some pages have a bit " +
+                    "more experimentation going on at the expense of a highly tuned visual experience."
             ) {
                 css(typographyStyle)
             }
