@@ -2,6 +2,10 @@ plugins {
     kotlin("js") version "1.3.61"
 }
 
+apply {
+    plugin("kotlin-dce-js")
+}
+
 group = "fm.force"
 version = "1.0-SNAPSHOT"
 
@@ -17,7 +21,9 @@ repositories {
     maven { url = uri("https://kotlin.bintray.com/kotlin-js-wrappers/") }
     maven { url = uri("https://dl.bintray.com/kotlin/kotlinx.html/") }
 }
+
 dependencies {
+
     implementation(kotlin("stdlib-js"))
 
     implementation("org.jetbrains:kotlin-extensions:$extensionsVersion-kotlin-$kotlinVersion")
@@ -35,7 +41,17 @@ dependencies {
 
 kotlin {
     target {
-        browser()
+        browser {
+            compilations.all {
+                kotlinOptions {
+                    metaInfo = true
+                    sourceMap = true
+                    sourceMapEmbedSources = "always"
+                    moduleKind = "commonjs"
+                    main = "call"
+                }
+            }
+        }
     }
 
     sourceSets["main"].dependencies {
@@ -48,5 +64,9 @@ kotlin {
         implementation(npm("react-router-dom", reactRouterDomVersion.split("-").first()))
 
         implementation(npm("core-js", "3.6.4"))
+
+        implementation(npm("@material-ui/core"))
+        implementation(npm("@material-ui/icons"))
+
     }
 }
