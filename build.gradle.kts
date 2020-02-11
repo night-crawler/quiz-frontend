@@ -15,13 +15,14 @@ val extensionsVersion: String by extra
 val reactRouterDomVersion: String by extra
 val reactReduxVersion: String by extra
 val reduxVersion: String by extra
+val styledVersion: String by extra
 
 repositories {
     mavenCentral()
     maven { url = uri("https://kotlin.bintray.com/kotlin-js-wrappers/") }
     maven { url = uri("https://dl.bintray.com/kotlin/kotlinx.html/") }
+    maven { url = uri("https://dl.bintray.com/cfraser/muirwik") }
 }
-
 dependencies {
 
     implementation(kotlin("stdlib-js"))
@@ -35,6 +36,11 @@ dependencies {
 
     implementation("org.jetbrains:kotlin-redux:$reduxVersion-kotlin-$kotlinVersion")
     implementation("org.jetbrains:kotlin-react-redux:$reactReduxVersion-kotlin-$kotlinVersion")
+
+    implementation("org.jetbrains:kotlin-styled:$styledVersion-kotlin-$kotlinVersion")
+
+    implementation("com.ccfraser.muirwik:muirwik-components:0.4.1")
+
 
     testImplementation(kotlin("test-js"))
 }
@@ -67,6 +73,7 @@ kotlin {
 
         implementation(npm("@material-ui/core"))
         implementation(npm("@material-ui/icons"))
-
+        implementation(npm("styled-components"))
+        implementation(npm("inline-style-prefixer"))
     }
 }
