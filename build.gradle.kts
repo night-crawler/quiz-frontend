@@ -1,12 +1,9 @@
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
-    kotlin("js") version "1.3.61"
+    id("org.jetbrains.kotlin.js") version "1.3.70-eap-184"
     id("org.jlleitschuh.gradle.ktlint") version "9.1.1"
-}
-
-apply {
-    plugin("kotlin-dce-js")
+    id("com.dorongold.task-tree") version "1.5"
 }
 
 group = "fm.force"
@@ -22,6 +19,7 @@ val styledVersion: String by extra
 
 repositories {
     mavenCentral()
+    maven { url = uri("https://dl.bintray.com/kotlin/kotlin-eap") }
     maven { url = uri("https://kotlin.bintray.com/kotlin-js-wrappers/") }
     maven { url = uri("https://dl.bintray.com/kotlin/kotlinx.html/") }
     maven { url = uri("https://dl.bintray.com/cfraser/muirwik") }

@@ -4,3 +4,4 @@ config.devServer.watchOptions = {
     "aggregateTimeout": 5000,
     "poll": 1000
 };
+config.devServer.open = false;
