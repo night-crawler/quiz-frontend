@@ -1,9 +1,9 @@
-package fm.force.core.components
+package fm.force.core.component
 
 import com.ccfraser.muirwik.components.MTypographyVariant
 import com.ccfraser.muirwik.components.mTypography
 import com.ccfraser.muirwik.components.spacingUnits
-import fm.force.core.components.Intro.ComponentStyles.typographyStyle
+import fm.force.core.component.Intro.ComponentStyles.typographyStyle
 import kotlinx.css.*
 import react.RBuilder
 import react.RComponent

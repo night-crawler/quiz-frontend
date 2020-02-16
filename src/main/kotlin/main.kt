@@ -1,6 +1,6 @@
-import fm.force.core.components.app
-import fm.force.core.reducers.State
-import fm.force.core.reducers.combinedReducers
+import fm.force.core.container.app
+import fm.force.core.reducer.State
+import fm.force.core.reducer.combinedReducers
 import fm.force.core.util.composeWithDevTools
 import kotlin.browser.document
 import react.dom.render
@@ -20,7 +20,7 @@ fun main() {
     val rootElement = document.getElementById("root")!!
     render(rootElement) {
         provider(store) {
-            app()
+            app() {}
         }
     }
 }

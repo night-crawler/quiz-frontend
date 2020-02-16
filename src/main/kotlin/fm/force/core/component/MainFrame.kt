@@ -1,4 +1,4 @@
-package fm.force.core.components
+package fm.force.core.component
 
 import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.button.mIconButton

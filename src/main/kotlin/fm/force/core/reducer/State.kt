@@ -1,9 +1,9 @@
-package fm.force.core.reducers
+package fm.force.core.reducer
 
 import fm.force.core.util.combineReducers
 
 data class AppPreferences(
-    val themeColor: String = "light"
+    val themeType: String = "light"
 )
 
 data class State(
