@@ -50,6 +50,7 @@ kotlin {
         browser {
             compilations.all {
                 kotlinOptions {
+                    friendModulesDisabled = false
                     metaInfo = true
                     sourceMap = true
                     sourceMapEmbedSources = "always"

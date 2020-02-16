@@ -3,8 +3,7 @@ package fm.force.core.components
 import com.ccfraser.muirwik.components.Colors
 import com.ccfraser.muirwik.components.mCssBaseline
 import com.ccfraser.muirwik.components.mThemeProvider
-import com.ccfraser.muirwik.components.styles.ThemeOptions
-import com.ccfraser.muirwik.components.styles.createMuiTheme
+import com.ccfraser.muirwik.components.styles.*
 import react.*
 
 class App(props: RProps) : RComponent<RProps, RState>(props) {

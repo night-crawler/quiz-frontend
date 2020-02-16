@@ -115,6 +115,7 @@ class MainFrame(props: MainFrameProps) : RComponent<MainFrameProps, RState>(prop
                             flexGrow = 1.0; minWidth = 0.px
                             backgroundColor = Color(theme.palette.background.default)
                         }
+
                         spacer()
                         styledDiv {
                             css {
