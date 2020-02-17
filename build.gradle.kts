@@ -77,6 +77,7 @@ kotlin {
         implementation(npm("styled-components"))
         implementation(npm("inline-style-prefixer"))
         implementation(npm("history"))
+        implementation(npm("connected-react-router", "5.0.1"))
     }
 }
 

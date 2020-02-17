@@ -8,8 +8,7 @@
 
 package history
 
-external interface History<HistoryLocationState> {
-    var length: Number
+external interface History<HistoryLocationState> : org.w3c.dom.History {
     var action: String /* 'PUSH' | 'POP' | 'REPLACE' */
     var location: Location<HistoryLocationState>
     fun push(path: Path, state: HistoryLocationState = definedExternally)
@@ -27,11 +26,8 @@ external interface History<HistoryLocationState> {
     fun block(): UnregisterCallback
 }
 
-external interface Location<S> {
-    var pathname: Pathname
-    var search: Search
-    var state: S
-    var hash: Hash
+external interface Location<S> : org.w3c.dom.Location {
+    var state: S?
     var key: LocationKey?
         get() = definedExternally
         set(value) = definedExternally
