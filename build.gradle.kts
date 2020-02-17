@@ -76,6 +76,7 @@ kotlin {
         implementation(npm("@material-ui/icons"))
         implementation(npm("styled-components"))
         implementation(npm("inline-style-prefixer"))
+        implementation(npm("history"))
     }
 }
 
