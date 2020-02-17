@@ -4,7 +4,12 @@ import com.ccfraser.muirwik.components.MTypographyVariant
 import com.ccfraser.muirwik.components.mTypography
 import com.ccfraser.muirwik.components.spacingUnits
 import fm.force.core.component.Intro.ComponentStyles.typographyStyle
-import kotlinx.css.*
+import kotlinx.css.TextAlign
+import kotlinx.css.em
+import kotlinx.css.fontSize
+import kotlinx.css.padding
+import kotlinx.css.paddingBottom
+import kotlinx.css.textAlign
 import react.RBuilder
 import react.RComponent
 import react.RProps

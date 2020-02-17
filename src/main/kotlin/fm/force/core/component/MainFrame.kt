@@ -12,7 +12,11 @@ import kotlin.properties.Delegates.observable
 import kotlinext.js.js
 import kotlinext.js.jsObject
 import kotlinx.css.*
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.setState
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv

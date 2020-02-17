@@ -5,7 +5,10 @@ import com.ccfraser.muirwik.components.mCssBaseline
 import com.ccfraser.muirwik.components.mThemeProvider
 import com.ccfraser.muirwik.components.styles.ThemeOptions
 import com.ccfraser.muirwik.components.styles.createMuiTheme
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 
 interface AppProps : RProps {
     var themeType: String
