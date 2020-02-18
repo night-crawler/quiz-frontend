@@ -1,7 +1,5 @@
 package fm.force.util
 
-import kotlin.browser.window
-import kotlin.reflect.KProperty1
 import kotlinext.js.Object
 import kotlinext.js.assign
 import kotlinext.js.js
@@ -14,6 +12,8 @@ import redux.StoreCreator
 import redux.WrapperAction
 import redux.combineReducers
 import redux.compose
+import kotlin.browser.window
+import kotlin.reflect.KProperty1
 
 /**
  * Helper function that combines reducers using [combineReducers] where the keys in the map are
@@ -51,23 +51,24 @@ fun <S> customEnhancer(): Enhancer<S, Action, Action, RAction, WrapperAction> = 
             // Expected argument to be an object with the following keys: "appPreferences", "router"
             Object.assign(js {}, initialState) as S
         )
+        val regularPlainStore = store.unsafeCast<Store<S, RAction, RAction>>()
 
         assign(Object.assign(js {}, store)) {
             dispatch = { action: RAction ->
-                val result = store.dispatch(
-                    js {
+                when (action.asDynamic().type) {
+                    // undefined means there was no type set, it's a Kotlin action
+                    undefined -> store.dispatch(js {
                         type = action::class.simpleName
                         this.action = action
-                    }.unsafeCast<WrapperAction>()
-                )
-
-                result
+                    }.unsafeCast<WrapperAction>())
+                    // if we have a `type` in the received object, it means it's just a regular redux action
+                    else -> regularPlainStore.dispatch(action).unsafeCast<WrapperAction>()
+                }
             }
             replaceReducer = { nextReducer: Reducer<S, RAction> ->
                 store.replaceReducer(wrapperReducer(nextReducer))
             }
-        }
-            .unsafeCast<Store<S, RAction, WrapperAction>>()
+        }.unsafeCast<Store<S, RAction, WrapperAction>>()
     }
 }
 

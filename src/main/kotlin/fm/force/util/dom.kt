@@ -6,7 +6,7 @@ import history.Pathname
 import history.Search
 
 fun <S> createLocation(pathname: Pathname = "/", search: Search = "", hash: Hash = "", state: S? = null) =
-    jsApply<Location<S>>(kotlinext.js.js {}) {
+    jsApply<Location<S>> {
         this.pathname = pathname
         this.search = search
         this.hash = hash
