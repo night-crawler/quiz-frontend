@@ -37,8 +37,9 @@ enum class ThemeType(val value: String) {
 }
 
 class CustomAppBar(props: CustomAppBarProps) : RComponent<CustomAppBarProps, RState>(props) {
-    private val nextThemeType get() =
-        (ThemeType.values().toSet() - setOf(ThemeType.of(props.themeType))).first()
+    private val nextThemeType
+        get() =
+            (ThemeType.values().toSet() - setOf(ThemeType.of(props.themeType))).first()
 
     override fun RBuilder.render() {
         mCssBaseline()
