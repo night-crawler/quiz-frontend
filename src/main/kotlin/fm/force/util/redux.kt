@@ -1,5 +1,7 @@
 package fm.force.util
 
+import kotlin.browser.window
+import kotlin.reflect.KProperty1
 import kotlinext.js.Object
 import kotlinext.js.assign
 import kotlinext.js.js
@@ -12,8 +14,6 @@ import redux.StoreCreator
 import redux.WrapperAction
 import redux.combineReducers
 import redux.compose
-import kotlin.browser.window
-import kotlin.reflect.KProperty1
 
 /**
  * Helper function that combines reducers using [combineReducers] where the keys in the map are
@@ -39,8 +39,12 @@ fun <S, A, R> customCombineReducers(reducers: Map<KProperty1<S, R>, Reducer<*, A
 
 fun <S> customEnhancer(): Enhancer<S, Action, Action, RAction, WrapperAction> = { next ->
     { reducer, initialState ->
-        fun wrapperReducer(reducer: Reducer<S, RAction>): Reducer<S, WrapperAction> {
-            return { state, action -> reducer(state, action.action) }
+        fun wrapperReducer(reducer: Reducer<S, RAction>): Reducer<S, WrapperAction> = { state, action ->
+            if (!action.asDynamic().isKotlin as Boolean) {
+                reducer(state, action.asDynamic().unsafeCast<RAction>())
+            } else {
+                reducer(state, action.action)
+            }
         }
 
         val nextStoreCreator = next.unsafeCast<StoreCreator<S, WrapperAction, WrapperAction>>()
@@ -51,18 +55,21 @@ fun <S> customEnhancer(): Enhancer<S, Action, Action, RAction, WrapperAction> = 
             // Expected argument to be an object with the following keys: "appPreferences", "router"
             Object.assign(js {}, initialState) as S
         )
-        val regularPlainStore = store.unsafeCast<Store<S, RAction, RAction>>()
 
         assign(Object.assign(js {}, store)) {
-            dispatch = { action: RAction ->
-                when (action.asDynamic().type) {
-                    // undefined means there was no type set, it's a Kotlin action
-                    undefined -> store.dispatch(js {
-                        type = action::class.simpleName
-                        this.action = action
-                    }.unsafeCast<WrapperAction>())
-                    // if we have a `type` in the received object, it means it's just a regular redux action
-                    else -> regularPlainStore.dispatch(action).unsafeCast<WrapperAction>()
+            dispatch = { action: dynamic ->
+                // original redux actions use `type` keyword, so we don't reshape them
+                if (action.type != undefined && action.action == undefined) {
+                    store.dispatch(action.unsafeCast<WrapperAction>())
+                } else {
+                    // it's a Kotlin action, so we'll reshape it and provide a marker for the wrapper
+                    store.dispatch(
+                        js {
+                            type = action::class.simpleName
+                            isKotlin = true
+                            this.action = action
+                        }.unsafeCast<WrapperAction>()
+                    )
                 }
             }
             replaceReducer = { nextReducer: Reducer<S, RAction> ->

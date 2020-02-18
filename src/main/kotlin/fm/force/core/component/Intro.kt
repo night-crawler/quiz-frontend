@@ -15,7 +15,6 @@ import react.RComponent
 import react.RProps
 import react.RState
 import react.dom.a
-import react.dom.img
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
@@ -35,7 +34,6 @@ class Intro : RComponent<RProps, RState>() {
                 padding(3.spacingUnits)
                 textAlign = TextAlign.left
             }
-            img("Muirwik Box", "/images/muirwik-logo.png") {}
             mTypography("Welcome to Muirwik", MTypographyVariant.h3) { css { paddingBottom = 3.spacingUnits } }
             mTypography {
                 css(typographyStyle)

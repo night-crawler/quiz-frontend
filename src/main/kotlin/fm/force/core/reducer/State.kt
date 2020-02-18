@@ -11,13 +11,16 @@ data class CustomLocationState(
 )
 
 data class AppPreferences(
-    val themeType: String = "light"
+    val themeType: String = "light",
+    val appTitle: String = "Quiz",
+    val activeViewDisplayName: String = "1",
+    val responsiveDrawerOpen: Boolean = false
 )
 
 data class State(
     val appPreferences: AppPreferences = AppPreferences(),
     val router: RouterState<CustomLocationState> = RouterState(
-        createLocation(state = CustomLocationState()), "REPLACE"
+        createLocation(state = CustomLocationState()), "POP"
     )
 )
 
