@@ -1,7 +1,7 @@
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
-    id("org.jetbrains.kotlin.js") version "1.3.70-eap-184"
+    id("org.jetbrains.kotlin.js") version "1.3.70-eap-274"
     id("org.jlleitschuh.gradle.ktlint") version "9.1.1"
     id("com.dorongold.task-tree") version "1.5"
 }
@@ -68,8 +68,6 @@ kotlin {
         implementation(npm("redux", reduxVersion.split("-").first()))
         implementation(npm("react-redux", reactReduxVersion.split("-").first()))
 
-        implementation(npm("react-router-dom", reactRouterDomVersion.split("-").first()))
-
         implementation(npm("core-js", "3.6.4"))
 
         implementation(npm("@material-ui/core"))
@@ -78,6 +76,9 @@ kotlin {
         implementation(npm("inline-style-prefixer"))
         implementation(npm("history"))
         implementation(npm("connected-react-router", "5.0.1"))
+
+        // react-router-dom 4.3.1-pre.91 is broken: it does not update the view
+        implementation(npm("react-router-dom", "5.1.2"))
     }
 }
 

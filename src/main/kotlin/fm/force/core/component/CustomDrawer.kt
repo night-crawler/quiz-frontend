@@ -13,6 +13,7 @@ import com.ccfraser.muirwik.components.styles.Breakpoint
 import com.ccfraser.muirwik.components.styles.down
 import com.ccfraser.muirwik.components.styles.up
 import com.ccfraser.muirwik.components.themeContext
+import kotlinext.js.js
 import kotlinext.js.jsObject
 import kotlinx.css.Overflow
 import kotlinx.css.WordBreak
@@ -35,28 +36,7 @@ interface CustomDrawerProps : RProps {
 }
 
 class CustomDrawer(props: CustomDrawerProps) : RComponent<CustomDrawerProps, RState>(props) {
-    private val nameToTestMap = hashMapOf(
-        "An Intro" to RBuilder::intro
-    )
-
     private fun RBuilder.demoItems() {
-        fun RBuilder.addListItem(caption: String) {
-            mListItem(caption)
-            // We want to get rid of the extra right padding, so must use the longer version as below
-//            mListItem(true, onClick = { setState { currentView = caption; responsiveDrawerOpen = false } }) {
-//                mListItemText(caption) {
-//                    css {
-//                        paddingRight = 0.px
-//                        if (caption == currentView) {
-//                            descendants {
-//                                color = Colors.Blue.shade500
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-        }
-
         themeContext.Consumer { theme ->
             mList {
                 css {
@@ -70,7 +50,14 @@ class CustomDrawer(props: CustomDrawerProps) : RComponent<CustomDrawerProps, RSt
                     overflowX = Overflow.hidden
                     wordBreak = WordBreak.keepAll
                 }
-                nameToTestMap.keys.sorted().forEach { addListItem(it) }
+
+                routeLink("/sample/haha/222") {
+                    mListItem("I AM HERE", selected = it.isActive, onClick = it.onClick)
+                }
+
+                routeLink("/sample") {
+                    mListItem("HAHA", selected = it.isActive, onClick = it.onClick)
+                }
             }
         }
     }
@@ -81,13 +68,14 @@ class CustomDrawer(props: CustomDrawerProps) : RComponent<CustomDrawerProps, RSt
         val drawerWidth = 180.px
 
         val paperProps: MPaperProps = jsObject { }
-        paperProps.asDynamic().style = kotlinext.js.js {
+        paperProps.asDynamic().style = js {
             position = "relative"
             width = drawerWidth.value
             display = "block"
             height = "100%"
             minHeight = "100vh"
         }
+        console.log(paperProps)
         mHidden(mdUp = true) {
             mDrawer(
                 props.responsiveDrawerOpen,

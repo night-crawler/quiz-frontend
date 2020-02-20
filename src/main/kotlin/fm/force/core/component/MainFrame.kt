@@ -8,6 +8,7 @@ import com.ccfraser.muirwik.components.styles.up
 import com.ccfraser.muirwik.components.themeContext
 import fm.force.core.container.customAppBar
 import fm.force.core.container.customDrawer
+import fm.force.core.container.mainContainer
 import kotlinx.css.*
 import react.RBuilder
 import react.RComponent
@@ -71,7 +72,7 @@ class MainFrame(props: MainFrameProps) : RComponent<MainFrameProps, RState>(prop
                                 padding(2.spacingUnits)
                                 backgroundColor = Color(theme.palette.background.default)
                             }
-                            intro()
+                            mainContainer() {}
                         }
                     }
                 }
