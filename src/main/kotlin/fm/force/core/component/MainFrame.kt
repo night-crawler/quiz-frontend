@@ -6,8 +6,8 @@ import com.ccfraser.muirwik.components.styles.Breakpoint
 import com.ccfraser.muirwik.components.styles.down
 import com.ccfraser.muirwik.components.styles.up
 import com.ccfraser.muirwik.components.themeContext
-import fm.force.core.container.customAppBar
-import fm.force.core.container.customDrawer
+import fm.force.core.container.appBar
+import fm.force.core.container.drawer
 import fm.force.core.container.mainContainer
 import kotlinx.css.*
 import react.RBuilder
@@ -47,8 +47,8 @@ class MainFrame(props: MainFrameProps) : RComponent<MainFrameProps, RState>(prop
                         width = 100.pct
                     }
 
-                    customAppBar() {}
-                    customDrawer() {}
+                    appBar() {}
+                    drawer() {}
 
                     // Main content area
                     styledDiv {

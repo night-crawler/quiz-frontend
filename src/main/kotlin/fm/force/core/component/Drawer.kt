@@ -14,7 +14,6 @@ import com.ccfraser.muirwik.components.styles.down
 import com.ccfraser.muirwik.components.styles.up
 import com.ccfraser.muirwik.components.themeContext
 import kotlinext.js.js
-import kotlinext.js.jsObject
 import kotlinx.css.Overflow
 import kotlinx.css.WordBreak
 import kotlinx.css.height
@@ -29,13 +28,24 @@ import react.RProps
 import react.RState
 import styled.css
 
-interface CustomDrawerProps : RProps {
+interface DrawerProps : RProps {
     var responsiveDrawerOpen: Boolean
 
     var onResponsiveDrawerOpenToggle: (isOpen: Boolean) -> Unit
 }
 
-class CustomDrawer(props: CustomDrawerProps) : RComponent<CustomDrawerProps, RState>(props) {
+class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
+    private val drawerWidth = 180.px
+    private val paperProps = js {
+        style = js {
+            position = "relative"
+            width = drawerWidth.value
+            display = "block"
+            height = "100%"
+            minHeight = "100vh"
+        }
+    }.unsafeCast<MPaperProps>()
+
     private fun RBuilder.demoItems() {
         themeContext.Consumer { theme ->
             mList {
@@ -65,17 +75,6 @@ class CustomDrawer(props: CustomDrawerProps) : RComponent<CustomDrawerProps, RSt
     override fun RBuilder.render() {
         mCssBaseline()
 
-        val drawerWidth = 180.px
-
-        val paperProps: MPaperProps = jsObject { }
-        paperProps.asDynamic().style = js {
-            position = "relative"
-            width = drawerWidth.value
-            display = "block"
-            height = "100%"
-            minHeight = "100vh"
-        }
-        console.log(paperProps)
         mHidden(mdUp = true) {
             mDrawer(
                 props.responsiveDrawerOpen,

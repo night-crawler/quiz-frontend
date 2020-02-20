@@ -71,7 +71,6 @@ external interface LocationActionPayload {
         set(value) = definedExternally
 }
 
-@JsName("ConnectedRouter")
 external class ConnectedRouter : Component<ConnectedRouterProps, RState> {
     override fun render(): ReactElement?
 }

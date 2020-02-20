@@ -15,6 +15,7 @@ import react.RComponent
 import react.RProps
 import react.RState
 import react.dom.a
+import react.dom.title
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
@@ -30,6 +31,9 @@ class Intro : RComponent<RProps, RState>() {
 
     override fun RBuilder.render() {
         styledDiv {
+            helmet {
+                title("SAMPLE")
+            }
             css {
                 padding(3.spacingUnits)
                 textAlign = TextAlign.left

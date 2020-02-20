@@ -5,6 +5,7 @@ import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
+import react.dom.title
 import react.router.dom.route
 import react.router.dom.switch
 
@@ -17,7 +18,7 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
     override fun RBuilder.render() {
         switch {
             route("/sample/:sub/222") {
-                mButton("HEY")
+                intro()
             }
 
             route("/sample", exact = true) {

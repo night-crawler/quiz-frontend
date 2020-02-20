@@ -1,3 +1,4 @@
+@file:JsModule("history")
 @file:Suppress(
     "INTERFACE_WITH_SUPERCLASS",
     "OVERRIDING_FINAL_MEMBER",

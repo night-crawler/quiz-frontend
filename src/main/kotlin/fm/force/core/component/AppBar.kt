@@ -17,7 +17,7 @@ import react.RProps
 import react.RState
 import styled.css
 
-interface CustomAppBarProps : RProps {
+interface AppBarProps : RProps {
     var appTitle: String
     var activeViewDisplayName: String
     var themeType: String
@@ -36,7 +36,7 @@ enum class ThemeType(val value: String) {
     }
 }
 
-class CustomAppBar(props: CustomAppBarProps) : RComponent<CustomAppBarProps, RState>(props) {
+class AppBar(props: AppBarProps) : RComponent<AppBarProps, RState>(props) {
     private val nextThemeType
         get() =
             (ThemeType.values().toSet() - setOf(ThemeType.of(props.themeType))).first()

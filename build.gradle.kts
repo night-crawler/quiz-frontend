@@ -79,6 +79,7 @@ kotlin {
 
         // react-router-dom 4.3.1-pre.91 is broken: it does not update the view
         implementation(npm("react-router-dom", "5.1.2"))
+        implementation(npm("react-helmet"))
     }
 }
 
