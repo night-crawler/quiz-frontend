@@ -1,7 +1,7 @@
-package fm.force.core.reducer
+package fm.force.ui.reducer
 
-import fm.force.core.action.DrawerOpenToggle
-import fm.force.core.action.SetThemeType
+import fm.force.ui.DrawerOpenToggle
+import fm.force.ui.SetThemeType
 import redux.RAction
 
 fun appPreferencesReducer(state: AppPreferences = AppPreferences(), action: RAction): AppPreferences = when (action) {

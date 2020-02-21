@@ -1,4 +1,4 @@
-package fm.force.core.component
+package fm.force.ui.component
 
 import com.ccfraser.muirwik.components.Colors
 import com.ccfraser.muirwik.components.mCssBaseline

@@ -1,9 +1,9 @@
-package fm.force.core.component
+package fm.force.ui.component
 
 import com.ccfraser.muirwik.components.MTypographyVariant
 import com.ccfraser.muirwik.components.mTypography
 import com.ccfraser.muirwik.components.spacingUnits
-import fm.force.core.component.Intro.ComponentStyles.typographyStyle
+import fm.force.ui.component.Intro.ComponentStyles.typographyStyle
 import kotlinx.css.TextAlign
 import kotlinx.css.em
 import kotlinx.css.fontSize

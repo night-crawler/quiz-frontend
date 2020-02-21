@@ -1,4 +1,4 @@
-package fm.force.core.component
+package fm.force.ui.component
 
 import fm.force.util.RouterContext
 import org.w3c.dom.events.Event

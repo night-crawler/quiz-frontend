@@ -1,4 +1,4 @@
-package fm.force.core.component
+package fm.force.ui.component
 
 import com.ccfraser.muirwik.components.MAppBarPosition
 import com.ccfraser.muirwik.components.MColor
@@ -9,6 +9,8 @@ import com.ccfraser.muirwik.components.mCssBaseline
 import com.ccfraser.muirwik.components.mHidden
 import com.ccfraser.muirwik.components.mToolbar
 import com.ccfraser.muirwik.components.mToolbarTitle
+import com.ccfraser.muirwik.components.menu.mMenuItem
+import com.ccfraser.muirwik.components.menu.mMenuItemWithIcon
 import com.ccfraser.muirwik.components.themeContext
 import kotlinx.css.zIndex
 import react.RBuilder
@@ -62,6 +64,27 @@ class AppBar(props: AppBarProps) : RComponent<AppBarProps, RState>(props) {
                         "lightbulb_outline",
                         onClick = { props.onThemeTypeChange(nextThemeType.value) }
                     )
+
+                    iconMenu("account_circle_outline") {
+                        routeLink("/profile") {
+                            mMenuItemWithIcon(
+                                "person_outline",
+                                "Profile",
+                                "night-crawler",
+                                selected = it.isActive,
+                                onClick = it.onClick
+                            )
+                        }
+                        routeLink("/login") {
+                            mMenuItemWithIcon(
+                                "fingerprint_outline",
+                                "Log in",
+                                selected = it.isActive,
+                                onClick = it.onClick
+                            )
+                        }
+                        mMenuItemWithIcon("rowing_outline", "Log out")
+                    }
                 }
             }
         }

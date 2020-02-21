@@ -1,4 +1,4 @@
-package fm.force.core.component
+package fm.force.ui.component
 
 import com.ccfraser.muirwik.components.MDrawerAnchor
 import com.ccfraser.muirwik.components.MDrawerVariant
@@ -61,12 +61,18 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
                     wordBreak = WordBreak.keepAll
                 }
 
-                routeLink("/sample/haha/222") {
-                    mListItem("I AM HERE", selected = it.isActive, onClick = it.onClick)
+                routeLink("/sample/haha/222") { pathInfo ->
+                    mListItem("I AM HERE", selected = pathInfo.isActive, onClick = {
+                        props.onResponsiveDrawerOpenToggle(false)
+                        pathInfo.onClick(it)
+                    })
                 }
 
-                routeLink("/sample") {
-                    mListItem("HAHA", selected = it.isActive, onClick = it.onClick)
+                routeLink("/sample") { pathInfo ->
+                    mListItem("HAHA", selected = pathInfo.isActive, onClick = {
+                        props.onResponsiveDrawerOpenToggle(false)
+                        pathInfo.onClick(it)
+                    })
                 }
             }
         }

@@ -1,4 +1,4 @@
-package fm.force.core.component
+package fm.force.ui.component
 
 import com.ccfraser.muirwik.components.mDivider
 import com.ccfraser.muirwik.components.themeContext

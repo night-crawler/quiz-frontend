@@ -1,9 +1,9 @@
-package fm.force.core.container
+package fm.force.ui.container
 
-import fm.force.core.action.SetThemeType
-import fm.force.core.component.App
-import fm.force.core.component.AppProps
-import fm.force.core.reducer.State
+import fm.force.ui.SetThemeType
+import fm.force.ui.component.App
+import fm.force.ui.component.AppProps
+import fm.force.ui.reducer.State
 import react.RClass
 import react.RProps
 import react.invoke

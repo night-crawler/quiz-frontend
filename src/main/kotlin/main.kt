@@ -1,28 +1,34 @@
 import connected.react.router.connectedRouter
-import fm.force.core.container.app
-import fm.force.core.reducer.CustomLocationState
-import fm.force.core.reducer.State
-import fm.force.core.reducer.combinedReducers
+import fm.force.ui.container.app
+import fm.force.ui.reducer.CustomLocationState
+import fm.force.ui.reducer.State
+import fm.force.ui.reducer.combinedReducers
+import fm.force.util.ThunkError
 import fm.force.util.composeWithDevTools
+import fm.force.util.createThunkMiddleware
 import fm.force.util.customEnhancer
 import history.createBrowserHistory
-import history.locationsAreEqual
-import kotlin.browser.document
 import react.dom.render
 import react.redux.provider
 import react.router.connected.routerMiddleware
 import redux.RAction
+import redux.WrapperAction
 import redux.applyMiddleware
 import redux.createStore
+import kotlin.browser.document
+
 
 val browserHistory = createBrowserHistory<CustomLocationState>()
 
-val store = createStore<State, RAction, dynamic>(
+val store = createStore<State, RAction, WrapperAction>(
     combinedReducers(browserHistory),
     State(),
     composeWithDevTools(
-        customEnhancer(),
-        applyMiddleware(routerMiddleware(browserHistory))
+        applyMiddleware(
+            routerMiddleware(browserHistory),
+            createThunkMiddleware { action, exc -> ThunkError(action, exc) }
+        ),
+        customEnhancer()
     )
 )
 

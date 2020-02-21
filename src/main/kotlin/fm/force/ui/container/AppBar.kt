@@ -1,10 +1,10 @@
-package fm.force.core.container
+package fm.force.ui.container
 
-import fm.force.core.action.DrawerOpenToggle
-import fm.force.core.action.SetThemeType
-import fm.force.core.component.AppBar
-import fm.force.core.component.AppBarProps
-import fm.force.core.reducer.State
+import fm.force.ui.DrawerOpenToggle
+import fm.force.ui.SetThemeType
+import fm.force.ui.component.AppBar
+import fm.force.ui.component.AppBarProps
+import fm.force.ui.reducer.State
 import react.RClass
 import react.RProps
 import react.invoke

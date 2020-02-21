@@ -1,4 +1,4 @@
-package fm.force.core.reducer
+package fm.force.ui.reducer
 
 import fm.force.util.createLocation
 import fm.force.util.customCombineReducers

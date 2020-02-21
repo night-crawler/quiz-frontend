@@ -1,4 +1,4 @@
-package fm.force.core.component
+package fm.force.ui.component
 
 import com.ccfraser.muirwik.components.mCssBaseline
 import com.ccfraser.muirwik.components.spacingUnits
@@ -6,9 +6,9 @@ import com.ccfraser.muirwik.components.styles.Breakpoint
 import com.ccfraser.muirwik.components.styles.down
 import com.ccfraser.muirwik.components.styles.up
 import com.ccfraser.muirwik.components.themeContext
-import fm.force.core.container.appBar
-import fm.force.core.container.drawer
-import fm.force.core.container.mainContainer
+import fm.force.ui.container.appBar
+import fm.force.ui.container.drawer
+import fm.force.ui.container.mainContainer
 import kotlinx.css.*
 import react.RBuilder
 import react.RComponent

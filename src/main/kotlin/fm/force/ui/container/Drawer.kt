@@ -1,9 +1,9 @@
-package fm.force.core.container
+package fm.force.ui.container
 
-import fm.force.core.action.DrawerOpenToggle
-import fm.force.core.component.Drawer
-import fm.force.core.component.DrawerProps
-import fm.force.core.reducer.State
+import fm.force.ui.DrawerOpenToggle
+import fm.force.ui.component.Drawer
+import fm.force.ui.component.DrawerProps
+import fm.force.ui.reducer.State
 import react.RClass
 import react.RProps
 import react.invoke

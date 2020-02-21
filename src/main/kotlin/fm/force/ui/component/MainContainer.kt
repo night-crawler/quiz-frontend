@@ -1,11 +1,10 @@
-package fm.force.core.component
+package fm.force.ui.component
 
 import com.ccfraser.muirwik.components.button.mButton
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
-import react.dom.title
 import react.router.dom.route
 import react.router.dom.switch
 
