@@ -1,4 +1,5 @@
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 
 plugins {
     id("org.jetbrains.kotlin.js") version "1.3.70-eap-274"
@@ -46,6 +47,15 @@ dependencies {
 }
 
 kotlin {
+//    sourceSets {
+//        val main by getting {
+//            languageSettings.apply {
+//                useExperimentalAnnotation("kotlin.collections.ArrayDeque.ArrayDeque")
+//                useExperimentalAnnotation("kotlin.ExperimentalStdlibApi")
+//            }
+//        }
+//    }
+
     target {
         browser {
             compilations.all {
@@ -60,6 +70,7 @@ kotlin {
             }
         }
     }
+
 
     sourceSets["main"].dependencies {
         implementation(npm("react", reactVersion.split("-").first()))
@@ -81,6 +92,11 @@ kotlin {
         implementation(npm("react-router-dom", "5.1.2"))
         implementation(npm("react-helmet"))
     }
+}
+
+
+tasks.withType<Kotlin2JsCompile>().all {
+    kotlinOptions.freeCompilerArgs += "-Xuse-experimental=kotlin.ExperimentalStdlibApi"
 }
 
 ktlint {
