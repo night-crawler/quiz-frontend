@@ -26,6 +26,10 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
             route("/", exact = true) {
                 mButton("/")
             }
+
+            route("*") {
+                notFound()
+            }
         }
     }
 }
