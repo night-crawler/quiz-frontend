@@ -8,7 +8,6 @@ import react.RState
 import react.router.dom.route
 import react.router.dom.switch
 
-
 interface MainContainerProps : RProps {
     var locationPathname: String
 }

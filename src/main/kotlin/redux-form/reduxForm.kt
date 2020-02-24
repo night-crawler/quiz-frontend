@@ -9,11 +9,11 @@
 
 package redux.form
 
+import kotlin.js.Promise
 import react.Component
 import react.RClass
 import react.RProps
 import react.RState
-import kotlin.js.Promise
 
 external interface SubmitHandler<FormData, P, ErrorType> {
     @nativeInvoke
@@ -112,7 +112,6 @@ external interface InjectedFormProps<FormData, P, ErrorType> {
     var registeredFields: `T$0`
 }
 
-
 external interface FormInstance<FormData, P, ErrorType> : Component<P, RState> where P : RProps {
     var dirty: Boolean
     var invalid: Boolean
@@ -126,8 +125,7 @@ external interface FormInstance<FormData, P, ErrorType> : Component<P, RState> w
     var wrappedInstance: Any
 }
 
-external interface DecoratedComponentClass<FormData, P: RProps, ErrorType> : RClass<P>
-
+external interface DecoratedComponentClass<FormData, P : RProps, ErrorType> : RClass<P>
 
 external interface ConfigProps<FormData, P, ErrorType> {
     var form: String
@@ -137,12 +135,14 @@ external interface ConfigProps<FormData, P, ErrorType> {
     var asyncChangeFields: Array<String>?
         get() = definedExternally
         set(value) = definedExternally
-    val asyncValidate: ((
-        values: FormData,
-        dispatch: Dispatch<Any, Any>,
-        props: P /* P & InjectedFormProps<FormData, P, ErrorType> */,
-        blurredField: String
-    ) -> Promise<Any>)?
+    val asyncValidate: (
+        (
+            values: FormData,
+            dispatch: Dispatch<Any, Any>,
+            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */,
+            blurredField: String
+        ) -> Promise<Any>
+    )?
         get() = definedExternally
     var destroyOnUnmount: Boolean?
         get() = definedExternally
@@ -168,20 +168,35 @@ external interface ConfigProps<FormData, P, ErrorType> {
     var updateUnregisteredFields: Boolean?
         get() = definedExternally
         set(value) = definedExternally
-    val onChange: ((values: FormData, dispatch: Dispatch<Any, Any>, props: P /* P & InjectedFormProps<FormData, P, ErrorType> */, previousValues: FormData) -> Unit)?
+    val onChange: (
+        (
+            values: FormData,
+            dispatch: Dispatch<Any, Any>,
+            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */,
+            previousValues: FormData
+        ) -> Unit
+    )?
         get() = definedExternally
     var onSubmit: dynamic /* FormSubmitHandler<FormData, P /* P & InjectedFormProps<FormData, P, ErrorType> */, ErrorType> | SubmitHandler<FormData, P /* P & InjectedFormProps<FormData, P, ErrorType> */, ErrorType> */
         get() = definedExternally
         set(value) = definedExternally
-    val onSubmitFail: ((
+    val onSubmitFail: (
+        (
 //        errors: FormErrors<FormData, ErrorType>?,
-        errors: dynamic,
-        dispatch: Dispatch<Any, Any>,
-        submitError: Any,
-        props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
-    ) -> Unit)?
+            errors: dynamic,
+            dispatch: Dispatch<Any, Any>,
+            submitError: Any,
+            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
+        ) -> Unit
+    )?
         get() = definedExternally
-    val onSubmitSuccess: ((result: Any, dispatch: Dispatch<Any, Any>, props: P /* P & InjectedFormProps<FormData, P, ErrorType> */) -> Unit)?
+    val onSubmitSuccess: (
+        (
+            result: Any,
+            dispatch: Dispatch<Any, Any>,
+            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
+        ) -> Unit
+    )?
         get() = definedExternally
     var propNamespace: String?
         get() = definedExternally
@@ -209,16 +224,20 @@ external interface ConfigProps<FormData, P, ErrorType> {
     var persistentSubmitErrors: Boolean?
         get() = definedExternally
         set(value) = definedExternally
-    val validate: ((
-        values: FormData,
-        props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
+    val validate: (
+        (
+            values: FormData,
+            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
 //    ) -> FormErrors<FormData, ErrorType>)?
-    ) -> dynamic)?
-    get() = definedExternally
-    val warn: ((
-        values: FormData,
-        props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
-    ) -> FormWarnings<FormData, Any>)?
+        ) -> dynamic
+    )?
+        get() = definedExternally
+    val warn: (
+        (
+            values: FormData,
+            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
+        ) -> FormWarnings<FormData, Any>
+    )?
         get() = definedExternally
 }
 
@@ -232,12 +251,14 @@ external interface ConfigPropsPartial<FormData, P, ErrorType> {
     var asyncChangeFields: Array<String>?
         get() = definedExternally
         set(value) = definedExternally
-    var asyncValidate: ((
-        values: FormData,
-        dispatch: Dispatch<Any, Any>,
-        props: P /* P & InjectedFormProps<FormData, P, ErrorType> */,
-        blurredField: String
-    ) -> Promise<Any>)?
+    var asyncValidate: (
+        (
+            values: FormData,
+            dispatch: Dispatch<Any, Any>,
+            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */,
+            blurredField: String
+        ) -> Promise<Any>
+    )?
         get() = definedExternally
         set(value) = definedExternally
     var destroyOnUnmount: Boolean?
@@ -264,31 +285,37 @@ external interface ConfigPropsPartial<FormData, P, ErrorType> {
     var updateUnregisteredFields: Boolean?
         get() = definedExternally
         set(value) = definedExternally
-    var onChange: ((
-        values: FormData,
-        dispatch: Dispatch<Any, Any>,
-        props: P /* P & InjectedFormProps<FormData, P, ErrorType> */,
-        previousValues: FormData
-    ) -> Unit)?
+    var onChange: (
+        (
+            values: FormData,
+            dispatch: Dispatch<Any, Any>,
+            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */,
+            previousValues: FormData
+        ) -> Unit
+    )?
         get() = definedExternally
         set(value) = definedExternally
     var onSubmit: dynamic /* FormSubmitHandler<FormData, P /* P & InjectedFormProps<FormData, P, ErrorType> */, ErrorType> | SubmitHandler<FormData, P /* P & InjectedFormProps<FormData, P, ErrorType> */, ErrorType> */
         get() = definedExternally
         set(value) = definedExternally
-    var onSubmitFail: ((
+    var onSubmitFail: (
+        (
 //        errors: FormErrors<FormData, ErrorType>?,
-        errors: dynamic,
-        dispatch: Dispatch<Any, Any>,
-        submitError: Any,
-        props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
-    ) -> Unit)?
+            errors: dynamic,
+            dispatch: Dispatch<Any, Any>,
+            submitError: Any,
+            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
+        ) -> Unit
+    )?
         get() = definedExternally
         set(value) = definedExternally
-    var onSubmitSuccess: ((
-        result: Any,
-        dispatch: Dispatch<Any, Any>,
-        props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
-    ) -> Unit)?
+    var onSubmitSuccess: (
+        (
+            result: Any,
+            dispatch: Dispatch<Any, Any>,
+            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
+        ) -> Unit
+    )?
         get() = definedExternally
         set(value) = definedExternally
     var propNamespace: String?
@@ -321,22 +348,25 @@ external interface ConfigPropsPartial<FormData, P, ErrorType> {
     var persistentSubmitErrors: Boolean?
         get() = definedExternally
         set(value) = definedExternally
-    var validate: ((
-        values: FormData,
-        props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
+    var validate: (
+        (
+            values: FormData,
+            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
 //    ) -> FormErrors<FormData, ErrorType>)?
-                   ) -> dynamic)?
+        ) -> dynamic
+    )?
         get() = definedExternally
         set(value) = definedExternally
-    var warn: ((
-        values: FormData,
-        props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
-    ) -> FormWarnings<FormData, Any>)?
+    var warn: (
+        (
+            values: FormData,
+            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
+        ) -> FormWarnings<FormData, Any>
+    )?
         get() = definedExternally
         set(value) = definedExternally
 }
 
+external fun <FormData, P : RProps, ErrorType> reduxForm(config: ConfigProps<FormData, P, ErrorType>): FormDecorator<FormData, P, ConfigPropsPartial<FormData, P, ErrorType>, ErrorType>
 
-external fun <FormData, P: RProps, ErrorType> reduxForm(config: ConfigProps<FormData, P, ErrorType>): FormDecorator<FormData, P, ConfigPropsPartial<FormData, P, ErrorType>, ErrorType>
-
-external fun <FormData, P: RProps, ErrorType> reduxForm(config: ConfigPropsPartial<FormData, P, ErrorType>): FormDecorator<FormData, P, ConfigProps<FormData, P, ErrorType>, ErrorType>
+external fun <FormData, P : RProps, ErrorType> reduxForm(config: ConfigPropsPartial<FormData, P, ErrorType>): FormDecorator<FormData, P, ConfigProps<FormData, P, ErrorType>, ErrorType>

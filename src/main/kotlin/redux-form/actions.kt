@@ -6,6 +6,7 @@
     "CONFLICTING_OVERLOADS",
     "EXTERNAL_DELEGATION", "PackageDirectoryMismatch"
 )
+
 package redux.form
 
 import react.RProps
@@ -88,11 +89,10 @@ external fun initialize(
     options: InitializeOptionsPartial = definedExternally
 ): FormAction
 
-
 external fun initialize(form: String, data: Any, options: InitializeOptionsPartial = definedExternally): FormAction
 
-external fun <P: RProps>registerField(form: String, name: String, type: Field/*<P>*/): FormAction
-external fun <P: RProps, FT>registerField(form: String, name: String, type: FieldArray<P, FT>): FormAction
+external fun <P : RProps> registerField(form: String, name: String, type: Field/*<P>*/): FormAction
+external fun <P : RProps, FT> registerField(form: String, name: String, type: FieldArray<P, FT>): FormAction
 
 external fun reset(form: String): FormAction
 

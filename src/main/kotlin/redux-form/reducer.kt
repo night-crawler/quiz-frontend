@@ -10,16 +10,15 @@
 
 package redux.form
 
-import redux.Reducer
 import kotlin.js.Json
+import redux.Reducer
 
 external interface FormReducer<S, A> {
     fun plugin(reducers: FormReducerMapObject): Reducer<S, A>
 }
 
-//@JsName("default")
+// @JsName("default")
 external var reducer: Reducer<dynamic, dynamic>
-
 
 external interface FormReducerMapObject {
     @nativeGetter

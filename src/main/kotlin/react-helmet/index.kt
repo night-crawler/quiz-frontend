@@ -19,7 +19,6 @@ import react.RProps
 import react.RState
 import react.ReactElement
 
-
 external interface HelmetTags {
     var baseTag: Array<Any>
     var linkTags: Array<HTMLLinkElement>
@@ -76,19 +75,20 @@ external interface HelmetProps : RProps {
         set(value) = definedExternally
 }
 
-external open class Helmet : Component<HelmetProps, RState> {
+open external class Helmet : Component<HelmetProps, RState> {
     companion object {
         fun peek(): HelmetData
         fun rewind(): HelmetData
         fun renderStatic(): HelmetData
         var canUseDOM: Boolean
     }
+
     override fun render(): ReactElement?
 }
 
 external interface HelmetData {
     var base: HelmetDatum
-//    var bodyAttributes: HelmetHTMLBodyDatum
+    //    var bodyAttributes: HelmetHTMLBodyDatum
 //    var htmlAttributes: HelmetHTMLElementDatum
     var link: HelmetDatum
     var meta: HelmetDatum
@@ -104,12 +104,12 @@ external interface HelmetDatum {
     fun toComponent(): Component<RProps, RState>
 }
 
-//external interface HelmetHTMLBodyDatum {
+// external interface HelmetHTMLBodyDatum {
 //    override fun toString(): String
 //    fun toComponent(): HTMLAttributes<HTMLBodyElement>
-//}
+// }
 //
-//external interface HelmetHTMLElementDatum {
+// external interface HelmetHTMLElementDatum {
 //    override fun toString(): String
 //    fun toComponent(): React.HTMLAttributes<HTMLHtmlElement>
-//}
+// }

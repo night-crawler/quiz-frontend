@@ -27,7 +27,7 @@ class NodeChildTreeIterator(node: Node) : Iterator<Node> {
 
     private fun processHeadQueueNode(): Boolean {
         var currentNode: Node
-        while(true) {
+        while (true) {
             if (queue.size == 0) {
                 return false
             }
@@ -51,6 +51,7 @@ class NodeChildTreeIterator(node: Node) : Iterator<Node> {
     override fun hasNext(): Boolean {
         return valueNodes.size > 0 || processHeadQueueNode()
     }
+
     override fun next(): Node {
         if (valueNodes.size == 0) {
             processHeadQueueNode()

@@ -1,9 +1,7 @@
-
 package fm.force.util
 
 import react.RContext
 import react.router.dom.RouteResultProps
-
 
 @JsModule("react-router")
 private external val ReactRouterModule: dynamic

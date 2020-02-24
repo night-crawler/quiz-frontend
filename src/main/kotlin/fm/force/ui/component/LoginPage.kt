@@ -19,7 +19,6 @@ import styled.StyleSheet
 import styled.css
 import styled.styledForm
 
-
 class BasicInputWrapper(props: WrappedFieldProps) : RComponent<WrappedFieldProps, RState>(props) {
     override fun RBuilder.render() {
         mTextField(
@@ -49,10 +48,12 @@ class LoginPage(props: RProps) : RComponent<RProps, RState>(props) {
     }
 }
 
-val wrappedStuff = reduxForm(jsApply<ConfigProps<Any, RProps, Any>> {
-    form = "wrappedStuff"
-    onSubmit = { a: dynamic, b: dynamic, c: dynamic, d: dynamic -> console.log(a, b, c, d) }
+val wrappedStuff = reduxForm(
+    jsApply<ConfigProps<Any, RProps, Any>> {
+        form = "wrappedStuff"
+        onSubmit = { a: dynamic, b: dynamic, c: dynamic, d: dynamic -> console.log(a, b, c, d) }
 //    getFormState = { a -> jsObject {} }
-})(LoginPage::class.js)
+    }
+)(LoginPage::class.js)
 
 fun RBuilder.loginPage() = wrappedStuff {}

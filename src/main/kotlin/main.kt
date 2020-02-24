@@ -8,6 +8,7 @@ import fm.force.util.composeWithDevTools
 import fm.force.util.createThunkMiddleware
 import fm.force.util.customEnhancer
 import history.createBrowserHistory
+import kotlin.browser.document
 import react.dom.render
 import react.redux.provider
 import react.router.connected.routerMiddleware
@@ -15,8 +16,6 @@ import redux.RAction
 import redux.WrapperAction
 import redux.applyMiddleware
 import redux.createStore
-import kotlin.browser.document
-
 
 val browserHistory = createBrowserHistory<CustomLocationState>()
 

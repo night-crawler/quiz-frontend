@@ -9,7 +9,9 @@ interface Thunk<S, A, R> : RAction {
 
 class ThunkError(val originalAction: RAction, val exception: Exception) : RAction
 
-fun <S, A, WA> createThunkMiddleware(errorActionBuilder: (A, Exception) -> A): (MiddlewareApi<S, A, WA>) -> ((A) -> WA) -> (A) -> WA {
+fun <S, A, WA> createThunkMiddleware(errorActionBuilder: (A, Exception) -> A): (MiddlewareApi<S, A, WA>) -> ((A) -> WA) -> (
+    A
+) -> WA {
     fun thunkMiddleware(api: MiddlewareApi<S, A, WA>): ((A) -> WA) -> (A) -> WA {
         return { next ->
             { action ->

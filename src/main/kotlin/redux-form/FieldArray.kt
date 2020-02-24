@@ -52,7 +52,8 @@ external interface GenericFieldArray<FieldValue, P> : Component<dynamic, RState>
     override fun render(): ReactElement?
 }
 
-external open class FieldArray<P, FieldValue> : Component<dynamic, RState>,
+open external class FieldArray<P, FieldValue> :
+    Component<dynamic, RState>,
     GenericFieldArray<FieldValue, P> {
     override var name: String
     override var valid: Boolean

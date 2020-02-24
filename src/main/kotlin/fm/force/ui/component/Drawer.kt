@@ -62,17 +62,23 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
                 }
 
                 routeLink("/sample/haha/222") { pathInfo ->
-                    mListItem("I AM HERE", selected = pathInfo.isActive, onClick = {
-                        props.onResponsiveDrawerOpenToggle(false)
-                        pathInfo.onClick(it)
-                    })
+                    mListItem(
+                        "I AM HERE", selected = pathInfo.isActive,
+                        onClick = {
+                            props.onResponsiveDrawerOpenToggle(false)
+                            pathInfo.onClick(it)
+                        }
+                    )
                 }
 
                 routeLink("/sample") { pathInfo ->
-                    mListItem("HAHA", selected = pathInfo.isActive, onClick = {
-                        props.onResponsiveDrawerOpenToggle(false)
-                        pathInfo.onClick(it)
-                    })
+                    mListItem(
+                        "HAHA", selected = pathInfo.isActive,
+                        onClick = {
+                            props.onResponsiveDrawerOpenToggle(false)
+                            pathInfo.onClick(it)
+                        }
+                    )
                 }
             }
         }

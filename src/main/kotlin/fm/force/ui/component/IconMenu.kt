@@ -19,7 +19,6 @@ interface IconMenuProps : RProps {
     var handler: RBuilder.() -> Unit
 }
 
-
 class IconMenu(props: IconMenuProps) : RComponent<IconMenuProps, RState>(props) {
     private var isOpened = false
     private var anchorElement: Node? = null
@@ -41,7 +40,10 @@ class IconMenu(props: IconMenuProps) : RComponent<IconMenuProps, RState>(props) 
     private fun close() = setState { isOpened = false }
     private fun open() = setState { isOpened = true }
 
-    private fun handleOpen(@Suppress("UNUSED_PARAMETER") event: Event) = open()
+    private fun handleOpen(
+        @Suppress("UNUSED_PARAMETER")
+        event: Event
+    ) = open()
     @Suppress("UNUSED_PARAMETER")
     private fun handleClose(event: Event, reason: MenuOnCloseReason) = close()
 

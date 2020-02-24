@@ -16,10 +16,10 @@ external interface FormSubmitProp<FormData, P, ErrorType> {
         set(value) = definedExternally
 }
 
-//external open class GenericForm<FormData, P, ErrorType> :
+// external open class GenericForm<FormData, P, ErrorType> :
 //    Component<Omit<FormHTMLAttributes<HTMLFormElement>, String /* "onSubmit" */> /* Omit<FormHTMLAttributes<HTMLFormElement>, String /* "onSubmit" */> & FormSubmitProp<FormData, P, ErrorType> */>
 //
-//external open class Form<FormData, P, ErrorType> :
+// external open class Form<FormData, P, ErrorType> :
 //    Component<Omit<FormHTMLAttributes<HTMLFormElement>, String /* "onSubmit" */> /* Omit<FormHTMLAttributes<HTMLFormElement>, String /* "onSubmit" */> & FormSubmitProp<FormData, P, ErrorType> */>,
 //    GenericForm<FormData, P, ErrorType>
 

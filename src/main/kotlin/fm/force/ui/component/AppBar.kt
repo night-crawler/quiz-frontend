@@ -9,7 +9,6 @@ import com.ccfraser.muirwik.components.mCssBaseline
 import com.ccfraser.muirwik.components.mHidden
 import com.ccfraser.muirwik.components.mToolbar
 import com.ccfraser.muirwik.components.mToolbarTitle
-import com.ccfraser.muirwik.components.menu.mMenuItem
 import com.ccfraser.muirwik.components.menu.mMenuItemWithIcon
 import com.ccfraser.muirwik.components.themeContext
 import kotlinx.css.zIndex

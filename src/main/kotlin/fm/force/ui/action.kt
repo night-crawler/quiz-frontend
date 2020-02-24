@@ -11,6 +11,6 @@ class DrawerOpenToggle(val isOpen: Boolean) : RAction
 
 class SampleThunk : Thunk<State, RAction, WrapperAction> {
     override fun run(dispatch: (RAction) -> WrapperAction, getState: () -> State): WrapperAction {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 }

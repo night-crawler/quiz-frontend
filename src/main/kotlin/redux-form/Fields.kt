@@ -9,11 +9,11 @@
 
 package redux.form
 
+import kotlin.js.Json
 import react.Component
 import react.RProps
 import react.RState
 import react.ReactElement
-import kotlin.js.Json
 
 external interface `T$1` {
     @nativeGetter
@@ -51,7 +51,6 @@ external interface BaseFieldsProps<P> : RProps {
         set(value) = definedExternally
 }
 
-
 external interface GenericFieldsRenderedComponentType<P> : WrappedFieldsProps, BaseFieldsProps<P>
 
 external interface GenericFields<P> : Component<BaseFieldsProps<P>, RState /* BaseFieldsProps<P> & P */> {
@@ -59,11 +58,11 @@ external interface GenericFields<P> : Component<BaseFieldsProps<P>, RState /* Ba
     var names: Array<String>
     var pristine: Boolean
     var values: Json
-//    fun getRenderedComponent(): Component<BaseFieldsProps<Any> /* BaseFieldsProps<Any> & WrappedFieldsProps & P */>
+    //    fun getRenderedComponent(): Component<BaseFieldsProps<Any> /* BaseFieldsProps<Any> & WrappedFieldsProps & P */>
     fun getRenderedComponent(): Component<GenericFieldsRenderedComponentType<Any>, RState>
 }
 
-external open class Fields<P> : Component<BaseFieldsProps<P>, RState /* BaseFieldsProps<P> & P */>, GenericFields<P> {
+open external class Fields<P> : Component<BaseFieldsProps<P>, RState /* BaseFieldsProps<P> & P */>, GenericFields<P> {
     override var dirty: Boolean
     override var names: Array<String>
     override var pristine: Boolean

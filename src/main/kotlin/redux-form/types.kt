@@ -3,8 +3,6 @@
 package redux.form
 
 import org.w3c.dom.events.Event
-import redux.Reducer
-import kotlin.js.Promise
 
 typealias Normalizer = (value: Any, previousValue: Any, allValues: Any, previousAllValues: Any) -> Any
 
@@ -45,6 +43,9 @@ typealias BooleanSelector<State> = (formName: String, getFormState: GetFormState
 
 typealias NamesSelector<State> = (getFormState: GetFormState) -> (state: State) -> Array<String>
 
-typealias FormOrFieldsBooleanSelector<State> = (formName: String, getFormState: GetFormState) -> (state: State, fields: String) -> Boolean
+typealias FormOrFieldsBooleanSelector<State> = (formName: String, getFormState: GetFormState) -> (
+    state: State,
+    fields: String
+) -> Boolean
 
 typealias SubmissionError<FormData, ErrorType> = Error

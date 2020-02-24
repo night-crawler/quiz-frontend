@@ -17,8 +17,7 @@ private interface MainContainerStateProps : RProps {
     var locationPathname: String
 }
 
-private interface MainContainerDispatchProps : RProps {
-}
+private interface MainContainerDispatchProps : RProps
 
 private val mapStateToProps: MainContainerStateProps.(State, MainContainerConnectedProps) -> Unit = { state, _ ->
     locationPathname = state.router.location.pathname

@@ -20,7 +20,6 @@ import react.dom.title
 import styled.StyleSheet
 import styled.css
 import styled.styledDiv
-import styled.styledH3
 
 class NotFound(props: RProps) : RComponent<RProps, RState>(props) {
     private object ComponentStyles : StyleSheet("ComponentStyles", isStatic = true) {
@@ -29,6 +28,7 @@ class NotFound(props: RProps) : RComponent<RProps, RState>(props) {
             paddingBottom = 2.spacingUnits
         }
     }
+
     private val message = "Requested page was not found on this server"
 
     override fun RBuilder.render() {

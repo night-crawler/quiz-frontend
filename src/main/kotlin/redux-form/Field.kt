@@ -6,6 +6,7 @@
     "CONFLICTING_OVERLOADS",
     "EXTERNAL_DELEGATION", "PackageDirectoryMismatch"
 )
+
 package redux.form
 
 import org.w3c.dom.DragEvent
@@ -90,7 +91,7 @@ external interface WrappedFieldInputProps : CommonFieldInputProps {
         get() = definedExternally
         set(value) = definedExternally
     var value: Any
-//    var onBlur: EventOrValueHandler<FocusEvent>
+    //    var onBlur: EventOrValueHandler<FocusEvent>
 //    var onChange: EventOrValueHandler<Any>
     var onBlur: dynamic
     var onChange: dynamic

@@ -1,5 +1,5 @@
-import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     id("org.jetbrains.kotlin.js") version "1.3.70-eap-274"
@@ -47,7 +47,7 @@ dependencies {
 }
 
 kotlin {
-//    sourceSets {
+    //    sourceSets {
 //        val main by getting {
 //            languageSettings.apply {
 //                useExperimentalAnnotation("kotlin.collections.ArrayDeque.ArrayDeque")
@@ -71,7 +71,6 @@ kotlin {
         }
     }
 
-
     sourceSets["main"].dependencies {
         implementation(npm("react", reactVersion.split("-").first()))
         implementation(npm("react-dom", reactVersion.split("-").first()))
@@ -94,7 +93,6 @@ kotlin {
         implementation(npm("redux-form", "8.2.6"))
     }
 }
-
 
 tasks.withType<Kotlin2JsCompile>().all {
     kotlinOptions.freeCompilerArgs += "-Xuse-experimental=kotlin.ExperimentalStdlibApi"
