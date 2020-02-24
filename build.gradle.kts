@@ -81,16 +81,17 @@ kotlin {
 
         implementation(npm("core-js", "3.6.4"))
 
-        implementation(npm("@material-ui/core"))
-        implementation(npm("@material-ui/icons"))
-        implementation(npm("styled-components"))
-        implementation(npm("inline-style-prefixer"))
-        implementation(npm("history"))
+        implementation(npm("@material-ui/core", "4.9.3"))
+        implementation(npm("@material-ui/icons", "4.9.1"))
+        implementation(npm("styled-components", "5.0.1"))
+        implementation(npm("inline-style-prefixer", "5.1.2"))
+        implementation(npm("history", "4.10.1"))
         implementation(npm("connected-react-router", "5.0.1"))
 
         // react-router-dom 4.3.1-pre.91 is broken: it does not update the view
         implementation(npm("react-router-dom", "5.1.2"))
-        implementation(npm("react-helmet"))
+        implementation(npm("react-helmet", "5.2.1"))
+        implementation(npm("redux-form", "8.2.6"))
     }
 }
 

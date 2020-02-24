@@ -20,13 +20,16 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
                 intro()
             }
 
+            route("/login") {
+                loginPage()
+            }
+
             route("/sample", exact = true) {
                 mButton("/sample")
             }
             route("/", exact = true) {
                 mButton("/")
             }
-
             route("*") {
                 notFound()
             }

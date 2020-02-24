@@ -39,7 +39,7 @@ class IconMenu(props: IconMenuProps) : RComponent<IconMenuProps, RState>(props) 
     }
 
     private fun close() = setState { isOpened = false }
-    private fun open() = setState() { isOpened = true }
+    private fun open() = setState { isOpened = true }
 
     private fun handleOpen(@Suppress("UNUSED_PARAMETER") event: Event) = open()
     @Suppress("UNUSED_PARAMETER")
