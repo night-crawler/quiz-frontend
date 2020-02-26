@@ -79,7 +79,7 @@ external interface `T$0` {
     operator fun set(name: String, value: RegisteredField)
 }
 
-external interface InjectedFormProps<FormData, P, ErrorType> {
+external interface InjectedFormProps<FormData, P, ErrorType> : RProps {
     var anyTouched: Boolean
     var array: InjectedArrayProps
     fun asyncValidate()
@@ -128,120 +128,6 @@ external interface FormInstance<FormData, P, ErrorType> : Component<P, RState> w
 external interface DecoratedComponentClass<FormData, P : RProps, ErrorType> : RClass<P>
 
 external interface ConfigProps<FormData, P, ErrorType> {
-    var form: String
-    var asyncBlurFields: Array<String>?
-        get() = definedExternally
-        set(value) = definedExternally
-    var asyncChangeFields: Array<String>?
-        get() = definedExternally
-        set(value) = definedExternally
-    val asyncValidate: (
-        (
-            values: FormData,
-            dispatch: Dispatch<Any, Any>,
-            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */,
-            blurredField: String
-        ) -> Promise<Any>
-    )?
-        get() = definedExternally
-    var destroyOnUnmount: Boolean?
-        get() = definedExternally
-        set(value) = definedExternally
-    var enableReinitialize: Boolean?
-        get() = definedExternally
-        set(value) = definedExternally
-    var forceUnregisterOnUnmount: Boolean?
-        get() = definedExternally
-        set(value) = definedExternally
-    var getFormState: GetFormState?
-        get() = definedExternally
-        set(value) = definedExternally
-    var immutableProps: Array<String>?
-        get() = definedExternally
-        set(value) = definedExternally
-    var initialValues: Any?
-        get() = definedExternally
-        set(value) = definedExternally
-    var keepDirtyOnReinitialize: Boolean?
-        get() = definedExternally
-        set(value) = definedExternally
-    var updateUnregisteredFields: Boolean?
-        get() = definedExternally
-        set(value) = definedExternally
-    val onChange: (
-        (
-            values: FormData,
-            dispatch: Dispatch<Any, Any>,
-            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */,
-            previousValues: FormData
-        ) -> Unit
-    )?
-        get() = definedExternally
-    var onSubmit: dynamic /* FormSubmitHandler<FormData, P /* P & InjectedFormProps<FormData, P, ErrorType> */, ErrorType> | SubmitHandler<FormData, P /* P & InjectedFormProps<FormData, P, ErrorType> */, ErrorType> */
-        get() = definedExternally
-        set(value) = definedExternally
-    val onSubmitFail: (
-        (
-//        errors: FormErrors<FormData, ErrorType>?,
-            errors: dynamic,
-            dispatch: Dispatch<Any, Any>,
-            submitError: Any,
-            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
-        ) -> Unit
-    )?
-        get() = definedExternally
-    val onSubmitSuccess: (
-        (
-            result: Any,
-            dispatch: Dispatch<Any, Any>,
-            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
-        ) -> Unit
-    )?
-        get() = definedExternally
-    var propNamespace: String?
-        get() = definedExternally
-        set(value) = definedExternally
-    var pure: Boolean?
-        get() = definedExternally
-        set(value) = definedExternally
-    val shouldValidate: ((params: ValidateCallback<FormData, P, ErrorType>) -> Boolean)?
-        get() = definedExternally
-    val shouldError: ((params: ValidateCallback<FormData, P, ErrorType>) -> Boolean)?
-        get() = definedExternally
-    val shouldWarn: ((params: ValidateCallback<FormData, P, ErrorType>) -> Boolean)?
-        get() = definedExternally
-    val shouldAsyncValidate: ((params: AsyncValidateCallback<FormData, ErrorType>) -> Boolean)?
-        get() = definedExternally
-    var submitAsSideEffect: Boolean?
-        get() = definedExternally
-        set(value) = definedExternally
-    var touchOnBlur: Boolean?
-        get() = definedExternally
-        set(value) = definedExternally
-    var touchOnChange: Boolean?
-        get() = definedExternally
-        set(value) = definedExternally
-    var persistentSubmitErrors: Boolean?
-        get() = definedExternally
-        set(value) = definedExternally
-    val validate: (
-        (
-            values: FormData,
-            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
-//    ) -> FormErrors<FormData, ErrorType>)?
-        ) -> dynamic
-    )?
-        get() = definedExternally
-    val warn: (
-        (
-            values: FormData,
-            props: P /* P & InjectedFormProps<FormData, P, ErrorType> */
-        ) -> FormWarnings<FormData, Any>
-    )?
-        get() = definedExternally
-}
-
-external interface ConfigPropsPartial<FormData, P, ErrorType> {
     var form: String?
         get() = definedExternally
         set(value) = definedExternally
@@ -295,7 +181,8 @@ external interface ConfigPropsPartial<FormData, P, ErrorType> {
     )?
         get() = definedExternally
         set(value) = definedExternally
-    var onSubmit: dynamic /* FormSubmitHandler<FormData, P /* P & InjectedFormProps<FormData, P, ErrorType> */, ErrorType> | SubmitHandler<FormData, P /* P & InjectedFormProps<FormData, P, ErrorType> */, ErrorType> */
+//    var onSubmit: dynamic /* FormSubmitHandler<FormData, P /* P & InjectedFormProps<FormData, P, ErrorType> */, ErrorType> | SubmitHandler<FormData, P /* P & InjectedFormProps<FormData, P, ErrorType> */, ErrorType> */
+    var onSubmit: FormSubmitHandler<FormData, P /* P & InjectedFormProps<FormData, P, ErrorType> */, ErrorType>?
         get() = definedExternally
         set(value) = definedExternally
     var onSubmitFail: (
@@ -367,6 +254,4 @@ external interface ConfigPropsPartial<FormData, P, ErrorType> {
         set(value) = definedExternally
 }
 
-external fun <FormData, P : RProps, ErrorType> reduxForm(config: ConfigProps<FormData, P, ErrorType>): FormDecorator<FormData, P, ConfigPropsPartial<FormData, P, ErrorType>, ErrorType>
-
-external fun <FormData, P : RProps, ErrorType> reduxForm(config: ConfigPropsPartial<FormData, P, ErrorType>): FormDecorator<FormData, P, ConfigProps<FormData, P, ErrorType>, ErrorType>
+external fun <FormData, P : RProps, ErrorType> reduxForm(config: ConfigProps<FormData, P, ErrorType>): FormDecorator<FormData, P, ConfigProps<FormData, P, ErrorType>, ErrorType>

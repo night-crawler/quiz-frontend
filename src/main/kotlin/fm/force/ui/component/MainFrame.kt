@@ -17,10 +17,7 @@ import react.RState
 import styled.css
 import styled.styledDiv
 
-interface MainFrameProps : RProps {
-    var onThemeTypeChange: (themeType: String) -> Unit
-    var initialView: String
-}
+interface MainFrameProps : RProps
 
 class MainFrame(props: MainFrameProps) : RComponent<MainFrameProps, RState>(props) {
 
@@ -81,7 +78,4 @@ class MainFrame(props: MainFrameProps) : RComponent<MainFrameProps, RState>(prop
     }
 }
 
-fun RBuilder.mainFrame(initialView: String, onThemeTypeChange: (themeType: String) -> Unit) = child(MainFrame::class) {
-    attrs.onThemeTypeChange = onThemeTypeChange
-    attrs.initialView = initialView
-}
+fun RBuilder.mainFrame() = child(MainFrame::class) {}

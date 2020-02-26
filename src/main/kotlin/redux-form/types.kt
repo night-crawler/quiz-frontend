@@ -49,3 +49,4 @@ typealias FormOrFieldsBooleanSelector<State> = (formName: String, getFormState: 
 ) -> Boolean
 
 typealias SubmissionError<FormData, ErrorType> = Error
+

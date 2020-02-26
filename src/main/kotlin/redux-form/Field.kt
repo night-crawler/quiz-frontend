@@ -72,11 +72,11 @@ external interface GenericField<P> : Component<BaseFieldProps<P>, RState /* Base
     fun getRenderedComponent(): Component<WrappedFieldProps, RState /* WrappedFieldProps & P */>
 }
 
-open external class Field : Component<BaseFieldProps<Any>, RState> {
+open external class Field : Component<BaseFieldProps<dynamic>, RState> {
     open var dirty: Boolean
     open var name: String
     open var pristine: Boolean
-    open var value: Any
+    open var value: dynamic
     open fun getRenderedComponent(): Component<WrappedFieldProps, RState /* WrappedFieldProps & P */>
     override fun render(): ReactElement?
 }

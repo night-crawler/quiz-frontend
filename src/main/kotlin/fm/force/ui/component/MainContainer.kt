@@ -20,7 +20,7 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
             }
 
             route("/login") {
-                loginPage()
+                loginForm()
             }
 
             route("/sample", exact = true) {
