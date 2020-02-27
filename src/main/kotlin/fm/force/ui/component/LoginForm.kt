@@ -47,14 +47,12 @@ class LoginForm(props: LoginFormProps) : RComponent<LoginFormProps, RState>(prop
                 onSubmit = props.handleSubmit.asDynamic()
             }
             mFormControl(fullWidth = true) {
-
                 field("email", WrappedMTextField::class, jsApply {
                     fieldType = InputType.email
                     label = "Login email"
                     helperText = "Enter your email"
                     variant = MFormControlVariant.filled
                 })
-
                 field("password", WrappedMTextField::class, jsApply {
                     fieldType = InputType.password
                     label = "Password"
@@ -65,7 +63,9 @@ class LoginForm(props: LoginFormProps) : RComponent<LoginFormProps, RState>(prop
                     color = MColor.primary,
                     variant = MButtonVariant.contained,
                     onClick = { props.handleSubmit(it) }
-                )
+                ) {
+                    attrs.asDynamic().type = "submit"
+                }
             }
         }
     }
@@ -74,7 +74,7 @@ class LoginForm(props: LoginFormProps) : RComponent<LoginFormProps, RState>(prop
 val reduxLoginForm = reduxForm(
     jsApply<ConfigProps<LoginDTO, InjectedFormProps<LoginDTO, RProps, Any>, Any>> {
         form = "loginForm"
-        onSubmit = { a, b, c -> console.log() }
+        onSubmit = { a, b, c -> console.log(a, b, c) }
     }
 )(LoginForm::class.js)
 
