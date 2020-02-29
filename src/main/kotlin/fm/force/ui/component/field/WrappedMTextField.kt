@@ -9,8 +9,7 @@ import react.RComponent
 import react.RState
 import redux.form.WrappedFieldProps
 
-interface WrappedMTextFieldProps : WrappedFieldProps,
-    MTextFieldProps {
+interface WrappedMTextFieldProps : WrappedFieldProps, MTextFieldProps {
     var fieldType: InputType
     var variant: MFormControlVariant
 }

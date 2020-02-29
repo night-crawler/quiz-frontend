@@ -4,26 +4,28 @@ import redux.MiddlewareApi
 import redux.RAction
 
 interface Thunk<S, A, R> : RAction {
-    fun run(dispatch: (A) -> R, getState: () -> S): R
+    fun run(originalAction: RAction, dispatch: (A) -> R, getState: () -> S)
 }
 
-class ThunkError(val originalAction: RAction, val exception: Exception) : RAction
+class ThunkAcknowledged(val originalAction: RAction) : RAction
 
-fun <S, A, WA> createThunkMiddleware(errorActionBuilder: (A, Exception) -> A): (MiddlewareApi<S, A, WA>) -> ((A) -> WA) -> (
-    A
-) -> WA {
+class ThunkError(val originalAction: RAction, val exception: Throwable) : RAction
+
+fun <S, A, WA> createThunkMiddleware(
+    errorActionBuilder: (A, Throwable) -> A
+): (MiddlewareApi<S, A, WA>) -> ((A) -> WA) -> (A) -> WA {
+
     fun thunkMiddleware(api: MiddlewareApi<S, A, WA>): ((A) -> WA) -> (A) -> WA {
         return { next ->
             { action ->
                 if (action is Thunk<*, *, *>) {
                     try {
-                        (action.unsafeCast<Thunk<S, A, WA>>()).run(api::dispatch, api::getState)
-                    } catch (exc: Exception) {
+                        (action.unsafeCast<Thunk<S, A, WA>>()).run(action, api::dispatch, api::getState)
+                    } catch (exc: Throwable) {
                         api.dispatch(errorActionBuilder(action, exc))
                     }
-                } else {
-                    next(action)
                 }
+                next(action)
             }
         }
     }

@@ -6,6 +6,7 @@ import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.form.mFormControl
 import com.ccfraser.muirwik.components.spacingUnits
+import fm.force.ui.SampleThunk
 import fm.force.ui.component.field.WrappedMTextField
 import fm.force.util.jsApply
 import kotlinx.css.Display
@@ -61,8 +62,8 @@ class LoginForm(props: LoginFormProps) : RComponent<LoginFormProps, RState>(prop
                 mButton(
                     "Login",
                     color = MColor.primary,
-                    variant = MButtonVariant.contained,
-                    onClick = { props.handleSubmit(it) }
+                    variant = MButtonVariant.contained
+//                    disabled = props.pristine || props.submitting
                 ) {
                     attrs.asDynamic().type = "submit"
                 }
@@ -74,7 +75,11 @@ class LoginForm(props: LoginFormProps) : RComponent<LoginFormProps, RState>(prop
 val reduxLoginForm = reduxForm(
     jsApply<ConfigProps<LoginDTO, InjectedFormProps<LoginDTO, RProps, Any>, Any>> {
         form = "loginForm"
-        onSubmit = { a, b, c -> console.log(a, b, c) }
+        onSubmit = { a, b, c ->
+            val r = b(SampleThunk())
+
+            js("{}")
+        }
     }
 )(LoginForm::class.js)
 
