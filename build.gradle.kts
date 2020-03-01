@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
@@ -51,7 +53,7 @@ dependencies {
 }
 
 kotlin {
-//        sourceSets {
+    //        sourceSets {
 //        val main by getting {
 //            languageSettings.apply {
 //                useExperimentalAnnotation("kotlin.collections.ArrayDeque.ArrayDeque")
@@ -62,6 +64,11 @@ kotlin {
 
     target {
         browser {
+            @UseExperimental(org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalDceDsl::class)
+            dceTask {
+                // dceOptions
+                keep("ktor-ktor-io.\$\$importsForInline\$\$.ktor-ktor-io.io.ktor.utils.io")
+            }
             compilations.all {
                 kotlinOptions {
                     friendModulesDisabled = false
@@ -99,11 +106,14 @@ kotlin {
         // ktor needs it
         implementation(npm("abort-controller"))
         implementation(npm("text-encoding"))
+        implementation(npm("utf-8-validate"))
+        implementation(npm("bufferutil"))
     }
 }
 
 tasks.withType<Kotlin2JsCompile>().all {
     kotlinOptions.freeCompilerArgs += "-Xuse-experimental=kotlin.ExperimentalStdlibApi"
+    kotlinOptions.freeCompilerArgs += "-Xuse-experimental=kotlin.Experimental"
 }
 
 ktlint {
