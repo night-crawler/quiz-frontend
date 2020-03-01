@@ -17,6 +17,7 @@ val reactRouterDomVersion: String by extra
 val reactReduxVersion: String by extra
 val reduxVersion: String by extra
 val styledVersion: String by extra
+val ktorClientVersion: String by extra
 
 repositories {
     mavenCentral()
@@ -27,6 +28,10 @@ repositories {
 }
 dependencies {
     implementation(kotlin("stdlib-js"))
+    implementation("io.ktor:ktor-client-js:$ktorClientVersion")
+    implementation("io.ktor:ktor-client-core:$ktorClientVersion")
+    implementation("io.ktor:ktor-client-json:$ktorClientVersion")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.3")
 
     implementation("org.jetbrains:kotlin-extensions:$extensionsVersion-kotlin-$kotlinVersion")
 
@@ -90,6 +95,10 @@ kotlin {
         implementation(npm("react-router-dom", "5.1.2"))
         implementation(npm("react-helmet", "5.2.1"))
         implementation(npm("redux-form", "8.2.6"))
+
+        // ktor needs it
+        implementation(npm("abort-controller"))
+        implementation(npm("text-encoding"))
     }
 }
 

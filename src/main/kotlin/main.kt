@@ -25,7 +25,7 @@ val store = createStore<State, RAction, WrapperAction>(
     composeWithDevTools(
         applyMiddleware(
             routerMiddleware(browserHistory),
-            createThunkMiddleware { action, exc -> ThunkError(action, exc) }
+            createThunkMiddleware(1) { action, exc -> ThunkError(action, exc) }
         ),
         customEnhancer()
     )
