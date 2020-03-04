@@ -17,7 +17,6 @@ fun <S, A, WA, X> createThunkMiddleware(
     extra: X,
     errorActionBuilder: (A, Throwable) -> A
 ): (MiddlewareApi<S, A, WA>) -> ((A) -> WA) -> (A) -> WA {
-
     fun thunkMiddleware(api: MiddlewareApi<S, A, WA>): ((A) -> WA) -> (A) -> WA {
         return { next ->
             { action ->

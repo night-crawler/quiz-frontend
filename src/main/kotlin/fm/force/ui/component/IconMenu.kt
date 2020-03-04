@@ -22,7 +22,6 @@ interface IconMenuProps : RProps {
 class IconMenu(props: IconMenuProps) : RComponent<IconMenuProps, RState>(props) {
     private var isOpened = false
     private var anchorElement: Node? = null
-
     /**
      * By default, item click does not close the menu. Passing callbacks in [IconMenuProps.handler] is cumbersome.
      * We don't want to close menu if we click the anchor. All other cases must result in closing.
@@ -44,6 +43,7 @@ class IconMenu(props: IconMenuProps) : RComponent<IconMenuProps, RState>(props) 
         @Suppress("UNUSED_PARAMETER")
         event: Event
     ) = open()
+
     @Suppress("UNUSED_PARAMETER")
     private fun handleClose(event: Event, reason: MenuOnCloseReason) = close()
 

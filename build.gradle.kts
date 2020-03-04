@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
-    id("org.jetbrains.kotlin.js") version "1.3.70-eap-274"
+    id("org.jetbrains.kotlin.js") version "1.3.70"
+//    id("org.jetbrains.kotlin.multiplatform") version "1.3.70"
+    kotlin("plugin.serialization") version "1.3.70"
     id("org.jlleitschuh.gradle.ktlint") version "9.1.1"
     id("com.dorongold.task-tree") version "1.5"
 }
@@ -28,40 +28,8 @@ repositories {
     maven { url = uri("https://dl.bintray.com/kotlin/kotlinx.html/") }
     maven { url = uri("https://dl.bintray.com/cfraser/muirwik") }
 }
-dependencies {
-    implementation(kotlin("stdlib-js"))
-    implementation("io.ktor:ktor-client-js:$ktorClientVersion")
-    implementation("io.ktor:ktor-client-core:$ktorClientVersion")
-    implementation("io.ktor:ktor-client-json:$ktorClientVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.3")
-
-    implementation("org.jetbrains:kotlin-extensions:$extensionsVersion-kotlin-$kotlinVersion")
-
-    implementation("org.jetbrains:kotlin-react:$reactVersion-kotlin-$kotlinVersion")
-    implementation("org.jetbrains:kotlin-react-dom:$reactVersion-kotlin-$kotlinVersion")
-
-    implementation("org.jetbrains:kotlin-react-router-dom:$reactRouterDomVersion-kotlin-$kotlinVersion")
-
-    implementation("org.jetbrains:kotlin-redux:$reduxVersion-kotlin-$kotlinVersion")
-    implementation("org.jetbrains:kotlin-react-redux:$reactReduxVersion-kotlin-$kotlinVersion")
-
-    implementation("org.jetbrains:kotlin-styled:$styledVersion-kotlin-$kotlinVersion")
-
-    implementation("com.ccfraser.muirwik:muirwik-components:0.4.1")
-
-    testImplementation(kotlin("test-js"))
-}
 
 kotlin {
-    //        sourceSets {
-//        val main by getting {
-//            languageSettings.apply {
-//                useExperimentalAnnotation("kotlin.collections.ArrayDeque.ArrayDeque")
-//                useExperimentalAnnotation("kotlin.ExperimentalStdlibApi")
-//            }
-//        }
-//    }
-
     target {
         browser {
             @UseExperimental(org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalDceDsl::class)
@@ -79,41 +47,82 @@ kotlin {
                     main = "call"
                 }
             }
+            testTask {
+                useKarma {
+                    useChromeHeadless()
+                }
+            }
         }
     }
 
-    sourceSets["main"].dependencies {
-        implementation(npm("react", reactVersion.split("-").first()))
-        implementation(npm("react-dom", reactVersion.split("-").first()))
+    sourceSets {
+        named("main") {
+            dependencies {
+                implementation(kotlin("stdlib-js"))
+                //    implementation("io.ktor:ktor-client-js:$ktorClientVersion")
+                //    implementation("io.ktor:ktor-client-json-js:$ktorClientVersion")
+                //    implementation("io.ktor:ktor-client-serialization-js:$ktorClientVersion")
 
-        implementation(npm("redux", reduxVersion.split("-").first()))
-        implementation(npm("react-redux", reactReduxVersion.split("-").first()))
+                implementation("org.jetbrains:kotlin-extensions:$extensionsVersion-kotlin-$kotlinVersion")
 
-        implementation(npm("core-js", "3.6.4"))
+                implementation("org.jetbrains:kotlin-react:$reactVersion-kotlin-$kotlinVersion")
+                implementation("org.jetbrains:kotlin-react-dom:$reactVersion-kotlin-$kotlinVersion")
 
-        implementation(npm("@material-ui/core", "4.9.3"))
-        implementation(npm("@material-ui/icons", "4.9.1"))
-        implementation(npm("styled-components", "5.0.1"))
-        implementation(npm("inline-style-prefixer", "5.1.2"))
-        implementation(npm("history", "4.10.1"))
-        implementation(npm("connected-react-router", "5.0.1"))
+                implementation("org.jetbrains:kotlin-react-router-dom:$reactRouterDomVersion-kotlin-$kotlinVersion")
 
-        // react-router-dom 4.3.1-pre.91 is broken: it does not update the view
-        implementation(npm("react-router-dom", "5.1.2"))
-        implementation(npm("react-helmet", "5.2.1"))
-        implementation(npm("redux-form", "8.2.6"))
+                implementation("org.jetbrains:kotlin-redux:$reduxVersion-kotlin-$kotlinVersion")
+                implementation("org.jetbrains:kotlin-react-redux:$reactReduxVersion-kotlin-$kotlinVersion")
 
-        // ktor needs it
-        implementation(npm("abort-controller"))
-        implementation(npm("text-encoding"))
-        implementation(npm("utf-8-validate"))
-        implementation(npm("bufferutil"))
+                implementation("org.jetbrains:kotlin-styled:$styledVersion-kotlin-$kotlinVersion")
+
+                implementation("com.ccfraser.muirwik:muirwik-components:0.4.1")
+
+                //        testImplementation(kotlin("test-js"))
+
+                implementation(npm("react", reactVersion.split("-").first()))
+                implementation(npm("react-dom", reactVersion.split("-").first()))
+
+                implementation(npm("redux", reduxVersion.split("-").first()))
+                implementation(npm("react-redux", reactReduxVersion.split("-").first()))
+
+                implementation(npm("core-js", "3.6.4"))
+
+                implementation(npm("@material-ui/core", "4.9.3"))
+                implementation(npm("@material-ui/icons", "4.9.1"))
+                implementation(npm("styled-components", "5.0.1"))
+                implementation(npm("inline-style-prefixer", "5.1.2"))
+                implementation(npm("history", "4.10.1"))
+                implementation(npm("connected-react-router", "5.0.1"))
+
+                // react-router-dom 4.3.1-pre.91 is broken: it does not update the view
+                implementation(npm("react-router-dom", "5.1.2"))
+                implementation(npm("react-helmet", "5.2.1"))
+                implementation(npm("redux-form", "8.2.6"))
+
+                // ktor needs it
+                implementation(npm("abort-controller"))
+                implementation(npm("text-encoding"))
+                implementation(npm("utf-8-validate"))
+                implementation(npm("bufferutil"))
+            }
+        }
+
+        named("test") {
+            dependencies {
+                implementation(kotlin("test-js"))
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.3")
+                implementation("io.kotest:kotest-core:4.0.0-BETA1")
+                implementation("io.kotest:kotest-core:4.0.0-BETA1")
+                implementation("io.kotest:kotest-assertions:4.0.0-BETA1")
+            }
+        }
     }
 }
 
 tasks.withType<Kotlin2JsCompile>().all {
     kotlinOptions.freeCompilerArgs += "-Xuse-experimental=kotlin.ExperimentalStdlibApi"
     kotlinOptions.freeCompilerArgs += "-Xuse-experimental=kotlin.Experimental"
+    kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
 }
 
 ktlint {

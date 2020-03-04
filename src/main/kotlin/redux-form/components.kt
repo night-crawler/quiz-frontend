@@ -1,10 +1,10 @@
 @file:Suppress("PackageDirectoryMismatch")
+
 package redux.form
 
 import kotlin.reflect.KClass
 import react.Component
 import react.RBuilder
-
 
 fun <WP, C : Component<WP, *>> RBuilder.field(
     name: String,

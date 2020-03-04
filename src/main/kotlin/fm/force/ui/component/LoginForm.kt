@@ -15,6 +15,7 @@ import kotlinx.css.marginLeft
 import kotlinx.css.marginRight
 import kotlinx.html.InputType
 import kotlinx.html.onSubmit
+import kotlinx.serialization.Serializable
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -26,6 +27,7 @@ import redux.form.reduxForm
 import styled.StyleSheet
 import styled.styledForm
 
+@Serializable
 data class LoginDTO(
     val email: String,
     val password: String

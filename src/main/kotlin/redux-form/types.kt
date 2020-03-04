@@ -3,7 +3,6 @@
 package redux.form
 
 import org.w3c.dom.events.Event
-import kotlin.reflect.KProperty
 
 typealias Normalizer = (value: Any, previousValue: Any, allValues: Any, previousAllValues: Any) -> Any
 
@@ -50,4 +49,3 @@ typealias FormOrFieldsBooleanSelector<State> = (formName: String, getFormState: 
 ) -> Boolean
 
 typealias SubmissionError<FormData, ErrorType> = Error
-

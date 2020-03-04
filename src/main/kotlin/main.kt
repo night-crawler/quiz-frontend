@@ -36,7 +36,7 @@ fun main() {
     render(rootElement) {
         provider(store) {
             connectedRouter(browserHistory) {
-                app() {}
+                app {}
             }
         }
     }
