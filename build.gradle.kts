@@ -109,6 +109,8 @@ kotlin {
 
         named("test") {
             dependencies {
+                implementation(npm("core-js", "3.6.4"))
+                implementation(kotlin("stdlib-js"))
                 implementation(kotlin("test-js"))
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.3")
                 implementation("io.kotest:kotest-core:4.0.0-BETA1")
