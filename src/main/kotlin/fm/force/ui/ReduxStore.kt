@@ -1,10 +1,12 @@
+package fm.force.ui
+
 import fm.force.ui.reducer.CustomLocationState
 import fm.force.ui.reducer.State
 import fm.force.ui.reducer.combinedReducers
-import fm.force.util.ThunkError
-import fm.force.util.composeWithDevTools
-import fm.force.util.createThunkMiddleware
-import fm.force.util.customEnhancer
+import fm.force.ui.util.ThunkError
+import fm.force.ui.util.composeWithDevTools
+import fm.force.ui.util.createThunkMiddleware
+import fm.force.ui.util.customEnhancer
 import history.History
 import history.createBrowserHistory
 import react.router.connected.routerMiddleware
@@ -19,10 +21,11 @@ class ReduxStore(
     val history: History<CustomLocationState>
 ) {
     companion object {
-        fun default() = of(State(), createBrowserHistory())
+        fun default() = of(State(), createBrowserHistory(), client = QuizClient(port = 8181))
         fun of(
             state: State,
-            history: History<CustomLocationState>
+            history: History<CustomLocationState>,
+            client: QuizClient
         ): ReduxStore {
             val store = createStore<State, RAction, WrapperAction>(
                 combinedReducers(history),
@@ -30,12 +33,11 @@ class ReduxStore(
                 composeWithDevTools(
                     applyMiddleware(
                         routerMiddleware(history),
-                        createThunkMiddleware(1) { action, exc -> ThunkError(action, exc) }
+                        createThunkMiddleware(client) { action, exc -> ThunkError(action, exc) }
                     ),
                     customEnhancer()
                 )
             )
-
             return ReduxStore(store, history)
         }
     }

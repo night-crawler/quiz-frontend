@@ -5,7 +5,7 @@ import com.ccfraser.muirwik.components.MTypographyVariant
 import com.ccfraser.muirwik.components.mIcon
 import com.ccfraser.muirwik.components.mTypography
 import com.ccfraser.muirwik.components.spacingUnits
-import fm.force.util.IconName
+import fm.force.ui.util.IconName
 import kotlinx.css.TextAlign
 import kotlinx.css.em
 import kotlinx.css.fontSize

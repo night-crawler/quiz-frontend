@@ -6,7 +6,7 @@ import com.ccfraser.muirwik.components.styles.PaletteOptions
 import com.ccfraser.muirwik.components.styles.ThemeOptions
 import com.ccfraser.muirwik.components.styles.TypographyOptions
 import com.ccfraser.muirwik.components.styles.createMuiTheme
-import fm.force.util.jsApply
+import fm.force.ui.util.jsApply
 import kotlinext.js.js
 import react.RBuilder
 import react.RComponent

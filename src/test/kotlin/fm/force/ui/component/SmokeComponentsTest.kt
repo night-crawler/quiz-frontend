@@ -1,6 +1,6 @@
-package fm.force.util
+package fm.force.ui.component
 
-import ReduxStore
+import fm.force.ui.ReduxStore
 import connected.react.router.connectedRouter
 import fm.force.ui.container.appBar
 import react.RBuilder
@@ -10,7 +10,7 @@ import styled.styledDiv
 import kotlin.test.Test
 
 
-class AppTest {
+class SmokeComponentsTest {
     @Test
     fun thingsShouldWork() {
         val reduxStore = ReduxStore.default()

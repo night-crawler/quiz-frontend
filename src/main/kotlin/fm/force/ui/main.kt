@@ -1,3 +1,5 @@
+package fm.force.ui
+
 import connected.react.router.connectedRouter
 import fm.force.ui.container.app
 import react.dom.render

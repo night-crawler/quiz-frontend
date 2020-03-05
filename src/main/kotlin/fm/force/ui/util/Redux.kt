@@ -1,4 +1,4 @@
-package fm.force.util
+package fm.force.ui.util
 
 import kotlin.browser.window
 import kotlin.reflect.KProperty1

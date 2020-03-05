@@ -8,7 +8,7 @@ import com.ccfraser.muirwik.components.form.mFormControl
 import com.ccfraser.muirwik.components.spacingUnits
 import fm.force.ui.SampleThunk
 import fm.force.ui.component.field.WrappedMTextField
-import fm.force.util.jsApply
+import fm.force.ui.util.jsApply
 import kotlinx.css.Display
 import kotlinx.css.display
 import kotlinx.css.marginLeft

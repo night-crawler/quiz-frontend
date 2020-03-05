@@ -3,7 +3,7 @@ package fm.force.ui.component
 import com.ccfraser.muirwik.components.button.mIconButton
 import com.ccfraser.muirwik.components.menu.MenuOnCloseReason
 import com.ccfraser.muirwik.components.menu.mMenu
-import fm.force.util.treeIterator
+import fm.force.ui.util.treeIterator
 import kotlinx.html.onClick
 import org.w3c.dom.Node
 import org.w3c.dom.events.Event

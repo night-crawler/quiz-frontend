@@ -1,6 +1,6 @@
 package fm.force.ui.component
 
-import fm.force.util.RouterContext
+import fm.force.ui.util.RouterContext
 import org.w3c.dom.events.Event
 import react.RBuilder
 import react.RProps

@@ -1,6 +1,6 @@
 package fm.force.ui.component
 
-import fm.force.constant.DEFAULT_TITLE_TEMPLATE
+import fm.force.ui.constant.DEFAULT_TITLE_TEMPLATE
 import react.RBuilder
 import react.helmet.helmet
 

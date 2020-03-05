@@ -1,7 +1,7 @@
 package fm.force.ui.reducer
 
-import fm.force.util.createLocation
-import fm.force.util.customCombineReducers
+import fm.force.ui.util.createLocation
+import fm.force.ui.util.customCombineReducers
 import history.History
 import kotlinext.js.jsObject
 import react.router.connected.RouterState

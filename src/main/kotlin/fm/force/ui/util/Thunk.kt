@@ -1,4 +1,4 @@
-package fm.force.util
+package fm.force.ui.util
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -25,6 +25,7 @@ fun <S, A, WA, X> createThunkMiddleware(
                         try {
                             (action.unsafeCast<Thunk<S, A, WA, X>>()).run(action, api::dispatch, api::getState, extra)
                         } catch (exc: Throwable) {
+                            console.error(exc)
                             api.dispatch(errorActionBuilder(action, exc))
                         }
                     }

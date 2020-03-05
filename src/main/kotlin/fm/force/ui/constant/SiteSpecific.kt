@@ -1,4 +1,4 @@
-package fm.force.constant
+package fm.force.ui.constant
 
 const val SITE_HOST = "quiz.force.fm"
 const val SITE_NAME = "Quiz"

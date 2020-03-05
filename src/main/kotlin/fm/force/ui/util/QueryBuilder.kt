@@ -1,4 +1,4 @@
-package fm.force.util
+package fm.force.ui.util
 
 external fun decodeURIComponent(encoded: String): String
 external fun encodeURIComponent(raw: String): String
@@ -12,12 +12,12 @@ class QueryBuilder(vararg init: Pair<String, Collection<Any?>>) {
         fun of(vararg init: Pair<String, Any>) = QueryBuilder(
             *init
                 .map { (key, value) ->
-                    val transformedValue = when(value) {
+                    val setWrappedValue = when (value) {
                         is Collection<*> -> value.toMutableSet()
                         else -> mutableSetOf(value)
                     }
 
-                    key to transformedValue
+                    key to setWrappedValue
                 }
                 .toTypedArray()
         )
@@ -28,20 +28,30 @@ class QueryBuilder(vararg init: Pair<String, Collection<Any?>>) {
     }
 
     private val queryMap = init.map { (key, value) ->
-        key to value.map { it.toString() }.toMutableSet()
+        key to value.toMutableSet()
     }.toMap(mutableMapOf())
 
-    fun append(key: String, value: String): QueryBuilder {
+    fun add(key: String, value: Any?): QueryBuilder {
         queryMap.getOrPut(key, { mutableSetOf() }).add(value)
         return this
+    }
+
+    fun appendTo(uri: String): String {
+        val repr = toString()
+        if (repr.isNotBlank())
+            return "$uri?$repr"
+        return uri
     }
 
     override fun toString(): String {
         val kvPairs = mutableListOf<String>()
         queryMap.forEach { (key, values) ->
-            values.forEach { value ->
-                kvPairs.add("$key=${encodeURIComponent(value)}")
-            }
+            if (values.isEmpty())
+                kvPairs.add("$key=")
+            else
+                values.sortedBy { it.toString() }. forEach { value ->
+                    kvPairs += value.materialize(key, escape = ::encodeURIComponent)
+                }
         }
         return kvPairs.joinToString("&")
     }

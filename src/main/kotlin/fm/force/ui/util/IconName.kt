@@ -1,4 +1,4 @@
-package fm.force.util
+package fm.force.ui.util
 
 /**
  * MAY GOD FORGIVE ME
