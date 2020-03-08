@@ -65,10 +65,6 @@ kotlin {
                 implementation(kotlin("stdlib-js"))
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.20.0")
 
-                compileOnly("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.+")
-                implementation("com.fasterxml.jackson.core:jackson-annotations:2.10.3")
-                compileOnly("com.fasterxml.jackson.core:jackson-core:2.10.3")
-                compileOnly("com.fasterxml.jackson.core:jackson-databind:2.10.3")
                 //    implementation("io.ktor:ktor-client-js:$ktorClientVersion")
                 //    implementation("io.ktor:ktor-client-json-js:$ktorClientVersion")
                 //    implementation("io.ktor:ktor-client-serialization-js:$ktorClientVersion")
