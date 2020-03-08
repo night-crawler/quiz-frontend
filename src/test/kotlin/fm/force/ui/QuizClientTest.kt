@@ -1,5 +1,6 @@
 package fm.force.ui
 
+import fm.force.ui.client.QuizClient
 import io.kotest.matchers.shouldBe
 import kotlin.test.Test
 

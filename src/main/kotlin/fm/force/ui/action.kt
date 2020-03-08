@@ -1,7 +1,9 @@
 package fm.force.ui
 
+import fm.force.ui.client.HttpMethod
+import fm.force.ui.client.QuizClient
+import fm.force.ui.component.LoginDTO
 import fm.force.ui.reducer.State
-import fm.force.ui.util.QueryBuilder
 import fm.force.ui.util.Thunk
 import redux.RAction
 import redux.WrapperAction
@@ -24,12 +26,9 @@ class SampleThunk : Thunk<State, RAction, WrapperAction, QuizClient> {
     ) {
         dispatch(LoginStart())
 
-        val result = client.fetch(
-            "post",
-            "http://localhost:8181/auth/register",
-            """{"lol": "q"}""",
-            mapOf("Accept" to "application/json")
+        val result = client.login(
+            LoginDTO("sample", "sample")
         )
-        dispatch(LoginSuccess(result))
+        dispatch(LoginSuccess(""))
     }
 }
