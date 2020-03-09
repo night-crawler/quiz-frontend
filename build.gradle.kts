@@ -59,6 +59,7 @@ kotlin {
         named("main") {
             languageSettings.apply {
                 useExperimentalAnnotation("kotlinx.serialization.ImplicitReflectionSerializer")
+                useExperimentalAnnotation("kotlinx.serialization.UnstableDefault")
             }
 
             dependencies {

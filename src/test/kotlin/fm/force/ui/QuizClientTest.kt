@@ -18,6 +18,5 @@ class QuizClientTest {
         cliWithoutPort.prepareUri(
             "sample", "1", params = mapOf("param" to 2)
         ) shouldBe "http://example.com/sample/1?param=2"
-
     }
 }

@@ -1,7 +1,7 @@
 package fm.force.ui.container
 
-import fm.force.ui.DrawerOpenToggle
-import fm.force.ui.SetThemeType
+import fm.force.ui.action.DrawerOpenToggle
+import fm.force.ui.action.SetThemeType
 import fm.force.ui.component.AppBar
 import fm.force.ui.component.AppBarProps
 import fm.force.ui.reducer.State
@@ -35,7 +35,13 @@ private val mapStateToProps: AppBarStateProps.(State, AppBarConnectedProps) -> U
 private val mapDispatchToProps: AppBarDispatchProps.((RAction) -> WrapperAction, AppBarConnectedProps) -> Unit =
     { dispatch, _ ->
         onThemeTypeChange = { themeColor -> dispatch(SetThemeType(themeColor)) }
-        onResponsiveDrawerOpenToggle = { isOpen -> dispatch(DrawerOpenToggle(isOpen)) }
+        onResponsiveDrawerOpenToggle = { isOpen ->
+            dispatch(
+                DrawerOpenToggle(
+                    isOpen
+                )
+            )
+        }
     }
 
 val appBar: RClass<AppBarConnectedProps> =

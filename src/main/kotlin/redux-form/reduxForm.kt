@@ -181,6 +181,7 @@ external interface ConfigProps<FormData, P, ErrorType> {
     )?
         get() = definedExternally
         set(value) = definedExternally
+
     //    var onSubmit: dynamic /* FormSubmitHandler<FormData, P /* P & InjectedFormProps<FormData, P, ErrorType> */, ErrorType> | SubmitHandler<FormData, P /* P & InjectedFormProps<FormData, P, ErrorType> */, ErrorType> */
     var onSubmit: FormSubmitHandler<FormData, P /* P & InjectedFormProps<FormData, P, ErrorType> */, ErrorType>?
         get() = definedExternally

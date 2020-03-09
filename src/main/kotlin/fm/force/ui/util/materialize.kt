@@ -1,6 +1,5 @@
 package fm.force.ui.util
 
-
 typealias Escape = (String) -> String
 
 private val defaultEscape: Escape = { it }

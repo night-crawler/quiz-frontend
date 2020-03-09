@@ -1,13 +1,15 @@
 package fm.force.ui.util
 
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.promise
 import redux.MiddlewareApi
 import redux.RAction
 
 interface Thunk<S, A, R, X> : RAction {
-    suspend fun run(originalAction: RAction, dispatch: (A) -> R, getState: () -> S, extra: X)
+    suspend fun run(originalAction: RAction, dispatch: (A) -> R, getState: () -> S, extra: X): R
 }
+
+interface ThunkCheckedException
 
 class ThunkAcknowledged(val originalAction: RAction) : RAction
 
@@ -20,17 +22,26 @@ fun <S, A, WA, X> createThunkMiddleware(
     fun thunkMiddleware(api: MiddlewareApi<S, A, WA>): ((A) -> WA) -> (A) -> WA {
         return { next ->
             { action ->
-                GlobalScope.launch {
-                    if (action is Thunk<*, *, *, *>) {
+                if (action is Thunk<*, *, *, *>) {
+                    val promise = GlobalScope.promise {
                         try {
-                            (action.unsafeCast<Thunk<S, A, WA, X>>()).run(action, api::dispatch, api::getState, extra)
+                            val thunk = (action.unsafeCast<Thunk<S, A, WA, X>>())
+                            thunk.run(action, api::dispatch, api::getState, extra)
                         } catch (exc: Throwable) {
-                            console.error(exc)
+                            // in some cases we need to propagate this exception, because some JavaScript code
+                            // relies on rejected() promise values, e.g., redux-form
+                            if (exc is ThunkCheckedException) {
+                                throw exc
+                            }
+
+                            console.error("Thunk processing failed", action, exc)
                             api.dispatch(errorActionBuilder(action, exc))
                         }
                     }
+                    promise.unsafeCast<WA>()
+                } else {
+                    next(action)
                 }
-                next(action)
             }
         }
     }

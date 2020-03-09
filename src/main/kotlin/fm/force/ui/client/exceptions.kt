@@ -4,18 +4,18 @@ import org.w3c.fetch.Response
 
 abstract class JsFetchError(message: String, cause: Throwable? = null) : RuntimeException(message, cause)
 
-class FetchError(
+class FetchNetworkError(
     message: String,
     cause: Throwable? = null,
-    request: Request,
-    response: Response?
+    val request: Request,
+    val response: Response?
 ) : JsFetchError(message, cause)
 
 class JsonError(
     message: String,
-    request: Request,
-    response: Response,
-    responseText: String
+    val request: Request,
+    val response: Response,
+    val responseText: String
 ) : JsFetchError(message)
 
 class ReadException(

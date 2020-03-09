@@ -6,7 +6,6 @@ external fun encodeURIComponent(raw: String): String
 external fun decodeURI(encoded: String): String
 external fun encodeURI(raw: String): String
 
-
 class QueryBuilder(vararg init: Pair<String, Collection<Any?>>) {
     companion object {
         fun of(vararg init: Pair<String, Any>) = QueryBuilder(
@@ -49,7 +48,7 @@ class QueryBuilder(vararg init: Pair<String, Collection<Any?>>) {
             if (values.isEmpty())
                 kvPairs.add("$key=")
             else
-                values.sortedBy { it.toString() }. forEach { value ->
+                values.sortedBy { it.toString() }.forEach { value ->
                     kvPairs += value.materialize(key, escape = ::encodeURIComponent)
                 }
         }

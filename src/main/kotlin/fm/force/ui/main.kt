@@ -2,9 +2,9 @@ package fm.force.ui
 
 import connected.react.router.connectedRouter
 import fm.force.ui.container.app
+import kotlin.browser.document
 import react.dom.render
 import react.redux.provider
-import kotlin.browser.document
 
 val reduxStore = ReduxStore.default()
 

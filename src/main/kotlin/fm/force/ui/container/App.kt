@@ -1,6 +1,6 @@
 package fm.force.ui.container
 
-import fm.force.ui.SetThemeType
+import fm.force.ui.action.SetThemeType
 import fm.force.ui.component.App
 import fm.force.ui.component.AppProps
 import fm.force.ui.reducer.State

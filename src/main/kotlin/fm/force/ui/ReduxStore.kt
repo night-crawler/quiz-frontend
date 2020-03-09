@@ -22,10 +22,7 @@ class ReduxStore(
     val history: History<CustomLocationState>
 ) {
     companion object {
-        fun default() = of(State(), createBrowserHistory(), client = QuizClient(
-            port = 8181
-        )
-        )
+        fun default() = of(State(), createBrowserHistory(), client = QuizClient(port = 8181))
         fun of(
             state: State,
             history: History<CustomLocationState>,

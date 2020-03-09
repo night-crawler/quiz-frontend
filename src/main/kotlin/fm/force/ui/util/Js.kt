@@ -1,8 +1,8 @@
 package fm.force.ui.util
 
+import kotlin.js.Json
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
-import kotlin.js.Json
 
 inline fun <T> jsApply(init: dynamic = js("{}"), cb: T.() -> Unit): T {
     cb(init.unsafeCast<T>())
@@ -23,7 +23,6 @@ class DynamicIterator<T>(private val obj: dynamic) : Iterator<T> {
 
 fun NodeList.iterator() =
     DynamicIterator<Node>(this)
-
 
 fun <K, V> Map<K, V>.toJson(): Json {
     val res = js("{}")

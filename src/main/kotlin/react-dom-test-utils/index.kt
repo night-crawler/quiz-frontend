@@ -8,6 +8,8 @@
 )
 package react.dom.test
 
+import kotlin.js.Date
+import kotlin.js.Promise
 import org.w3c.dom.DataTransfer
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLElement
@@ -17,8 +19,6 @@ import react.Component
 import react.RProps
 import react.RState
 import react.ReactElement
-import kotlin.js.Date
-import kotlin.js.Promise
 
 external interface OptionalEventProperties {
     var bubbles: Boolean?
@@ -152,7 +152,6 @@ external interface SyntheticEventData : OptionalEventProperties {
         set(value) = definedExternally
 }
 
-
 external interface MockedComponentClass
 
 external interface ShallowRenderer {
@@ -161,11 +160,11 @@ external interface ShallowRenderer {
     fun unmount()
 }
 
-//external fun <T : Element> renderIntoDocument(element: DOMElement<Any, T>): T
+// external fun <T : Element> renderIntoDocument(element: DOMElement<Any, T>): T
 
-//external fun renderIntoDocument(element: SFCElement<Any>)
+// external fun renderIntoDocument(element: SFCElement<Any>)
 
-//external fun <P, T : Component<P, RState>> renderIntoDocument(element: CElement<P, T>): T
+// external fun <P, T : Component<P, RState>> renderIntoDocument(element: CElement<P, T>): T
 
 external fun renderIntoDocument(element: ReactElement): dynamic /* Component<P> | Element | Unit */
 
@@ -175,9 +174,9 @@ external fun isElement(element: Any): Boolean
 
 external fun <T : HTMLElement> isElementOfType(element: ReactElement, type: String): Boolean
 
-//external fun <P : DOMAttributes<Any>, T : Element> isElementOfType(element: ReactElement, type: String): Boolean
+// external fun <P : DOMAttributes<Any>, T : Element> isElementOfType(element: ReactElement, type: String): Boolean
 
-//external fun <P> isElementOfType(element: ReactElement, type: SFC<P>): Boolean
+// external fun <P> isElementOfType(element: ReactElement, type: SFC<P>): Boolean
 
 external fun <P> isElementOfType(
     element: ReactElement,
@@ -185,18 +184,18 @@ external fun <P> isElementOfType(
     type: dynamic
 ): Boolean
 
-//type ReactInstance = Component<any> | Element;
+// type ReactInstance = Component<any> | Element;
 
 external fun isDOMComponent(instance: Element): Boolean
-external fun <P: RProps> isDOMComponent(instance: Component<out P, RState>): Boolean
+external fun <P : RProps> isDOMComponent(instance: Component<out P, RState>): Boolean
 
 external fun isCompositeComponent(instance: Element): Boolean
-external fun <P: RProps>isCompositeComponent(instance: Component<out P, RState>): Boolean
+external fun <P : RProps> isCompositeComponent(instance: Component<out P, RState>): Boolean
 
-//external fun <T : Component<RProps, RState>, C : RClass<Any>> isCompositeComponentWithType(
+// external fun <T : Component<RProps, RState>, C : RClass<Any>> isCompositeComponentWithType(
 //    instance: ReactInstance,
 //    type: ClassType<Any, T, C>
-//): Boolean
+// ): Boolean
 
 external fun isCompositeComponentWithType(
     instance: Element,
@@ -210,8 +209,7 @@ external fun <T : Component<out RProps, RState>> isCompositeComponentWithType(
 ): Boolean
 
 external fun findAllInRenderedTree(root: Component<RProps, RState>, fn: (i: Element) -> Boolean): Array<Element>
-//external fun findAllInRenderedTree(root: Component<RProps, RState>, fn: (i: ReactInstance) -> Boolean): Array<ReactInstance>
-
+// external fun findAllInRenderedTree(root: Component<RProps, RState>, fn: (i: ReactInstance) -> Boolean): Array<ReactInstance>
 
 external fun scryRenderedDOMComponentsWithClass(root: Component<RProps, RState>, className: String): Array<Element>
 
@@ -221,15 +219,15 @@ external fun scryRenderedDOMComponentsWithTag(root: Component<RProps, RState>, t
 
 external fun findRenderedDOMComponentWithTag(root: Component<RProps, RState>, tagName: String): Element
 
-//external fun <T : Component<RProps, RState>, C : ComponentClass<Any>> scryRenderedComponentsWithType(
+// external fun <T : Component<RProps, RState>, C : ComponentClass<Any>> scryRenderedComponentsWithType(
 //    root: Component<RProps, RState>,
 //    type: ClassType<Any, T, C>
-//): Array<T>
+// ): Array<T>
 
-//external fun <T : Component<RProps, RState>, C : RClass<Any>> findRenderedComponentWithType(
+// external fun <T : Component<RProps, RState>, C : RClass<Any>> findRenderedComponentWithType(
 //    root: Component<Any>,
 //    type: ClassType<Any, T, C>
-//): T
+// ): T
 
 external fun createRenderer(): ShallowRenderer
 

@@ -1,6 +1,6 @@
 package fm.force.ui.container
 
-import fm.force.ui.DrawerOpenToggle
+import fm.force.ui.action.DrawerOpenToggle
 import fm.force.ui.component.Drawer
 import fm.force.ui.component.DrawerProps
 import fm.force.ui.reducer.State
@@ -28,7 +28,13 @@ private val mapStateToProps: DrawerStateProps.(State, DrawerConnectedProps) -> U
 
 private val mapDispatchToProps: DrawerDispatchProps.((RAction) -> WrapperAction, DrawerConnectedProps) -> Unit =
     { dispatch, _ ->
-        onResponsiveDrawerOpenToggle = { isOpen -> dispatch(DrawerOpenToggle(isOpen)) }
+        onResponsiveDrawerOpenToggle = { isOpen ->
+            dispatch(
+                DrawerOpenToggle(
+                    isOpen
+                )
+            )
+        }
     }
 
 val drawer: RClass<DrawerConnectedProps> =

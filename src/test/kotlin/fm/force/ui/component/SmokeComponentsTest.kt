@@ -1,14 +1,13 @@
 package fm.force.ui.component
 
-import fm.force.ui.ReduxStore
 import connected.react.router.connectedRouter
+import fm.force.ui.ReduxStore
 import fm.force.ui.container.appBar
+import kotlin.test.Test
 import react.RBuilder
 import react.dom.test.renderIntoDocument
 import react.redux.provider
 import styled.styledDiv
-import kotlin.test.Test
-
 
 class SmokeComponentsTest {
     @Test
