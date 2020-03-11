@@ -2,23 +2,34 @@ package fm.force.ui.client
 
 import org.w3c.fetch.Response
 
-abstract class JsFetchError(message: String, cause: Throwable? = null) : RuntimeException(message, cause)
-
-class FetchNetworkError(
+open class FetchError(
     message: String,
     cause: Throwable? = null,
     val request: Request,
-    val response: Response?
-) : JsFetchError(message, cause)
-
-class JsonError(
-    message: String,
-    val request: Request,
-    val response: Response,
+    val response: Response?,
+    val status: HttpStatusCode,
     val responseText: String
-) : JsFetchError(message)
+) : RuntimeException(message, cause)
+
+/**
+ * When server is not responding, preflight request is failed, or network connection is lost
+ */
+class FetchClientNetworkError(
+    message: String,
+    cause: Throwable? = null,
+    status: HttpStatusCode,
+    request: Request,
+    response: Response?
+) : FetchError(
+    message = message,
+    cause = cause,
+    status = status,
+    request = request,
+    response = response,
+    responseText = ""
+)
 
 class ReadException(
     message: String,
     cause: Throwable? = null
-) : JsFetchError(message, cause)
+) : Exception(message, cause)

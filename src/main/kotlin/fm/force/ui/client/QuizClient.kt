@@ -16,7 +16,6 @@ open class QuizClient(
     )
     private var authHeaders = mutableMapOf<String, String>()
     private val fetchAdapter = WindowFetchAdapter()
-    val jsonX get() = fetchAdapter.jsonX
 
     fun prepareUri(vararg paths: String, params: Map<String, Any> = mapOf()) =
         QueryBuilder.of(params).appendTo(

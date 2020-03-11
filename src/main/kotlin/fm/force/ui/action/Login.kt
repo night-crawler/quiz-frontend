@@ -1,24 +1,19 @@
 package fm.force.ui.action
 
-import fm.force.ui.client.JsonError
 import fm.force.ui.client.QuizClient
-import fm.force.ui.client.dto.ErrorResponse
 import fm.force.ui.client.dto.LoginDTO
-import fm.force.ui.client.toReduxFormErrors
+import fm.force.ui.client.dto.LoginResponseDTO
 import fm.force.ui.reducer.State
-import fm.force.ui.util.Thunk
-import fm.force.ui.util.toJson
 import redux.RAction
 import redux.WrapperAction
 
 class LoginStart : RAction
 
-class LoginSuccess(val text: String) : RAction
+class LoginSuccess(val loginResponseDTO: LoginResponseDTO) : RAction
 
-class LoginError(val errorResponse: ErrorResponse) : RAction
+class LoginError(val responseText: String) : RAction
 
-class LoginThunk(private val loginDTO: LoginDTO) :
-    Thunk<State, RAction, WrapperAction, QuizClient> {
+class LoginThunk(private val loginDTO: LoginDTO) : ThunkForm() {
     override suspend fun run(
         originalAction: RAction,
         dispatch: (RAction) -> WrapperAction,
@@ -26,14 +21,11 @@ class LoginThunk(private val loginDTO: LoginDTO) :
         @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
         client: QuizClient
     ): WrapperAction {
-        dispatch(LoginStart())
-        return try {
-            val response = client.login(loginDTO)
-            dispatch(LoginSuccess(""))
-        } catch (exc: JsonError) {
-            val response = client.jsonX.parse(ErrorResponse.serializer(), exc.responseText)
-            dispatch(LoginError(response))
-            throw SubmissionError(response.toReduxFormErrors().toJson())
+        return checkedRun(
+            start = { dispatch(LoginStart()) },
+            error = { exc, _ -> dispatch(LoginError(exc.responseText)) }
+        ) {
+            dispatch(LoginSuccess(client.login(loginDTO)))
         }
     }
 }
