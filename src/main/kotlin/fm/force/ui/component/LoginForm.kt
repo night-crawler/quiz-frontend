@@ -8,9 +8,11 @@ import com.ccfraser.muirwik.components.form.mFormControl
 import com.ccfraser.muirwik.components.spacingUnits
 import fm.force.ui.action.LoginThunk
 import fm.force.ui.client.dto.ErrorMessage
-import fm.force.ui.client.dto.LoginDTO
+import fm.force.ui.client.dto.JwtResponseTokensDTO
+import fm.force.ui.client.dto.LoginRequestDTO
 import fm.force.ui.component.field.WrappedMTextField
 import fm.force.ui.util.jsApply
+import kotlinext.js.js
 import kotlinx.css.Display
 import kotlinx.css.display
 import kotlinx.css.marginLeft
@@ -30,7 +32,7 @@ import redux.form.reduxForm
 import styled.StyleSheet
 import styled.styledForm
 
-interface LoginFormProps : InjectedFormProps<LoginDTO, RProps, Any>
+interface LoginFormProps : InjectedFormProps<LoginRequestDTO, RProps, Any>
 
 class LoginForm(props: LoginFormProps) : RComponent<LoginFormProps, RState>(props) {
     object ComponentStyles : StyleSheet("SampleStyles", isStatic = true) {
@@ -86,11 +88,12 @@ class LoginForm(props: LoginFormProps) : RComponent<LoginFormProps, RState>(prop
 }
 
 val reduxLoginForm = reduxForm(
-    jsApply<ConfigProps<LoginDTO, InjectedFormProps<LoginDTO, RProps, Any>, Any>> {
+    jsApply<ConfigProps<LoginRequestDTO, InjectedFormProps<LoginRequestDTO, RProps, Any>, Any>> {
+        initialValues = js { email = "admin@force.fm"; password = "sample123" }
         form = "loginForm"
-        onSubmit = { loginDTO, dispatch, _ ->
-            // loginDTO is unchecked, it's just a JavaScript plain object
-            dispatch(LoginThunk(loginDTO))
+        onSubmit = { loginRequest, dispatch, _ ->
+            // jwtResponseTokensDTO is unchecked, it's just a JavaScript plain object
+            dispatch(LoginThunk(loginRequest))
         }
     }
 )(LoginForm::class.js)

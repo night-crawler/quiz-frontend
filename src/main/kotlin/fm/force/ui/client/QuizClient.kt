@@ -1,13 +1,14 @@
 package fm.force.ui.client
 
-import fm.force.ui.client.dto.LoginDTO
-import fm.force.ui.client.dto.LoginResponseDTO
+import fm.force.ui.client.dto.JwtResponseTokensDTO
+import fm.force.ui.client.dto.LoginRequestDTO
 import fm.force.ui.util.QueryBuilder
 
 open class QuizClient(
     scheme: String = "http",
     host: String = "localhost",
-    port: Int? = null
+    port: Int? = null,
+    private val fetchAdapter: WindowFetchAdapter = WindowFetchAdapter()
 ) {
     private val baseUri = "$scheme://$host" + (port?.let { ":$port" } ?: "")
     private val jsonHeaders = mapOf(
@@ -15,7 +16,7 @@ open class QuizClient(
         "Accept" to "application/json"
     )
     private var authHeaders = mutableMapOf<String, String>()
-    private val fetchAdapter = WindowFetchAdapter()
+
 
     fun prepareUri(vararg paths: String, params: Map<String, Any> = mapOf()) =
         QueryBuilder.of(params).appendTo(
@@ -25,10 +26,10 @@ open class QuizClient(
             )
         )
 
-    suspend fun login(loginDTO: LoginDTO) = fetchAdapter.fetch<LoginResponseDTO>(
+    suspend fun login(jwtResponseTokensDTO: LoginRequestDTO) = fetchAdapter.fetch<JwtResponseTokensDTO>(
         HttpMethod.POST,
         prepareUri("auth/login"),
-        loginDTO,
+        jwtResponseTokensDTO,
         headers = jsonHeaders + authHeaders
     )
 }

@@ -25,7 +25,6 @@ abstract class ThunkForm :
         } catch (exc: FetchError) {
             val transformed = transformException(exc)
             error(exc, transformed)
-            console.log("throw!", transformed)
             throw transformed
         }
     }

@@ -13,6 +13,8 @@ import org.w3c.fetch.INCLUDE
 import org.w3c.fetch.RequestCredentials
 import org.w3c.fetch.Response
 
+
+
 open class WindowFetchAdapter {
     @ImplicitReflectionSerializer
     suspend inline fun <reified ResponseType : Any> fetch(
