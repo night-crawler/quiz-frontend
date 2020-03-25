@@ -17,6 +17,7 @@ enum class IconName(val iconMame: String) {
     ACCOUNT_BALANCE_WALLET("account_balance_wallet"),
     ACCOUNT_BOX("account_box"),
     ACCOUNT_CIRCLE("account_circle"),
+    ACCOUNT_CIRCLE_OUTLINE("account_circle_outline"),
     ADD_SHOPPING_CART("add_shopping_cart"),
     ALARM("alarm"),
     ALARM_ADD("alarm_add"),
@@ -92,6 +93,7 @@ enum class IconName(val iconMame: String) {
     FIND_IN_PAGE("find_in_page"),
     FIND_REPLACE("find_replace"),
     FINGERPRINT("fingerprint"),
+    FINGERPRINT_OUTLINE("fingerprint_outline"),
     FLIGHT_LAND("flight_land"),
     FLIGHT_TAKEOFF("flight_takeoff"),
     FLIP_TO_BACK("flip_to_back"),
@@ -171,6 +173,7 @@ enum class IconName(val iconMame: String) {
     ROOM("room"),
     ROUNDED_CORNER("rounded_corner"),
     ROWING("rowing"),
+    ROWING_OUTLINE("rowing_outline"),
     SCHEDULE("schedule"),
     SEARCH("search"),
     SETTINGS("settings"),
@@ -1078,5 +1081,6 @@ enum class IconName(val iconMame: String) {
     STAR_BORDER("star_border"),
     STAR_HALF("star_half"),
     TOGGLE_OFF("toggle_off"),
-    TOGGLE_ON("toggle_on")
+    TOGGLE_ON("toggle_on"),
+    LIGHTBULB_OUTLINE("lightbulb_outline")
 }

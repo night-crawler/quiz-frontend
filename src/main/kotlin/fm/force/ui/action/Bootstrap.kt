@@ -21,45 +21,11 @@ class Bootstrap : Thunk<State, RAction, WrapperAction, QuizClient> {
         getState: () -> State,
         client: QuizClient
     ): WrapperAction {
-
         return try {
             dispatch(BootstrapSuccess(client.currentProfile()))
         } catch (exc: UnauthorizedError) {
             dispatch(push("/login").unsafeCast<RAction>())
         } catch (exc: FetchClientNetworkError) {
-            dispatch(
-                ShowSnack(
-                    Snack(
-                        title = "Request failed",
-                        text = "No Internet connection or server is down",
-                        type = SnackType.ERROR,
-                        iconName = IconName.ERROR,
-                        timeout = null
-                    )
-                )
-            )
-            dispatch(
-                ShowSnack(
-                    Snack(
-                        title = "Request failed",
-                        text = "No Internet connection or server is down",
-                        type = SnackType.ERROR,
-                        iconName = IconName.ERROR,
-                        timeout = null
-                    )
-                )
-            )
-            dispatch(
-                ShowSnack(
-                    Snack(
-                        title = "Request failed",
-                        text = "No Internet connection or server is down",
-                        type = SnackType.ERROR,
-                        iconName = IconName.ERROR,
-                        timeout = null
-                    )
-                )
-            )
             dispatch(
                 ShowSnack(
                     Snack(

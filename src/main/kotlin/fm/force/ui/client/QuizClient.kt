@@ -10,7 +10,6 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 import org.w3c.fetch.Response
 
-
 open class QuizClient(
     scheme: String = "http",
     host: String = "localhost",
@@ -25,10 +24,12 @@ open class QuizClient(
     private val refreshUri = prepareUri("auth/refresh")
 
     init {
-        fetchAdapter.configure(AuthAwareAdapterConfiguration(
-            refreshUri,
-            listOf("$baseUri/auth/.+".toRegex())
-        ))
+        fetchAdapter.configure(
+            AuthAwareAdapterConfiguration(
+                refreshUri,
+                listOf("$baseUri/auth/.+".toRegex())
+            )
+        )
     }
 
     private suspend inline fun <reified ResponseType : Any> Json.buildResponse(

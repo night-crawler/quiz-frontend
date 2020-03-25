@@ -11,6 +11,8 @@ import com.ccfraser.muirwik.components.mToolbar
 import com.ccfraser.muirwik.components.mToolbarTitle
 import com.ccfraser.muirwik.components.menu.mMenuItemWithIcon
 import com.ccfraser.muirwik.components.themeContext
+import fm.force.ui.client.dto.UserFullDTO
+import fm.force.ui.util.IconName
 import kotlinx.css.zIndex
 import react.RBuilder
 import react.RComponent
@@ -19,6 +21,7 @@ import react.RState
 import styled.css
 
 interface AppBarProps : RProps {
+    var currentUser: UserFullDTO
     var appTitle: String
     var activeViewDisplayName: String
     var themeType: String
@@ -53,36 +56,44 @@ class AppBar(props: AppBarProps) : RComponent<AppBarProps, RState>(props) {
                 mToolbar {
                     mHidden(mdUp = true, implementation = MHiddenImplementation.css) {
                         mIconButton(
-                            "menu",
+                            iconName = IconName.MENU.iconMame,
                             color = MColor.inherit,
                             onClick = { props.onResponsiveDrawerOpenToggle(true) }
                         )
                     }
                     mToolbarTitle("${props.appTitle} - ${props.activeViewDisplayName}")
                     mIconButton(
-                        "lightbulb_outline",
+                        iconName = IconName.LIGHTBULB_OUTLINE.iconMame,
                         onClick = { props.onThemeTypeChange(nextThemeType.value) }
                     )
 
-                    iconMenu("account_circle_outline") {
+                    iconMenu(IconName.ACCOUNT_CIRCLE_OUTLINE.iconMame) {
                         routeLink("/profile") {
                             mMenuItemWithIcon(
-                                "person_outline",
-                                "Profile",
-                                "night-crawler",
+                                iconName = IconName.PERSON_OUTLINE.iconMame,
+                                primaryText = "Profile",
+                                secondaryText = props.currentUser.email,
                                 selected = it.isActive,
                                 onClick = it.onClick
                             )
                         }
-                        routeLink("/login") {
-                            mMenuItemWithIcon(
-                                "fingerprint_outline",
-                                "Log in",
-                                selected = it.isActive,
-                                onClick = it.onClick
-                            )
+                        if (props.currentUser.isActive) {
+                            routeLink("/logout") {
+                                mMenuItemWithIcon(
+                                    iconName = IconName.ROWING_OUTLINE.iconMame,
+                                    primaryText = "Log out"
+                                )
+                            }
+                        } else {
+                            routeLink("/login") {
+                                mMenuItemWithIcon(
+                                    iconName = IconName.FINGERPRINT_OUTLINE.iconMame,
+                                    primaryText = "Log in",
+                                    selected = it.isActive,
+                                    onClick = it.onClick
+                                )
+                            }
                         }
-                        mMenuItemWithIcon("rowing_outline", "Log out")
                     }
                 }
             }

@@ -2,6 +2,7 @@ package fm.force.ui.container
 
 import fm.force.ui.action.DrawerOpenToggle
 import fm.force.ui.action.SetThemeType
+import fm.force.ui.client.dto.UserFullDTO
 import fm.force.ui.component.AppBar
 import fm.force.ui.component.AppBarProps
 import fm.force.ui.reducer.State
@@ -19,6 +20,7 @@ private interface AppBarStateProps : RProps {
     var appTitle: String
     var activeViewDisplayName: String
     var themeType: String
+    var currentUser: UserFullDTO
 }
 
 private interface AppBarDispatchProps : RProps {
@@ -27,6 +29,7 @@ private interface AppBarDispatchProps : RProps {
 }
 
 private val mapStateToProps: AppBarStateProps.(State, AppBarConnectedProps) -> Unit = { state, _ ->
+    currentUser = state.currentUser
     appTitle = state.appPreferences.appTitle
     activeViewDisplayName = state.appPreferences.activeViewDisplayName
     themeType = state.appPreferences.themeType

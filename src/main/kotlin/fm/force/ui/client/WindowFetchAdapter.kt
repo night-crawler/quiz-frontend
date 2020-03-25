@@ -2,6 +2,7 @@ package fm.force.ui.client
 
 import fm.force.ui.util.jsApply
 import fm.force.ui.util.toJson
+import kotlin.browser.window
 import kotlinx.coroutines.await
 import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.KSerializer
@@ -11,12 +12,11 @@ import kotlinx.serialization.serializer
 import org.w3c.fetch.INCLUDE
 import org.w3c.fetch.RequestCredentials
 import org.w3c.fetch.Response
-import kotlin.browser.window
 
 interface AdapterConfiguration<T>
 
 interface FetchAdapter {
-    fun <T> configure(config: AdapterConfiguration<T>) : Unit = throw NotImplementedError()
+    fun <T> configure(config: AdapterConfiguration<T>): Unit = throw NotImplementedError()
     suspend fun <ResponseType : Any> fetch(
         method: HttpMethod,
         uri: String,

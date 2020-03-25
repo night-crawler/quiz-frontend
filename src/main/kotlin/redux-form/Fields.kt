@@ -58,6 +58,7 @@ external interface GenericFields<P> : Component<BaseFieldsProps<P>, RState /* Ba
     var names: Array<String>
     var pristine: Boolean
     var values: Json
+
     //    fun getRenderedComponent(): Component<BaseFieldsProps<Any> /* BaseFieldsProps<Any> & WrappedFieldsProps & P */>
     fun getRenderedComponent(): Component<GenericFieldsRenderedComponentType<Any>, RState>
 }

@@ -4,6 +4,7 @@ import fm.force.ui.client.QuizClient
 import fm.force.ui.client.dto.JwtResponseTokensDTO
 import fm.force.ui.client.dto.LoginRequestDTO
 import fm.force.ui.reducer.State
+import fm.force.ui.util.IconName
 import redux.RAction
 import redux.WrapperAction
 
@@ -23,7 +24,18 @@ class LoginThunk(private val loginRequestDTO: LoginRequestDTO) : ThunkForm() {
     ): WrapperAction {
         return checkedRun(
             start = { dispatch(LoginStart()) },
-            error = { exc, _ -> dispatch(LoginError(exc.responseText)) }
+            error = { exc, _ ->
+                dispatch(
+                    ShowSnack(
+                        Snack(
+                            title = "Submission error",
+                            iconName = IconName.ERROR,
+                            timeout = null
+                        )
+                    )
+                )
+                dispatch(LoginError(exc.responseText))
+            }
         ) {
             dispatch(LoginSuccess(jwtResponseTokensDto = client.login(loginRequestDTO)))
         }

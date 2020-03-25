@@ -6,6 +6,7 @@
     "CONFLICTING_OVERLOADS",
     "EXTERNAL_DELEGATION", "PackageDirectoryMismatch"
 )
+
 package react.dom.test
 
 import kotlin.js.Date

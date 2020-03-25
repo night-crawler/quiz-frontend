@@ -88,6 +88,7 @@ open external class Helmet : Component<HelmetProps, RState> {
 
 external interface HelmetData {
     var base: HelmetDatum
+
     //    var bodyAttributes: HelmetHTMLBodyDatum
 //    var htmlAttributes: HelmetHTMLElementDatum
     var link: HelmetDatum

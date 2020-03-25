@@ -1,8 +1,6 @@
 package fm.force.ui.container
 
-import fm.force.ui.action.Bootstrap
 import fm.force.ui.action.CloseSnack
-import fm.force.ui.action.SetThemeType
 import fm.force.ui.action.Snack
 import fm.force.ui.component.SnackList
 import fm.force.ui.component.SnackListProps
