@@ -1,8 +1,9 @@
 package fm.force.ui.util
 
-import kotlin.js.Json
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
+import kotlin.js.Json
+import kotlin.reflect.KProperty
 
 inline fun <T> jsApply(init: dynamic = js("{}"), cb: T.() -> Unit): T {
     cb(init.unsafeCast<T>())
@@ -33,3 +34,10 @@ fun <K, V> Map<K, V>.toJson(): Json {
 }
 
 fun <K, V> Map<K, V>.toPairs() = entries.map { (k, v) -> k to v }.toTypedArray()
+
+external fun atob(encoded: String): String
+external fun btoa(raw: String): String
+
+operator fun <T> Json.getValue(thisRef: Any?, property: KProperty<*>): T? {
+    return this[property.name] as T?
+}

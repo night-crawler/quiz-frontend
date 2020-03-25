@@ -15,6 +15,7 @@ import react.RState
 
 interface AppProps : RProps {
     var themeType: String
+    var onBootstrap: () -> Unit
 }
 
 class App(props: AppProps) : RComponent<AppProps, RState>(props) {
@@ -47,5 +48,9 @@ class App(props: AppProps) : RComponent<AppProps, RState>(props) {
         mThemeProvider(createMuiTheme(themeOptions)) {
             mainFrame()
         }
+    }
+
+    override fun componentDidMount() {
+        props.onBootstrap()
     }
 }

@@ -1,5 +1,6 @@
 package fm.force.ui.container
 
+import fm.force.ui.action.Bootstrap
 import fm.force.ui.action.SetThemeType
 import fm.force.ui.component.App
 import fm.force.ui.component.AppProps
@@ -20,6 +21,7 @@ private interface AppStateProps : RProps {
 
 private interface AppDispatchProps : RProps {
     var onSetThemeType: (themeType: String) -> Unit
+    var onBootstrap: () -> Unit
 }
 
 private val mapStateToProps: AppStateProps.(State, ConnectedAppProps) -> Unit = { state, props ->
@@ -29,6 +31,7 @@ private val mapStateToProps: AppStateProps.(State, ConnectedAppProps) -> Unit = 
 private val mapDispatchToProps: AppDispatchProps.((RAction) -> WrapperAction, ConnectedAppProps) -> Unit =
     { dispatch, props ->
         onSetThemeType = { themeColor -> dispatch(SetThemeType(themeColor)) }
+        onBootstrap = { dispatch(Bootstrap()) }
     }
 
 val app: RClass<ConnectedAppProps> =

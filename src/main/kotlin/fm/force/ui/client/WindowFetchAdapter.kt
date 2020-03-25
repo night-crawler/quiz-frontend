@@ -2,7 +2,6 @@ package fm.force.ui.client
 
 import fm.force.ui.util.jsApply
 import fm.force.ui.util.toJson
-import kotlin.browser.window
 import kotlinx.coroutines.await
 import kotlinx.serialization.ImplicitReflectionSerializer
 import kotlinx.serialization.KSerializer
@@ -12,20 +11,30 @@ import kotlinx.serialization.serializer
 import org.w3c.fetch.INCLUDE
 import org.w3c.fetch.RequestCredentials
 import org.w3c.fetch.Response
+import kotlin.browser.window
 
+interface AdapterConfiguration<T>
 
-
-open class WindowFetchAdapter {
-    @ImplicitReflectionSerializer
-    suspend inline fun <reified ResponseType : Any> fetch(
+interface FetchAdapter {
+    fun <T> configure(config: AdapterConfiguration<T>) : Unit = throw NotImplementedError()
+    suspend fun <ResponseType : Any> fetch(
         method: HttpMethod,
         uri: String,
-        body: Any? = null,
-        headers: Map<String, String> = mapOf(),
-        noinline buildResponse: suspend Json.(Request, Response) -> ResponseType = { request, response ->
-            val serializer = ResponseType::class.serializer()
-            parse(serializer, response.text().await())
-        }
+        body: Any?,
+        headers: Map<String, String>,
+        buildResponse: suspend Json.(Request, Response) -> ResponseType
+    ): ResponseType
+}
+
+@Suppress("OVERRIDE_BY_INLINE")
+open class WindowFetchAdapter : FetchAdapter {
+    @ImplicitReflectionSerializer
+    final override suspend inline fun <ResponseType : Any> fetch(
+        method: HttpMethod,
+        uri: String,
+        body: Any?,
+        headers: Map<String, String>,
+        buildResponse: suspend Json.(Request, Response) -> ResponseType
     ): ResponseType {
         @Suppress("UNCHECKED_CAST")
         val data = body?.let {

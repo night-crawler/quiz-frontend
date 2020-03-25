@@ -9,6 +9,7 @@ import com.ccfraser.muirwik.components.themeContext
 import fm.force.ui.container.appBar
 import fm.force.ui.container.drawer
 import fm.force.ui.container.mainContainer
+import fm.force.ui.container.snackList
 import kotlinx.css.*
 import react.RBuilder
 import react.RComponent
@@ -19,12 +20,13 @@ import styled.styledDiv
 
 interface MainFrameProps : RProps
 
+
 class MainFrame(props: MainFrameProps) : RComponent<MainFrameProps, RState>(props) {
 
     override fun RBuilder.render() {
         mCssBaseline()
-
         themeContext.Consumer { theme ->
+            snackList {}
             styledDiv {
                 css {
                     flexGrow = 1.0

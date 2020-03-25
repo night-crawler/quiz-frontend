@@ -17,7 +17,7 @@ class MaterializeTest {
             "j" to "i.l.l.e.g.a.l==true",
             1 to 2
         )
-        // ensure we have not lost anything
+        // ensure we have nothing lost
         sampleMap.materialize() shouldHaveAtLeastSize sampleMap.size
 
         // ensure encodeURIComponent does some real work

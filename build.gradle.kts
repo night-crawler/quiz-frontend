@@ -85,6 +85,7 @@ kotlin {
                 implementation("com.ccfraser.muirwik:muirwik-components:0.4.1")
 
                 //        testImplementation(kotlin("test-js"))
+                implementation("com.benasher44:uuid:0.1.0")
 
                 implementation(npm("react", reactVersion.split("-").first()))
                 implementation(npm("react-dom", reactVersion.split("-").first()))
