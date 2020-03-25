@@ -20,7 +20,6 @@ import styled.styledDiv
 
 interface MainFrameProps : RProps
 
-
 class MainFrame(props: MainFrameProps) : RComponent<MainFrameProps, RState>(props) {
 
     override fun RBuilder.render() {

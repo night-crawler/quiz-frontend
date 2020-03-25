@@ -5,7 +5,6 @@ import fm.force.ui.util.getValue
 import kotlin.js.Date
 import kotlin.js.Json
 
-
 @Suppress("MemberVisibilityCanBePrivate")
 class JsJwt private constructor(val header: JwtHeader, val claims: JwtClaims) {
     class JwtHeader(val json: Json) : Json by json {

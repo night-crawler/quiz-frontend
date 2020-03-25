@@ -67,7 +67,6 @@ class AuthAwareFetchAdapter(private val adapter: FetchAdapter) : FetchAdapter by
         return mapOf("Authorization" to "Bearer $accessToken")
     }
 
-
     private suspend fun refresh() = try {
         adapter.fetch(
             method = HttpMethod.POST,

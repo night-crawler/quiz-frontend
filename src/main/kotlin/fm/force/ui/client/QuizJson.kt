@@ -4,10 +4,10 @@ import fm.force.ui.client.dto.ErrorMessage
 import fm.force.ui.client.dto.FieldError
 import fm.force.ui.client.dto.GenericError
 import fm.force.ui.client.dto.InstantSerializer
+import kotlin.js.Date
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import kotlinx.serialization.modules.SerializersModule
-import kotlin.js.Date
 
 object QuizJson {
     private val defaultSerialModule = SerializersModule {

@@ -1,9 +1,9 @@
 package fm.force.ui.util
 
-import org.w3c.dom.Node
-import org.w3c.dom.NodeList
 import kotlin.js.Json
 import kotlin.reflect.KProperty
+import org.w3c.dom.Node
+import org.w3c.dom.NodeList
 
 inline fun <T> jsApply(init: dynamic = js("{}"), cb: T.() -> Unit): T {
     cb(init.unsafeCast<T>())
