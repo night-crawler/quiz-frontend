@@ -66,7 +66,7 @@ fun <
             this.name = name
             // component's type is JsClass<Component<WrappedFieldArrayProps<FieldValue>, RState>>
             // FunctionalComponent and Component classes don't have a common supertype, thus it seems there's
-            // no way of defining `component` without using a hybrid type, support of which Kotlin lacks.
+            // no way of defining `component` without using a Union type, support of which Kotlin lacks.
             this.component = component.unsafeCast<JsClass<Component<WrappedFieldArrayProps<FieldValue>, RState>>>()
         }
     }

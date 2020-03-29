@@ -112,6 +112,8 @@ kotlin {
                 implementation(npm("text-encoding"))
                 implementation(npm("utf-8-validate"))
                 implementation(npm("bufferutil"))
+
+                implementation(npm("@material-ui/core", "4.0.0-alpha.47"))
             }
         }
 
