@@ -1,4 +1,4 @@
-package fm.force.ui.component
+package fm.force.ui.component.form
 
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.button.MButtonVariant
@@ -9,7 +9,7 @@ import com.ccfraser.muirwik.components.spacingUnits
 import fm.force.ui.action.LoginThunk
 import fm.force.ui.client.dto.ErrorMessage
 import fm.force.ui.client.dto.LoginRequestDTO
-import fm.force.ui.component.field.WrappedMTextField
+import fm.force.ui.component.field.WrappedTextField
 import fm.force.ui.util.jsApply
 import kotlinext.js.js
 import kotlinx.css.Display
@@ -49,7 +49,8 @@ class LoginForm(props: LoginFormProps) : RComponent<LoginFormProps, RState>(prop
             }
             mFormControl(fullWidth = true) {
                 field(
-                    "email", WrappedMTextField::class,
+                    LoginRequestDTO::email,
+                    WrappedTextField,
                     jsApply {
                         fieldType = InputType.email
                         label = "Login email"
@@ -58,7 +59,8 @@ class LoginForm(props: LoginFormProps) : RComponent<LoginFormProps, RState>(prop
                     }
                 )
                 field(
-                    "password", WrappedMTextField::class,
+                    LoginRequestDTO::password,
+                    WrappedTextField,
                     jsApply {
                         fieldType = InputType.password
                         label = "Password"

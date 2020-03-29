@@ -16,7 +16,7 @@ typealias EventHandler<Event> = (event: Event, name: String) -> Unit
 
 typealias EventWithDataHandler<Event> = (event: Event, newValue: Any, previousValue: Any, name: String) -> Unit
 
-typealias FieldIterate<FieldValue, R> = (name: String, index: Number, fields: FieldArrayFieldsProps<FieldValue>) -> R
+typealias FieldIterate<FieldValue, R> = (name: String, index: Int, fields: FieldArrayFieldsProps<FieldValue>) -> R
 
 typealias FormWarnings<FormData, T> = Any
 
@@ -32,6 +32,7 @@ typealias GetFormState = (state: Any) -> FormStateMap
 
 typealias FormDecorator<FormData, P, Config, ErrorType> = (
 //    component: ComponentType<P /* P & InjectedFormProps<FormData, P, ErrorType> */>
+//    component: JsClass<*>
     component: Any
 ) -> DecoratedComponentClass<FormData, P /* P & Config */, ErrorType>
 

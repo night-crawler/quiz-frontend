@@ -14,9 +14,13 @@ import react.RProps
 import react.RState
 import react.ReactElement
 
-external interface _BaseFieldArrayProps<P, FieldValue> : RProps {
+external interface _BaseFieldArrayProps<P : RProps, FieldValue> : RProps {
     var name: String
-    var component: Any
+
+    //    var component: Component<WrappedFieldArrayProps<FieldValue>, RState>
+//    var component: dynamic
+    var component: JsClass<Component<WrappedFieldArrayProps<FieldValue>, RState>>
+
     var validate: dynamic /* Validator | Array<Validator> */
         get() = definedExternally
         set(value) = definedExternally
@@ -33,10 +37,6 @@ external interface _BaseFieldArrayProps<P, FieldValue> : RProps {
     var props: P
 }
 
-external interface `T$2`<P> {
-    var props: P
-}
-
 /*
 export interface GenericFieldArray<FieldValue = any, P = {}> extends Component<BaseFieldArrayProps<P, FieldValue>> {
     name: string;
@@ -45,15 +45,15 @@ export interface GenericFieldArray<FieldValue = any, P = {}> extends Component<B
 }
  */
 
-external interface GenericFieldArray<FieldValue, P> : Component<dynamic, RState> {
+external interface GenericFieldArray<FieldValue, P : RProps> : Component<_BaseFieldArrayProps<P, FieldValue>, RState> {
     var name: String
     var valid: Boolean
     fun getRenderedComponent(): Component<WrappedFieldArrayProps<FieldValue>, RState>
     override fun render(): ReactElement?
 }
 
-open external class FieldArray<P, FieldValue> :
-    Component<dynamic, RState>,
+open external class FieldArray<P : RProps, FieldValue> :
+    Component<_BaseFieldArrayProps<P, FieldValue>, RState>,
     GenericFieldArray<FieldValue, P> {
     override var name: String
     override var valid: Boolean
@@ -68,19 +68,19 @@ external interface WrappedFieldArrayProps<FieldValue> : RProps {
 
 external interface FieldArrayFieldsProps<FieldValue> {
     fun forEach(callback: FieldIterate<FieldValue, dynamic>)
-    fun get(index: Number): FieldValue
+    operator fun get(index: Int): FieldValue
     fun getAll(): Array<FieldValue>
     fun removeAll()
-    fun insert(index: Number, value: FieldValue)
+    fun insert(index: Int, value: FieldValue)
     var name: String
-    var length: Number
+    var length: Int
     fun <R> map(callback: FieldIterate<FieldValue, R>): Array<R>
     fun pop(): FieldValue
     fun push(value: FieldValue)
-    fun remove(index: Number)
+    fun remove(index: Int)
     fun shift(): FieldValue
-    fun swap(indexA: Number, indexB: Number)
-    fun move(from: Number, to: Number)
+    fun swap(indexA: Int, indexB: Int)
+    fun move(from: Int, to: Int)
     fun unshift(value: FieldValue)
 }
 

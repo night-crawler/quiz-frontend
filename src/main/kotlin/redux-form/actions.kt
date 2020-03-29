@@ -24,23 +24,23 @@ external interface FormAction : Action {
         set(value) = definedExternally
 }
 
-external fun arrayInsert(form: String, field: String, index: Number, value: Any): FormAction
+external fun arrayInsert(form: String, field: String, index: Int, value: Any): FormAction
 
-external fun arrayMove(form: String, field: String, from: Number, to: Number): FormAction
+external fun arrayMove(form: String, field: String, from: Int, to: Int): FormAction
 
 external fun arrayPop(form: String, field: String): FormAction
 
 external fun arrayPush(form: String, field: String, value: Any): FormAction
 
-external fun arrayRemove(form: String, field: String, index: Number): FormAction
+external fun arrayRemove(form: String, field: String, index: Int): FormAction
 
 external fun arrayRemoveAll(form: String, field: String): FormAction
 
 external fun arrayShift(form: String, field: String): FormAction
 
-external fun arraySplice(form: String, field: String, index: Number, removeNum: Number, value: Any): FormAction
+external fun arraySplice(form: String, field: String, index: Int, removeNum: Int, value: Any): FormAction
 
-external fun arraySwap(form: String, field: String, indexA: Number, indexB: Number): FormAction
+external fun arraySwap(form: String, field: String, indexA: Int, indexB: Int): FormAction
 
 external fun arrayUnshift(form: String, field: String, value: Any): FormAction
 

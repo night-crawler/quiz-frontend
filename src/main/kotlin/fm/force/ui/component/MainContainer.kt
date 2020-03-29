@@ -1,6 +1,8 @@
 package fm.force.ui.component
 
 import com.ccfraser.muirwik.components.button.mButton
+import fm.force.ui.component.form.createQuestionForm
+import fm.force.ui.component.form.loginForm
 import react.RBuilder
 import react.RComponent
 import react.RProps
@@ -21,6 +23,10 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
 
             route("/login") {
                 loginForm()
+            }
+
+            route("/questions/create") {
+                createQuestionForm()
             }
 
             route("/sample", exact = true) {

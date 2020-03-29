@@ -53,20 +53,20 @@ external interface AsyncValidateCallback<FormData, ErrorType> {
 }
 
 external interface InjectedArrayProps {
-    fun insert(field: String, index: Number, value: Any)
-    fun move(field: String, from: Number, to: Number)
+    fun insert(field: String, index: Int, value: Any)
+    fun move(field: String, from: Int, to: Int)
     fun pop(field: String)
     fun push(field: String, value: Any)
-    fun remove(field: String, index: Number)
+    fun remove(field: String, index: Int)
     fun removeAll(field: String)
     fun shift(field: String)
-    fun splice(field: String, index: Number, removeNum: Number, value: Any)
-    fun swap(field: String, indexA: Number, indexB: Number)
+    fun splice(field: String, index: Int, removeNum: Int, value: Any)
+    fun swap(field: String, indexA: Int, indexB: Int)
     fun unshift(field: String, value: Any)
 }
 
 external interface RegisteredField {
-    var count: Number
+    var count: Int
     var name: String
     var type: String /* "Field" | "FieldArray" */
 }
@@ -255,4 +255,6 @@ external interface ConfigProps<FormData, P, ErrorType> {
         set(value) = definedExternally
 }
 
-external fun <FormData, P : RProps, ErrorType> reduxForm(config: ConfigProps<FormData, P, ErrorType>): FormDecorator<FormData, P, ConfigProps<FormData, P, ErrorType>, ErrorType>
+external fun <FormData, P : RProps, ErrorType> reduxForm(
+    config: ConfigProps<FormData, P, ErrorType>
+): FormDecorator<FormData, P, ConfigProps<FormData, P, ErrorType>, ErrorType>

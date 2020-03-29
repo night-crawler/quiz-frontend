@@ -2,27 +2,27 @@ package fm.force.ui.component.field
 
 import com.ccfraser.muirwik.components.MTextFieldProps
 import com.ccfraser.muirwik.components.form.MFormControlVariant
-import com.ccfraser.muirwik.components.mTextField
+import com.ccfraser.muirwik.components.mTextFieldMultiLine
 import fm.force.ui.client.dto.FieldError
-import kotlinx.html.InputType
 import react.functionalComponent
 import redux.form.WrappedFieldProps
 
-interface WrappedTextFieldProps : WrappedFieldProps, MTextFieldProps {
-    var fieldType: InputType
+interface WrappedMultilineFieldProps : WrappedFieldProps, MTextFieldProps {
     var variant: MFormControlVariant
 }
 
 @Suppress("UnsafeCastFromDynamic")
-val WrappedTextField = functionalComponent<WrappedTextFieldProps> { props ->
+val WrappedMultilineField = functionalComponent<WrappedMultilineFieldProps> { props ->
     val hasError = props.meta.error != undefined
-    mTextField(
+
+    mTextFieldMultiLine(
+        rows = props.rows,
+        rowsMax = props.rowsMax,
         defaultValue = props.input.value.asDynamic(),
         helperText = props.helperText,
         error = hasError,
         label = props.label,
         name = props.input.name,
-        type = props.fieldType,
         variant = props.variant
     ) {
         attrs {
