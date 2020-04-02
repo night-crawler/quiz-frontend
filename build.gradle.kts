@@ -95,7 +95,7 @@ kotlin {
 
                 implementation(npm("core-js", "3.6.4"))
 
-                implementation(npm("@material-ui/core", "4.9.3"))
+                implementation(npm("@material-ui/core", "4.9.8"))
                 implementation(npm("@material-ui/icons", "4.9.1"))
                 implementation(npm("styled-components", "5.0.1"))
                 implementation(npm("inline-style-prefixer", "5.1.2"))
@@ -113,7 +113,7 @@ kotlin {
                 implementation(npm("utf-8-validate"))
                 implementation(npm("bufferutil"))
 
-                implementation(npm("@material-ui/core", "4.0.0-alpha.47"))
+                implementation(npm("@material-ui/lab", "4.0.0-alpha.47"))
             }
         }
 

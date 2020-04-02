@@ -4,6 +4,7 @@ import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.form.mFormControl
 import fm.force.ui.component.field.WrappedMultilineField
 import fm.force.ui.util.jsApply
+import mui.lab.renderSampleAutocomplete
 import react.RBuilder
 import react.RProps
 import react.functionalComponent
@@ -15,10 +16,18 @@ import redux.form.reduxForm
 import styled.styledForm
 
 interface CreateQuestionFormProps : InjectedFormProps<QuestionEditDTO, RProps, Any>
-
+data class SampleItem(
+    val item: String,
+    val id: Int
+)
 val EditQuestionForm = functionalComponent<CreateQuestionFormProps> {
     styledForm {
         mFormControl(fullWidth = true) {
+            renderSampleAutocomplete(listOf(SampleItem("sample1", 1), SampleItem("sample2", 2)))
+//            child(qwe)
+//            child(Autocomplete(jsApply<AutocompleteProps<String>> {
+//
+//            }))
             field(
                 QuestionEditDTO::name,
                 WrappedMultilineField,
