@@ -38,6 +38,8 @@ class App(props: AppProps) : RComponent<AppProps, RState>(props) {
                     borderRadius = 8
                 }
             }
+            overrides = js("""{ MuiAutocomplete: {popup: { zIndex: 1300 }}}""")
+            zIndex = js("{modal: 5555}")
         }
     }
 

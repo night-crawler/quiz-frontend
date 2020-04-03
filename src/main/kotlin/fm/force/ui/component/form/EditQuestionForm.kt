@@ -24,10 +24,6 @@ val EditQuestionForm = functionalComponent<CreateQuestionFormProps> {
     styledForm {
         mFormControl(fullWidth = true) {
             renderSampleAutocomplete(listOf(SampleItem("sample1", 1), SampleItem("sample2", 2)))
-//            child(qwe)
-//            child(Autocomplete(jsApply<AutocompleteProps<String>> {
-//
-//            }))
             field(
                 QuestionEditDTO::name,
                 WrappedMultilineField,
