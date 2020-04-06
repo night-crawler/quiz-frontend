@@ -1,10 +1,14 @@
 package fm.force.ui.component.form
 
+import com.ccfraser.muirwik.components.MColor
+import com.ccfraser.muirwik.components.button.MButtonVariant
+import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.form.mFormControl
+import fm.force.ui.component.field.TagsAutocompleteField
 import fm.force.ui.component.field.WrappedMultilineField
 import fm.force.ui.util.jsApply
-import mui.lab.renderSampleAutocomplete
+import kotlinx.html.onSubmit
 import react.RBuilder
 import react.RProps
 import react.functionalComponent
@@ -15,15 +19,25 @@ import redux.form.fieldArray
 import redux.form.reduxForm
 import styled.styledForm
 
-interface CreateQuestionFormProps : InjectedFormProps<QuestionEditDTO, RProps, Any>
+interface EditQuestionFormProps : InjectedFormProps<QuestionEditDTO, RProps, Any>
+
 data class SampleItem(
     val item: String,
     val id: Int
 )
-val EditQuestionForm = functionalComponent<CreateQuestionFormProps> {
+
+
+val EditQuestionForm = functionalComponent<EditQuestionFormProps> { props ->
     styledForm {
+        attrs {
+            onSubmit = props.handleSubmit.asDynamic()
+        }
         mFormControl(fullWidth = true) {
-            renderSampleAutocomplete(listOf(SampleItem("sample1", 1), SampleItem("sample2", 2)))
+            field(
+                QuestionEditDTO::tags,
+                TagsAutocompleteField,
+                jsApply {  }
+            )
             field(
                 QuestionEditDTO::name,
                 WrappedMultilineField,
@@ -37,13 +51,25 @@ val EditQuestionForm = functionalComponent<CreateQuestionFormProps> {
             )
 
             fieldArray("answers", AnswerArrayField::class)
+
+            mButton(
+                "Save",
+                color = MColor.primary,
+                variant = MButtonVariant.contained,
+                disabled = /*props.pristine ||*/ props.submitting
+            ) {
+                attrs.asDynamic().type = "submit"
+            }
         }
     }
 }
 
 val reduxCreateQuestionForm = reduxForm(
-    jsApply<ConfigProps<QuestionEditDTO, CreateQuestionFormProps, Any>> {
+    jsApply<ConfigProps<QuestionEditDTO, EditQuestionFormProps, Any>> {
         form = "editQuestion"
+        onSubmit = { questionEditDTO, dispatch, _ ->
+            console.log(questionEditDTO)
+        }
     }
 )(EditQuestionForm)
 

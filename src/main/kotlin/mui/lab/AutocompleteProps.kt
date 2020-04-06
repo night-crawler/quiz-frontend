@@ -1,9 +1,11 @@
 package mui.lab
 
 import com.ccfraser.muirwik.components.StyledPropsWithCommonAttributes
+import org.w3c.dom.events.Event
 
 interface AutocompleteProps<T> : UseAutocompleteCommonProps<T>,
     StyledPropsWithCommonAttributes {
+    var onChange: ((event: Event, value: T, reason: String) -> Unit)?
     var ChipProps: Any?
     var closeIcon: dynamic /* ReactElement | String | Number | Any | ReactNodeArray | ReactPortal | Boolean | Nothing? | Nothing? */
     var clearText: String?

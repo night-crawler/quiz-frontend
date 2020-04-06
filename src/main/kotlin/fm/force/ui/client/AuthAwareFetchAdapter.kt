@@ -31,6 +31,7 @@ class AuthAwareFetchAdapter(private val adapter: FetchAdapter) : FetchAdapter by
         headers: Map<String, String>,
         buildResponse: suspend Json.(Request, Response) -> ResponseType
     ): ResponseType {
+        console.log("Fetching $uri")
         if (shouldIgnore(uri)) {
             return adapter.fetch(method, uri, body, headers, buildResponse)
         }
@@ -54,14 +55,14 @@ class AuthAwareFetchAdapter(private val adapter: FetchAdapter) : FetchAdapter by
     }
 
     private suspend fun prepareAuthHeaders(forceRefresh: Boolean = false): Map<String, String> {
-        synchronized(this) {
-            if (forceRefresh || !::accessToken.isInitialized) {
-                accessToken = refresh().accessToken
-            }
+        if (forceRefresh || !::accessToken.isInitialized) {
+            accessToken = refresh().accessToken
+            console.log("No access token; refreshing (force: $forceRefresh)")
+        }
 
-            if (!JsJwt.decode(accessToken).isValid()) {
-                accessToken = refresh().accessToken
-            }
+        if (!JsJwt.decode(accessToken).isValid()) {
+            accessToken = refresh().accessToken
+            console.log("Access token is not valid; refreshing (force: $forceRefresh)")
         }
 
         return mapOf("Authorization" to "Bearer $accessToken")

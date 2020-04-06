@@ -83,10 +83,7 @@ external interface RenderInputParams {
 }
 
 @JsName("default")
-external var qwe: dynamic
-
-//@JsName("default")
-//external fun <T> Autocomplete(props: AutocompleteProps<T> /* AutocompleteProps<T> & UseAutocompleteProps<T> */): ReactElement
+external var StubAutocomplete: dynamic
 
 @JsName("default")
 external class Autocomplete<T> : Component<AutocompleteProps<T>, RState> {

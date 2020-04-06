@@ -12,7 +12,7 @@ import styled.styledDiv
 class SmokeComponentsTest {
     @Test
     fun thingsShouldWork() {
-        val reduxStore = ReduxStore.default()
+        val reduxStore = ReduxStore.DEFAULT
         val a = RBuilder()
         val q = a.styledDiv {
             provider(reduxStore.store) {

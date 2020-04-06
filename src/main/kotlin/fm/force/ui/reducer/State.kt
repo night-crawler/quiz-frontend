@@ -8,7 +8,7 @@ import history.History
 import kotlinext.js.jsObject
 import react.router.connected.RouterState
 import react.router.connected.connectRouter
-import redux.form.reducer
+import redux.form.reducer as formReducer
 
 data class CustomLocationState(
     var placeholder: Int = 1
@@ -30,6 +30,6 @@ fun combinedReducers(history: History<*>) = customCombineReducers(
         State::snacks to ::snackReducer,
         State::appPreferences to ::appPreferencesReducer,
         State::router to connectRouter(history),
-        State::form to reducer
+        State::form to formReducer
     )
 )

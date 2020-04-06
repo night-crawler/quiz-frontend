@@ -19,10 +19,11 @@ import redux.createStore
 
 class ReduxStore(
     val store: Store<State, RAction, WrapperAction>,
-    val history: History<CustomLocationState>
+    val history: History<CustomLocationState>,
+    val client: QuizClient
 ) {
     companion object {
-        fun default() = of(State(), createBrowserHistory(), client = QuizClient(port = 8181))
+        val DEFAULT by lazy { of(State(), createBrowserHistory(), client = QuizClient(port = 8181)) }
         fun of(
             state: State,
             history: History<CustomLocationState>,
@@ -39,7 +40,7 @@ class ReduxStore(
                     customEnhancer()
                 )
             )
-            return ReduxStore(store, history)
+            return ReduxStore(store, history, client)
         }
     }
 }

@@ -7,6 +7,7 @@ import kotlin.reflect.KProperty
 import react.Component
 import react.FunctionalComponent
 import react.RBuilder
+import react.RClass
 import react.RState
 import react.key
 
@@ -27,6 +28,22 @@ fun <WP, C : Component<WP, RState>> RBuilder.field(
 }
 
 fun <WP, C : FunctionalComponent<WP>> RBuilder.field(
+    property: KProperty<*>,
+    component: C,
+    props: WP,
+    key: String? = null,
+    prefix: String = ""
+) = child(Field::class) {
+    val name = listOf(prefix, property.name).filter { it.isNotEmpty() }.joinToString(".")
+    attrs {
+        this.name = name
+        this.component = component
+        this.props = props
+        key?.let { this.key = key }
+    }
+}
+
+fun <WP, C : RClass<WP>> RBuilder.field(
     property: KProperty<*>,
     component: C,
     props: WP,

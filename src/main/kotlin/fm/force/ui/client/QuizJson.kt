@@ -1,9 +1,14 @@
 package fm.force.ui.client
 
+import fm.force.ui.client.dto.DTOMarker
 import fm.force.ui.client.dto.ErrorMessage
 import fm.force.ui.client.dto.FieldError
 import fm.force.ui.client.dto.GenericError
 import fm.force.ui.client.dto.InstantSerializer
+import fm.force.ui.client.dto.TagFullDTO
+import fm.force.ui.client.dto.TagPatchDTO
+import fm.force.ui.client.dto.TagRestrictedDTO
+import kotlinx.serialization.internal.LongAsStringSerializer
 import kotlin.js.Date
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
@@ -15,13 +20,20 @@ object QuizJson {
             ErrorMessage::class with ErrorMessage.serializer()
             FieldError::class with FieldError.serializer()
         }
-        this.contextual(Date::class, InstantSerializer)
+
+        polymorphic(DTOMarker::class) {
+            TagFullDTO::class with TagFullDTO.serializer()
+            TagRestrictedDTO::class with TagRestrictedDTO.serializer()
+            TagPatchDTO::class with TagPatchDTO.serializer()
+        }
+        contextual(Date::class, InstantSerializer)
+        contextual(Long::class, LongAsStringSerializer)
     }
     private val defaultJsonConfiguration =
         JsonConfiguration(
             encodeDefaults = true,
             ignoreUnknownKeys = true,
-            isLenient = false,
+            isLenient = true,
             serializeSpecialFloatingPointValues = false,
             allowStructuredMapKeys = true,
             prettyPrint = false,

@@ -6,7 +6,7 @@ import kotlin.browser.document
 import react.dom.render
 import react.redux.provider
 
-val reduxStore = ReduxStore.default()
+val reduxStore = ReduxStore.DEFAULT
 
 fun main() {
     val rootElement = document.getElementById("root")

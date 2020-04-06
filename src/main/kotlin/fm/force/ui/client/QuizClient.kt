@@ -3,7 +3,11 @@ package fm.force.ui.client
 import fm.force.ui.client.dto.JwtAccessTokenDTO
 import fm.force.ui.client.dto.JwtResponseTokensDTO
 import fm.force.ui.client.dto.LoginRequestDTO
+import fm.force.ui.client.dto.PageDTO
+import fm.force.ui.client.dto.TagFullDTO
+import fm.force.ui.client.dto.TagPatchDTO
 import fm.force.ui.client.dto.UserFullDTO
+import fm.force.ui.client.dto.toTypedPage
 import fm.force.ui.util.QueryBuilder
 import kotlinx.coroutines.await
 import kotlinx.serialization.json.Json
@@ -47,6 +51,18 @@ open class QuizClient(
                 *paths
             )
         )
+
+    suspend fun createTag(tag: TagPatchDTO) = fetchAdapter.fetch<TagFullDTO>(
+        HttpMethod.POST, prepareUri("tags"), tag,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
+    suspend fun findTags() = fetchAdapter.fetch<PageDTO>(
+        HttpMethod.GET, prepareUri("tags"), null,
+        headers = jsonHeaders,
+        buildResponse = { request: Request, response: Response -> buildResponse(request, response) }
+    ).toTypedPage<TagFullDTO>()
 
     suspend fun currentProfile() = fetchAdapter.fetch<UserFullDTO>(
         HttpMethod.GET, prepareUri("profiles/current"), null,
