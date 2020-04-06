@@ -21,11 +21,6 @@ import styled.styledForm
 
 interface EditQuestionFormProps : InjectedFormProps<QuestionEditDTO, RProps, Any>
 
-data class SampleItem(
-    val item: String,
-    val id: Int
-)
-
 
 val EditQuestionForm = functionalComponent<EditQuestionFormProps> { props ->
     styledForm {
