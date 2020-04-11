@@ -63,6 +63,7 @@ kotlin {
             }
 
             dependencies {
+                implementation("io.github.microutils:kotlin-logging-js:1.7.9")
                 implementation(kotlin("stdlib-js"))
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.20.0")
 

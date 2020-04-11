@@ -19,6 +19,7 @@ import react.RBuilder
 import react.RComponent
 import react.RState
 import redux.form.WrappedFieldArrayProps
+import com.ccfraser.muirwik.components.form.MFormControlVariant
 import redux.form.field
 import styled.css
 
@@ -26,10 +27,8 @@ import styled.css
 class AnswerArrayField(props: WrappedFieldArrayProps<Answer>) :
     RComponent<WrappedFieldArrayProps<Answer>, RState>(props) {
 
-    private val newAnswer = Answer("sample", isCorrect = false)
-
     override fun RBuilder.render() {
-        mButton(caption = "Add answer", onClick = { props.fields.push(newAnswer) })
+        mButton(caption = "Add answer", onClick = { props.fields.push(Answer("", isCorrect = false)) })
 
         props.fields.map { member: String, index: Int, fields ->
             mCard {
@@ -46,7 +45,7 @@ class AnswerArrayField(props: WrappedFieldArrayProps<Answer>) :
                         WrappedMultilineField,
                         jsApply {
                             label = "Answer Text"
-                            variant = com.ccfraser.muirwik.components.form.MFormControlVariant.outlined
+                            variant = MFormControlVariant.outlined
                             rows = 2
                             rowsMax = 8
                         },
@@ -59,8 +58,7 @@ class AnswerArrayField(props: WrappedFieldArrayProps<Answer>) :
                         jsApply {
                             fieldType = kotlinx.html.InputType.checkBox
                             label = "Is correct"
-                            variant =
-                                com.ccfraser.muirwik.components.form.MFormControlVariant.outlined
+                            variant = MFormControlVariant.outlined
                         },
                         prefix = member
                     )

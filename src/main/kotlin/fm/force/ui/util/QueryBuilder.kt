@@ -1,11 +1,5 @@
 package fm.force.ui.util
 
-external fun decodeURIComponent(encoded: String): String
-external fun encodeURIComponent(raw: String): String
-
-external fun decodeURI(encoded: String): String
-external fun encodeURI(raw: String): String
-
 class QueryBuilder(vararg init: Pair<String, Collection<Any?>>) {
     companion object {
         fun of(vararg init: Pair<String, Any>) = QueryBuilder(

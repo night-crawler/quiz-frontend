@@ -1,8 +1,8 @@
 package fm.force.ui.component.field
 
 import fm.force.ui.ReduxStore
-import fm.force.ui.client.dto.TagFullDTO
-import fm.force.ui.client.dto.TagPatchDTO
+import fm.force.ui.client.dto.TopicFullDTO
+import fm.force.ui.client.dto.TopicPatchDTO
 import fm.force.ui.effect.useDebounce
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
@@ -15,38 +15,38 @@ import react.useState
 import redux.form.WrappedFieldProps
 import redux.form.getArrayValue
 
-private val logger = KotlinLogging.logger("TagsAutocompleteField")
+private val logger = KotlinLogging.logger("TopicsAutocompleteField")
 
-interface TagsAutocompleteFieldProps : WrappedFieldProps {
+interface TopicsAutocompleteFieldProps : WrappedFieldProps {
     var label: String
 }
 
-val TagsAutocompleteField = functionalComponent<TagsAutocompleteFieldProps> { props ->
+val TopicsAutocompleteField = functionalComponent<TopicsAutocompleteFieldProps> { props ->
     val (searchText, setSearchText) = useState("")
-    val (tags, setTags) = useState(listOf<TagFullDTO>())
+    val (Topics, setTopics) = useState(listOf<TopicFullDTO>())
     val debouncedSearchText = useDebounce(searchText, 500)
 
     useEffect(listOf(debouncedSearchText)) {
         GlobalScope.promise {
-            ReduxStore.DEFAULT.client.findTags(debouncedSearchText).content.toList().apply(setTags)
+            ReduxStore.DEFAULT.client.findTopics(debouncedSearchText).content.toList().apply(setTopics)
         }
     }
 
-    labAutocompleteMultipleField(props.label, tags) {
+    labAutocompleteMultipleField(props.label, Topics) {
         attrs {
             freeSolo = true
             value = props.input.getArrayValue()
             onInputChange = { _, text, _ -> setSearchText(text) }
             renderOption = { option, _ ->
-                span { +option.name }
+                span { +option.title }
             }
-            getOptionLabel = { it.name }
+            getOptionLabel = { it.title }
             onChange = { _, value, reason, _ ->
                 logger.debug { "Triggered onChange: $value ($reason)" }
                 if (reason == "create-option") {
                     GlobalScope.promise {
-                        val tag = ReduxStore.DEFAULT.client.getOrCreateTag(TagPatchDTO(value.toString()))
-                        props.input.onChange(props.input.getArrayValue<TagFullDTO>() + listOf(tag))
+                        val Topic = ReduxStore.DEFAULT.client.getOrCreateTopic(TopicPatchDTO(value.toString()))
+                        props.input.onChange(props.input.getArrayValue<TopicFullDTO>() + listOf(Topic))
                         Unit
                     }
                 } else {
@@ -57,7 +57,7 @@ val TagsAutocompleteField = functionalComponent<TagsAutocompleteFieldProps> { pr
             getOptionSelected = { option, value ->
                 when {
                     option == undefined || value == undefined -> false
-                    option.name == value.name -> true
+                    option.title == value.title -> true
                     else -> false
                 }
             }

@@ -4,8 +4,11 @@ import fm.force.ui.client.dto.JwtAccessTokenDTO
 import fm.force.ui.client.dto.JwtResponseTokensDTO
 import fm.force.ui.client.dto.LoginRequestDTO
 import fm.force.ui.client.dto.PageDTO
+import fm.force.ui.client.dto.PageWrapper
 import fm.force.ui.client.dto.TagFullDTO
 import fm.force.ui.client.dto.TagPatchDTO
+import fm.force.ui.client.dto.TopicFullDTO
+import fm.force.ui.client.dto.TopicPatchDTO
 import fm.force.ui.client.dto.UserFullDTO
 import fm.force.ui.client.dto.toTypedPage
 import fm.force.ui.util.QueryBuilder
@@ -52,17 +55,41 @@ open class QuizClient(
             )
         )
 
+    suspend fun getOrCreateTopic(topic: TopicPatchDTO) =  fetchAdapter.fetch<TopicFullDTO>(
+        HttpMethod.POST, prepareUri("topics/getOrCreate"), topic,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
+    suspend fun getOrCreateTag(tag: TagPatchDTO) = fetchAdapter.fetch<TagFullDTO>(
+        HttpMethod.POST, prepareUri("tags/getOrCreate"), tag,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
     suspend fun createTag(tag: TagPatchDTO) = fetchAdapter.fetch<TagFullDTO>(
         HttpMethod.POST, prepareUri("tags"), tag,
         headers = jsonHeaders,
         buildResponse = { request, response -> buildResponse(request, response) }
     )
 
-    suspend fun findTags() = fetchAdapter.fetch<PageDTO>(
-        HttpMethod.GET, prepareUri("tags"), null,
-        headers = jsonHeaders,
-        buildResponse = { request: Request, response: Response -> buildResponse(request, response) }
-    ).toTypedPage<TagFullDTO>()
+    suspend fun findTopics(text: String = ""): PageWrapper<TopicFullDTO> {
+        val params = mapOf("query" to text, "sort" to "title")
+        return fetchAdapter.fetch<PageDTO>(
+            HttpMethod.GET, prepareUri("topics", params = params), null,
+            headers = jsonHeaders,
+            buildResponse = { request: Request, response: Response -> buildResponse(request, response) }
+        ).toTypedPage()
+    }
+
+    suspend fun findTags(text: String = ""): PageWrapper<TagFullDTO> {
+        val params = mapOf("query" to text, "sort" to "name")
+        return fetchAdapter.fetch<PageDTO>(
+            HttpMethod.GET, prepareUri("tags", params = params), null,
+            headers = jsonHeaders,
+            buildResponse = { request: Request, response: Response -> buildResponse(request, response) }
+        ).toTypedPage()
+    }
 
     suspend fun currentProfile() = fetchAdapter.fetch<UserFullDTO>(
         HttpMethod.GET, prepareUri("profiles/current"), null,

@@ -33,3 +33,27 @@ fun <T> RBuilder.labAutocompleteField(
         }
         rb?.invoke(this)
     }
+
+fun <T> RBuilder.labAutocompleteMultipleField(
+    label: String,
+    options: List<T>,
+    rb: (RElementBuilder<AutocompleteMultipleProps<T>>.() -> Unit)? = null
+) =
+    child(Autocomplete::class as KClass<Component<AutocompleteMultipleProps<T>, RState>>) {
+        attrs {
+            multiple = true
+            this.options = options.toTypedArray()
+            renderOption = { option, state ->
+                span {
+                    +option.toString()
+                }
+            }
+            getOptionLabel = { it.toString() }
+            renderInput = { params ->
+                mTextField(label = label) {
+                    Object.assign(attrs, params)
+                }
+            }
+        }
+        rb?.invoke(this)
+    }

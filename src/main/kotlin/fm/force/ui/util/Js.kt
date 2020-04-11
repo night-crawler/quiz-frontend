@@ -41,3 +41,8 @@ external fun btoa(raw: String): String
 operator fun <T> Json.getValue(thisRef: Any?, property: KProperty<*>): T? {
     return this[property.name] as T?
 }
+
+external fun decodeURIComponent(encoded: String): String
+external fun encodeURIComponent(raw: String): String
+external fun decodeURI(encoded: String): String
+external fun encodeURI(raw: String): String
