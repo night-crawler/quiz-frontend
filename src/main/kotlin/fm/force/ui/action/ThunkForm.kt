@@ -3,7 +3,7 @@ package fm.force.ui.action
 import fm.force.ui.client.FetchClientNetworkError
 import fm.force.ui.client.FetchError
 import fm.force.ui.client.QuizClient
-import fm.force.ui.client.QuizJson
+import fm.force.quiz.common.serializer.QuizJson
 import fm.force.ui.client.dto.ErrorResponse
 import fm.force.ui.client.isJson
 import fm.force.ui.reducer.State

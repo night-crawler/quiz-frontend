@@ -1,8 +1,8 @@
 package fm.force.ui.component.field
 
+import fm.force.quiz.common.dto.TopicFullDTO
+import fm.force.quiz.common.dto.TopicPatchDTO
 import fm.force.ui.ReduxStore
-import fm.force.ui.client.dto.TopicFullDTO
-import fm.force.ui.client.dto.TopicPatchDTO
 import fm.force.ui.effect.useDebounce
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
@@ -45,8 +45,9 @@ val TopicsAutocompleteField = functionalComponent<TopicsAutocompleteFieldProps> 
                 logger.debug { "Triggered onChange: $value ($reason)" }
                 if (reason == "create-option") {
                     GlobalScope.promise {
-                        val Topic = ReduxStore.DEFAULT.client.getOrCreateTopic(TopicPatchDTO(value.toString()))
-                        props.input.onChange(props.input.getArrayValue<TopicFullDTO>() + listOf(Topic))
+                        val topic = ReduxStore.DEFAULT.client
+                            .getOrCreateTopic(TopicPatchDTO(searchText.trim()))
+                        props.input.onChange(props.input.getArrayValue<TopicFullDTO>() + listOf(topic))
                         Unit
                     }
                 } else {

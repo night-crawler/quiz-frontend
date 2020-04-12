@@ -1,31 +1,34 @@
-package fm.force.ui.client.dto
+package fm.force.quiz.common.dto
 
+import fm.force.quiz.common.serializer.InstantAlias
 import kotlinx.serialization.ContextualSerialization
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-@SerialName("TagFullDTO")
-data class TagFullDTO(
+data class DifficultyScaleFullDTO(
     @ContextualSerialization
     val id: Long,
+
     val name: String,
-    val slug: String,
+    val difficultyScaleRanges: Collection<DifficultyScaleRangeFullDTO>,
+
     @ContextualSerialization
     val createdAt: InstantAlias,
+
     @ContextualSerialization
     val updatedAt: InstantAlias
 ) : DTOFullSerializationMarker
 
 @Serializable
-@SerialName("TagRestrictedDTO")
-data class TagRestrictedDTO(
+data class DifficultyScaleRestrictedDTO(
     @ContextualSerialization
     val id: Long,
     val name: String,
-    val slug: String
+    val difficultyScaleRanges: Collection<DifficultyScaleRangeRestrictedDTO>
 ) : DTORestrictedSerializationMarker
 
 @Serializable
-@SerialName("TagPatchDTO")
-data class TagPatchDTO(val name: String) : DTOMarker
+data class DifficultyScalePatchDTO(
+    val name: String? = null,
+    val max: Int? = null
+) : DTOMarker

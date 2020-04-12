@@ -1,7 +1,8 @@
 package fm.force.ui.component.form
 
-import fm.force.ui.client.dto.TagFullDTO
-import fm.force.ui.client.dto.TopicFullDTO
+import fm.force.quiz.common.dto.TagFullDTO
+import fm.force.quiz.common.dto.TopicFullDTO
+
 
 data class TagDTO(
     val id: Long,

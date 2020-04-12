@@ -1,8 +1,8 @@
 package fm.force.ui.component.field
 
+import fm.force.quiz.common.dto.TagFullDTO
+import fm.force.quiz.common.dto.TagPatchDTO
 import fm.force.ui.ReduxStore
-import fm.force.ui.client.dto.TagFullDTO
-import fm.force.ui.client.dto.TagPatchDTO
 import fm.force.ui.effect.useDebounce
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
@@ -45,7 +45,7 @@ val TagsAutocompleteField = functionalComponent<TagsAutocompleteFieldProps> { pr
                 logger.debug { "Triggered onChange: $value ($reason)" }
                 if (reason == "create-option") {
                     GlobalScope.promise {
-                        val tag = ReduxStore.DEFAULT.client.getOrCreateTag(TagPatchDTO(value.toString()))
+                        val tag = ReduxStore.DEFAULT.client.getOrCreateTag(TagPatchDTO(searchText.trim()))
                         props.input.onChange(props.input.getArrayValue<TagFullDTO>() + listOf(tag))
                         Unit
                     }

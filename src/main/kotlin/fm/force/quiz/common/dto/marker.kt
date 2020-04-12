@@ -1,4 +1,4 @@
-package fm.force.ui.client.dto
+package fm.force.quiz.common.dto
 
 interface DTOMarker
 interface DTOSearchMarker

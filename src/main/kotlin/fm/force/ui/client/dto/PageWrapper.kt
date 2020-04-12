@@ -1,5 +1,7 @@
 package fm.force.ui.client.dto
 
+import fm.force.quiz.common.dto.*
+
 
 data class PageWrapper<T : DTOMarker>(
     val sort: SortDTO,
@@ -14,7 +16,7 @@ data class PageWrapper<T : DTOMarker>(
     companion object
 }
 
-fun <T : DTOMarker>PageDTO.toTypedPage() = PageWrapper(
+fun <T : DTOMarker> PageDTO.toTypedPage() = PageWrapper(
     sort = sort,
     numberOfElements = numberOfElements,
     totalElements = totalElements,

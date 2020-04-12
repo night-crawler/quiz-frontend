@@ -1,5 +1,6 @@
 package fm.force.ui.client
 
+import fm.force.quiz.common.serializer.QuizJson
 import fm.force.ui.util.jsApply
 import fm.force.ui.util.toJson
 import kotlin.browser.window

@@ -1,14 +1,10 @@
 package fm.force.ui.client
 
+import fm.force.quiz.common.dto.*
 import fm.force.ui.client.dto.JwtAccessTokenDTO
 import fm.force.ui.client.dto.JwtResponseTokensDTO
 import fm.force.ui.client.dto.LoginRequestDTO
-import fm.force.ui.client.dto.PageDTO
 import fm.force.ui.client.dto.PageWrapper
-import fm.force.ui.client.dto.TagFullDTO
-import fm.force.ui.client.dto.TagPatchDTO
-import fm.force.ui.client.dto.TopicFullDTO
-import fm.force.ui.client.dto.TopicPatchDTO
 import fm.force.ui.client.dto.UserFullDTO
 import fm.force.ui.client.dto.toTypedPage
 import fm.force.ui.util.QueryBuilder

@@ -1,4 +1,4 @@
-package fm.force.ui.client.dto
+package fm.force.quiz.common.serializer
 
 import kotlin.js.Date
 import kotlinx.serialization.Decoder
