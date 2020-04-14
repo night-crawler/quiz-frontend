@@ -15,20 +15,46 @@ inline fun <T> jsLet(init: dynamic = js("{}"), cb: (T) -> Unit): T {
     return init.unsafeCast<T>()
 }
 
+val Any?.jsLength get() = this.asDynamic().length
+
+val Any?.isFalsy get() = this == undefined || jsLength == 0 || jsLength == undefined
+
 class DynamicIterator<T>(private val obj: dynamic) : Iterator<T> {
     private var pointer: Int = 0
-    private val length: Int = obj.length as Int
+    private val length: Int = when (obj) {
+        is Collection<*> -> obj.size
+        else -> obj.length as Int
+    }
+
     override fun hasNext(): Boolean = pointer < length
     override fun next(): T = obj[pointer++].unsafeCast<T>()
 }
 
+fun <T> Any.dynamicIterator() = DynamicIterator<T>(this)
+
 fun NodeList.iterator() =
     DynamicIterator<Node>(this)
 
-fun <K, V> Map<K, V>.toJson(): Json {
+fun Map<*, *>.toJson(isRecursive: Boolean = true): Json {
     val res = js("{}")
-    for ((k, v) in this) {
-        res[k.toString()] = v
+    for ((key, value) in this) {
+        res[key.toString()] = when {
+            isRecursive && value is Collection<*> -> value.toJson(isRecursive = isRecursive)
+            isRecursive && value is Map<*, *> -> value.toJson(isRecursive = isRecursive)
+            else -> value
+        }
+    }
+    return res.unsafeCast<Json>()
+}
+
+fun Collection<*>.toJson(isRecursive: Boolean = true): Json {
+    val res = js("[]")
+    this.mapIndexed { index, value ->
+        res[index] = when {
+            isRecursive && value is Collection<*> -> value.toJson(isRecursive = isRecursive)
+            isRecursive && value is Map<*, *> -> value.toJson(isRecursive = isRecursive)
+            else -> value
+        }
     }
     return res.unsafeCast<Json>()
 }

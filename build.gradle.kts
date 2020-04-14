@@ -63,6 +63,8 @@ kotlin {
             }
 
             dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.3")
+
                 implementation("io.github.microutils:kotlin-logging-js:1.7.9")
                 implementation(kotlin("stdlib-js"))
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.20.0")
@@ -136,6 +138,7 @@ tasks.withType<Kotlin2JsCompile>().all {
     kotlinOptions.freeCompilerArgs += "-Xuse-experimental=kotlin.ExperimentalStdlibApi"
     kotlinOptions.freeCompilerArgs += "-Xuse-experimental=kotlin.Experimental"
     kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+    kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
 }
 
 ktlint {

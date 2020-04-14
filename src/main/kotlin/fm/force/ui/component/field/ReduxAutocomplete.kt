@@ -1,12 +1,11 @@
 package fm.force.ui.component.field
 
-import fm.force.ui.client.dto.FieldError
+import fm.force.quiz.common.dto.FieldError
 import mui.lab.labAutocompleteField
 import react.RBuilder
 import react.RComponent
 import react.RState
 import redux.form.WrappedFieldProps
-
 
 interface ReduxAutocompleteProps<T> : WrappedFieldProps {
     var options: List<T>

@@ -1,9 +1,11 @@
 package fm.force.ui.component.field
 
+import com.ccfraser.muirwik.components.mTextField
 import fm.force.quiz.common.dto.TopicFullDTO
 import fm.force.quiz.common.dto.TopicPatchDTO
 import fm.force.ui.ReduxStore
 import fm.force.ui.effect.useDebounce
+import kotlinext.js.Object
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
 import mu.KotlinLogging
@@ -60,6 +62,12 @@ val TopicsAutocompleteField = functionalComponent<TopicsAutocompleteFieldProps> 
                     option == undefined || value == undefined -> false
                     option.title == value.title -> true
                     else -> false
+                }
+            }
+            renderInput = { params ->
+                mTextField(label = props.label) {
+                    Object.assign(attrs, params)
+                    attrs.error = props.meta.error != undefined
                 }
             }
         }

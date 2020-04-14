@@ -1,14 +1,13 @@
 package mui.lab
 
 import com.ccfraser.muirwik.components.mTextField
+import kotlin.reflect.KClass
 import kotlinext.js.Object
 import react.Component
 import react.RBuilder
 import react.RElementBuilder
 import react.RState
 import react.dom.span
-import kotlin.reflect.KClass
-
 
 fun <T> RBuilder.labAutocompleteField(
     label: String,

@@ -5,9 +5,12 @@ import com.ccfraser.muirwik.components.button.MButtonVariant
 import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.form.mFormControl
+import fm.force.quiz.common.dto.FieldError
 import fm.force.ui.component.field.TagsAutocompleteField
 import fm.force.ui.component.field.TopicsAutocompleteField
 import fm.force.ui.component.field.WrappedMultilineField
+import fm.force.ui.component.field.fieldErrors
+import fm.force.ui.reducer.action.CreateQuestionThunk
 import fm.force.ui.util.jsApply
 import kotlinx.html.onSubmit
 import react.RBuilder
@@ -21,7 +24,6 @@ import redux.form.reduxForm
 import styled.styledForm
 
 interface EditQuestionFormProps : InjectedFormProps<QuestionEditDTO, RProps, Any>
-
 
 val EditQuestionForm = functionalComponent<EditQuestionFormProps> { props ->
     styledForm {
@@ -40,7 +42,7 @@ val EditQuestionForm = functionalComponent<EditQuestionFormProps> { props ->
                 jsApply { label = "Topics" }
             )
             field(
-                QuestionEditDTO::name,
+                QuestionEditDTO::text,
                 WrappedMultilineField,
                 jsApply {
                     label = "Question text"
@@ -61,6 +63,8 @@ val EditQuestionForm = functionalComponent<EditQuestionFormProps> { props ->
             ) {
                 attrs.asDynamic().type = "submit"
             }
+
+            props.error?.let { fieldErrors(it.unsafeCast<List<FieldError>>()) }
         }
     }
 }
@@ -69,7 +73,7 @@ val reduxCreateQuestionForm = reduxForm(
     jsApply<ConfigProps<QuestionEditDTO, EditQuestionFormProps, Any>> {
         form = "editQuestion"
         onSubmit = { questionEditDTO, dispatch, _ ->
-            console.log(questionEditDTO)
+            dispatch(CreateQuestionThunk(questionEditDTO))
         }
     }
 )(EditQuestionForm)

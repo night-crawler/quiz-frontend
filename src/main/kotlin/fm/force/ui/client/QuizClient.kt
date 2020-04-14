@@ -1,6 +1,12 @@
 package fm.force.ui.client
 
-import fm.force.quiz.common.dto.*
+import fm.force.quiz.common.dto.AnswerFullDTO
+import fm.force.quiz.common.dto.AnswerPatchDTO
+import fm.force.quiz.common.dto.PageDTO
+import fm.force.quiz.common.dto.TagFullDTO
+import fm.force.quiz.common.dto.TagPatchDTO
+import fm.force.quiz.common.dto.TopicFullDTO
+import fm.force.quiz.common.dto.TopicPatchDTO
 import fm.force.ui.client.dto.JwtAccessTokenDTO
 import fm.force.ui.client.dto.JwtResponseTokensDTO
 import fm.force.ui.client.dto.LoginRequestDTO
@@ -51,7 +57,13 @@ open class QuizClient(
             )
         )
 
-    suspend fun getOrCreateTopic(topic: TopicPatchDTO) =  fetchAdapter.fetch<TopicFullDTO>(
+    suspend fun createAnswer(patchDTO: AnswerPatchDTO) = fetchAdapter.fetch<AnswerFullDTO>(
+        HttpMethod.POST, prepareUri("answers"), patchDTO,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
+    suspend fun getOrCreateTopic(topic: TopicPatchDTO) = fetchAdapter.fetch<TopicFullDTO>(
         HttpMethod.POST, prepareUri("topics/getOrCreate"), topic,
         headers = jsonHeaders,
         buildResponse = { request, response -> buildResponse(request, response) }

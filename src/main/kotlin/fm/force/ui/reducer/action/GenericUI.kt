@@ -1,4 +1,4 @@
-package fm.force.ui.action
+package fm.force.ui.reducer.action
 
 import redux.RAction
 

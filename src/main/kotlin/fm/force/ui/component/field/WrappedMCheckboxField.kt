@@ -3,7 +3,7 @@ package fm.force.ui.component.field
 import com.ccfraser.muirwik.components.MCheckboxProps
 import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.mCheckboxWithLabel
-import fm.force.ui.client.dto.FieldError
+import fm.force.quiz.common.dto.FieldError
 import kotlinx.html.InputType
 import react.functionalComponent
 import redux.form.WrappedFieldProps

@@ -1,10 +1,10 @@
 package fm.force.ui.container
 
-import fm.force.ui.action.Bootstrap
-import fm.force.ui.action.SetThemeType
 import fm.force.ui.component.App
 import fm.force.ui.component.AppProps
 import fm.force.ui.reducer.State
+import fm.force.ui.reducer.action.Bootstrap
+import fm.force.ui.reducer.action.SetThemeType
 import react.RClass
 import react.RProps
 import react.invoke

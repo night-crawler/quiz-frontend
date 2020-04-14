@@ -6,10 +6,10 @@ import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.form.mFormControl
 import com.ccfraser.muirwik.components.spacingUnits
-import fm.force.ui.action.LoginThunk
-import fm.force.ui.client.dto.ErrorMessage
+import fm.force.quiz.common.dto.ErrorMessage
 import fm.force.ui.client.dto.LoginRequestDTO
 import fm.force.ui.component.field.WrappedTextField
+import fm.force.ui.reducer.action.LoginThunk
 import fm.force.ui.util.jsApply
 import kotlinext.js.js
 import kotlinx.css.Display

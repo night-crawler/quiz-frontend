@@ -1,7 +1,8 @@
 package fm.force.ui.client.dto
 
-import fm.force.quiz.common.dto.*
-
+import fm.force.quiz.common.dto.DTOMarker
+import fm.force.quiz.common.dto.PageDTO
+import fm.force.quiz.common.dto.SortDTO
 
 data class PageWrapper<T : DTOMarker>(
     val sort: SortDTO,

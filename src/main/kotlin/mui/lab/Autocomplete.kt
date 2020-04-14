@@ -12,7 +12,6 @@ package mui.lab
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventTarget
 import react.Component
-import react.FunctionalComponent
 import react.RState
 import react.ReactElement
 

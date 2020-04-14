@@ -36,7 +36,10 @@ external interface FilterOptionsState<T> {
     var getOptionLabel: (option: T) -> String
 }
 
-external fun <T> createFilterOptions(config: CreateFilterOptionsConfig<T> = definedExternally): (options: Array<T>, state: FilterOptionsState<T>) -> Array<T>
+external fun <T> createFilterOptions(config: CreateFilterOptionsConfig<T> = definedExternally): (
+    options: Array<T>,
+    state: FilterOptionsState<T>
+) -> Array<T>
 
 external interface AutocompleteChangeDetails<T> {
     var option: T

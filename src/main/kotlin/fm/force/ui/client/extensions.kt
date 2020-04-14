@@ -1,9 +1,9 @@
 package fm.force.ui.client
 
-import fm.force.ui.client.dto.ErrorMessage
-import fm.force.ui.client.dto.ErrorResponse
-import fm.force.ui.client.dto.FieldError
-import fm.force.ui.client.dto.GenericError
+import fm.force.quiz.common.dto.ErrorMessage
+import fm.force.quiz.common.dto.ErrorResponse
+import fm.force.quiz.common.dto.FieldError
+import fm.force.quiz.common.dto.GenericError
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine

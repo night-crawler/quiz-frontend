@@ -3,7 +3,7 @@ package fm.force.ui.component.field
 import com.ccfraser.muirwik.components.MTextFieldProps
 import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.mTextFieldMultiLine
-import fm.force.ui.client.dto.FieldError
+import fm.force.quiz.common.dto.FieldError
 import react.functionalComponent
 import redux.form.WrappedFieldProps
 

@@ -1,4 +1,4 @@
-package fm.force.ui.action
+package fm.force.ui.reducer.action
 
 import fm.force.ui.client.QuizClient
 import fm.force.ui.client.dto.JwtResponseTokensDTO

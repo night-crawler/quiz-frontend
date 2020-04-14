@@ -2,7 +2,7 @@ package fm.force.ui.component.form
 
 import com.benasher44.uuid.uuid4
 
-data class Answer(
+data class AnswerEditDTO(
     val text: String,
     val isCorrect: Boolean,
 

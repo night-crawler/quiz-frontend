@@ -1,6 +1,7 @@
 package fm.force.ui.component.field
 
-import fm.force.ui.client.dto.FieldError
+import fm.force.quiz.common.dto.FieldError
+import fm.force.ui.util.DynamicIterator
 import kotlinx.css.Color
 import kotlinx.css.LinearDimension
 import kotlinx.css.color
@@ -29,8 +30,7 @@ val FieldErrors = functionalComponent<FieldErrorsProps> { props ->
             fontSize = LinearDimension.inherit
         }
         ul {
-
-            props.fieldErrors.map { fieldError ->
+            DynamicIterator<FieldError>(props.fieldErrors).asSequence().forEach { fieldError ->
                 li {
                     +fieldError.message
                 }

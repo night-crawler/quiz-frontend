@@ -1,8 +1,8 @@
 package fm.force.ui.reducer
 
-import fm.force.ui.action.CloseSnack
-import fm.force.ui.action.ShowSnack
-import fm.force.ui.action.Snack
+import fm.force.ui.reducer.action.CloseSnack
+import fm.force.ui.reducer.action.ShowSnack
+import fm.force.ui.reducer.action.Snack
 import redux.RAction
 
 fun snackReducer(state: List<Snack> = listOf(), action: RAction): List<Snack> = when (action) {

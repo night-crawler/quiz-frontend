@@ -5,7 +5,7 @@ import com.ccfraser.muirwik.components.MIconFontSize
 import com.ccfraser.muirwik.components.button.mIconButton
 import com.ccfraser.muirwik.components.mIcon
 import com.ccfraser.muirwik.components.mSnackbar
-import fm.force.ui.action.Snack
+import fm.force.ui.reducer.action.Snack
 import kotlinx.css.VerticalAlign
 import kotlinx.css.verticalAlign
 import react.RBuilder

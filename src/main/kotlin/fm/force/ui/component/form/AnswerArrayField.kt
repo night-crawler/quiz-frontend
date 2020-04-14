@@ -4,9 +4,12 @@ import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.button.mIconButton
 import com.ccfraser.muirwik.components.card.mCard
 import com.ccfraser.muirwik.components.card.mCardActions
+import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.form.mFormControl
+import fm.force.quiz.common.dto.FieldError
 import fm.force.ui.component.field.WrappedCheckboxField
 import fm.force.ui.component.field.WrappedMultilineField
+import fm.force.ui.component.field.fieldErrors
 import fm.force.ui.util.IconName
 import fm.force.ui.util.jsApply
 import kotlinx.css.Direction
@@ -19,16 +22,15 @@ import react.RBuilder
 import react.RComponent
 import react.RState
 import redux.form.WrappedFieldArrayProps
-import com.ccfraser.muirwik.components.form.MFormControlVariant
 import redux.form.field
 import styled.css
 
 // this one must remain a class component since styled is created dynamically
-class AnswerArrayField(props: WrappedFieldArrayProps<Answer>) :
-    RComponent<WrappedFieldArrayProps<Answer>, RState>(props) {
+class AnswerArrayField(props: WrappedFieldArrayProps<AnswerEditDTO>) :
+    RComponent<WrappedFieldArrayProps<AnswerEditDTO>, RState>(props) {
 
     override fun RBuilder.render() {
-        mButton(caption = "Add answer", onClick = { props.fields.push(Answer("", isCorrect = false)) })
+        mButton(caption = "Add answer", onClick = { props.fields.push(AnswerEditDTO("", isCorrect = false)) })
 
         props.fields.map { member: String, index: Int, fields ->
             mCard {
@@ -41,7 +43,7 @@ class AnswerArrayField(props: WrappedFieldArrayProps<Answer>) :
                         paddingRight = 10.px
                     }
                     field(
-                        Answer::text,
+                        AnswerEditDTO::text,
                         WrappedMultilineField,
                         jsApply {
                             label = "Answer Text"
@@ -53,7 +55,7 @@ class AnswerArrayField(props: WrappedFieldArrayProps<Answer>) :
                         prefix = member
                     )
                     field(
-                        Answer::isCorrect,
+                        AnswerEditDTO::isCorrect,
                         WrappedCheckboxField,
                         jsApply {
                             fieldType = kotlinx.html.InputType.checkBox
@@ -85,5 +87,7 @@ class AnswerArrayField(props: WrappedFieldArrayProps<Answer>) :
                 }
             }
         }
+
+        props.meta.error?.let { fieldErrors(it.unsafeCast<List<FieldError>>()) }
     }
 }

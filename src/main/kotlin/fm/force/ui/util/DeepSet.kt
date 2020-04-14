@@ -37,7 +37,6 @@ fun deepSet(path: String, value: Any?, destination: dynamic = js("{}")): dynamic
         } else {
             destination[realKeyName] = jsArray
         }
-
     } else {
         val existing = if (destination[currentKey] != undefined) {
             destination[currentKey]

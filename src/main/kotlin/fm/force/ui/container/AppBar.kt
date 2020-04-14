@@ -1,11 +1,11 @@
 package fm.force.ui.container
 
-import fm.force.ui.action.DrawerOpenToggle
-import fm.force.ui.action.SetThemeType
 import fm.force.ui.client.dto.UserFullDTO
 import fm.force.ui.component.AppBar
 import fm.force.ui.component.AppBarProps
 import fm.force.ui.reducer.State
+import fm.force.ui.reducer.action.DrawerOpenToggle
+import fm.force.ui.reducer.action.SetThemeType
 import react.RClass
 import react.RProps
 import react.invoke

@@ -1,4 +1,5 @@
 package fm.force.ui.util
+
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -12,11 +13,13 @@ class DeepSetTest {
 
     @Test
     fun patchSampleArray() {
-        val sample = js("""[
+        val sample = js(
+            """[
             {sample: 1},
             {sample: 2},
             {sample: 3, some: [0, 1]}
-        ]""")
+        ]"""
+        )
         val result = deepSet("[1].sample", 100500, sample)
         console.log(JSON.stringify(result))
         assertEquals(100500, result[1].sample)

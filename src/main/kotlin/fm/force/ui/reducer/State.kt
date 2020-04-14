@@ -1,7 +1,7 @@
 package fm.force.ui.reducer
 
-import fm.force.ui.action.Snack
 import fm.force.ui.client.dto.UserFullDTO
+import fm.force.ui.reducer.action.Snack
 import fm.force.ui.util.createLocation
 import fm.force.ui.util.customCombineReducers
 import history.History

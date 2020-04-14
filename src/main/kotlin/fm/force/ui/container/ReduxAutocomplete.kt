@@ -14,15 +14,12 @@ interface ConnectedReduxAutocompleteProps : RProps {
     var label: String
 }
 
-
 private interface ReduxAutocompleteStateProps<T> : RProps {
     var options: MutableList<T>
     var label: String
 }
 
-private interface ReduxAutocompleteDispatchProps : RProps {
-}
-
+private interface ReduxAutocompleteDispatchProps : RProps
 
 fun <T> createReduxAutocompleteComponent() =
     rConnect<
@@ -34,8 +31,7 @@ fun <T> createReduxAutocompleteComponent() =
         { state, props ->
             label = props.label
         },
-        {
-            dispatch, props ->
+        { dispatch, props ->
         }
     )(ReduxAutocomplete::class.js.unsafeCast<RClass<ReduxAutocompleteProps<T>>>())
 
