@@ -9,9 +9,11 @@ import fm.force.quiz.common.dto.FieldError
 import fm.force.ui.component.field.TagsAutocompleteField
 import fm.force.ui.component.field.TopicsAutocompleteField
 import fm.force.ui.component.field.WrappedMultilineField
+import fm.force.ui.component.field.WrappedTextField
 import fm.force.ui.component.field.fieldErrors
 import fm.force.ui.reducer.action.CreateQuestionThunk
 import fm.force.ui.util.jsApply
+import kotlinx.html.InputType
 import kotlinx.html.onSubmit
 import react.RBuilder
 import react.RProps
@@ -47,6 +49,18 @@ val EditQuestionForm = functionalComponent<EditQuestionFormProps> { props ->
                 jsApply {
                     label = "Question text"
                     helperText = "Input question text (multiline)"
+                    variant = MFormControlVariant.outlined
+                    rows = 2
+                    rowsMax = 8
+                }
+            )
+            field(
+                QuestionEditDTO::difficulty,
+                WrappedTextField,
+                jsApply {
+                    fieldType = InputType.number
+                    label = "Difficulty"
+                    helperText = "Question difficulty in range 0-1000"
                     variant = MFormControlVariant.outlined
                     rows = 2
                     rowsMax = 8

@@ -32,6 +32,8 @@ class DynamicIterator<T>(private val obj: dynamic) : Iterator<T> {
 
 fun <T> Any.dynamicIterator() = DynamicIterator<T>(this)
 
+fun <T> Collection<T>.relist() = this.dynamicIterator<T>().asSequence().toList()
+
 fun NodeList.iterator() =
     DynamicIterator<Node>(this)
 

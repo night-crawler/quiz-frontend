@@ -3,6 +3,8 @@ package fm.force.ui.client
 import fm.force.quiz.common.dto.AnswerFullDTO
 import fm.force.quiz.common.dto.AnswerPatchDTO
 import fm.force.quiz.common.dto.PageDTO
+import fm.force.quiz.common.dto.QuestionFullDTO
+import fm.force.quiz.common.dto.QuestionPatchDTO
 import fm.force.quiz.common.dto.TagFullDTO
 import fm.force.quiz.common.dto.TagPatchDTO
 import fm.force.quiz.common.dto.TopicFullDTO
@@ -56,6 +58,12 @@ open class QuizClient(
                 *paths
             )
         )
+
+    suspend fun createQuestion(patchDTO: QuestionPatchDTO) = fetchAdapter.fetch<QuestionFullDTO>(
+        HttpMethod.POST, prepareUri("questions"), patchDTO,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
 
     suspend fun createAnswer(patchDTO: AnswerPatchDTO) = fetchAdapter.fetch<AnswerFullDTO>(
         HttpMethod.POST, prepareUri("answers"), patchDTO,

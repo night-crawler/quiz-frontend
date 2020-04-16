@@ -1,7 +1,11 @@
 package fm.force.ui.reducer.action
 
+import fm.force.quiz.common.dto.AnswerFullDTO
 import fm.force.quiz.common.dto.AnswerPatchDTO
 import fm.force.quiz.common.dto.ErrorMessage
+import fm.force.quiz.common.dto.QuestionPatchDTO
+import fm.force.quiz.common.dto.TagFullDTO
+import fm.force.quiz.common.dto.TopicFullDTO
 import fm.force.ui.client.FetchError
 import fm.force.ui.client.QuizClient
 import fm.force.ui.component.form.AnswerEditDTO
@@ -12,6 +16,7 @@ import fm.force.ui.util.IconName
 import fm.force.ui.util.deepSet
 import fm.force.ui.util.dynamicIterator
 import fm.force.ui.util.isFalsy
+import fm.force.ui.util.relist
 import fm.force.ui.util.runParallelIndexed
 import mu.KotlinLogging
 import redux.RAction
@@ -48,20 +53,41 @@ class CreateQuestionThunk(private val questionEditDTO: QuestionEditDTO) : ThunkF
                 )
             }
         ) {
-            validateAnswers(questionEditDTO.answers)
+            validate(questionEditDTO)
 
-            val bla = createAnswers(client, questionEditDTO.answers)
+            val answers = createAnswers(client, questionEditDTO.answers)
+            val correctAnswerIds = answers
+                .zip(questionEditDTO.answers.relist())
+                .filter { (_, editDTO) -> editDTO.isCorrect }
+                .map { (created, _) -> created.id }
+                .toSet()
+
+            val questionDTO = QuestionPatchDTO(
+                text = questionEditDTO.text,
+                correctAnswers = correctAnswerIds,
+                difficulty = questionEditDTO.difficulty,
+                answers = answers.map(AnswerFullDTO::id).toSet(),
+                tags = questionEditDTO.tags.relist().map(TagFullDTO::id).toSet(),
+                topics = questionEditDTO.topics.relist().map(TopicFullDTO::id).toSet()
+            )
+
+            val question = client.createQuestion(questionDTO)
+            console.log(question)
 
             dispatch(CreateQuestionSuccess(questionEditDTO))
         }
     }
 
-    private fun validateAnswers(answers: Collection<AnswerEditDTO>) {
-        if (answers.isFalsy) {
+    private fun validate(questionEditDto: QuestionEditDTO) {
+        if (questionEditDto.text.isFalsy) {
+            throw SubmissionError.of("text", ErrorMessage("Text must not be empty"))
+        }
+
+        if (questionEditDto.answers.isFalsy) {
             throw SubmissionError.of("answers._error", ErrorMessage("Answers must not be empty"))
         }
 
-        if (answers.dynamicIterator<AnswerEditDTO>().asSequence().count { it.isCorrect } == 0) {
+        if (questionEditDto.answers.dynamicIterator<AnswerEditDTO>().asSequence().count { it.isCorrect } == 0) {
             throw SubmissionError.of("answers._error", ErrorMessage("At least one answer must be correct"))
         }
     }

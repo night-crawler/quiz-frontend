@@ -7,5 +7,6 @@ data class QuestionEditDTO(
     val tags: List<TagFullDTO>,
     val topics: List<TopicFullDTO>,
     val text: String,
+    val difficulty: Int,
     val answers: List<AnswerEditDTO>
 )
