@@ -120,6 +120,7 @@ kotlin {
 
                 implementation(npm("react-window", "1.8.5"))
                 implementation(npm("react-window-infinite-loader", "1.0.5"))
+                implementation(npm("react-virtualized-auto-sizer", "1.0.2"))
             }
         }
 

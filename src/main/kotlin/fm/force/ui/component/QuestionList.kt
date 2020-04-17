@@ -9,6 +9,7 @@ import react.RState
 import react.dom.span
 import react.functionalComponent
 import react.rClass
+import react.virtualized.auto.sizer.autoSizer
 import react.window.fixedSizeList
 import react.window.infinite.loader.InfiniteLoader
 import react.window.infinite.loader.OnItemsRendered
@@ -34,22 +35,24 @@ class Row(props: RowProps) : RComponent<RowProps, RState>(props) {
 
 class QuestionList(props: RProps) : RComponent<RProps, RState>(props) {
     override fun RBuilder.render() {
-        infiniteLoader(
-            isItemLoaded = { true },
-            loadMoreItems = { startIndex: Int, stopIndex: Int -> null },
-            itemCount = 1000
-        ) { onItemsRendered: OnItemsRendered, ref ->
-            fixedSizeList(
-                ref = ref,
-                onItemsRendered = onItemsRendered,
-                rowComponent = Row::class.rClass,
-                height = 500,
-                width = "100%",
-                itemCount = 1000,
-                itemSize = 400
-            ) {
-                attrs {
-                    itemSize = 10
+        autoSizer { size ->
+            infiniteLoader(
+                isItemLoaded = { true },
+                loadMoreItems = { startIndex: Int, stopIndex: Int -> null },
+                itemCount = 1000
+            ) { onItemsRendered: OnItemsRendered, ref ->
+                fixedSizeList(
+                    ref = ref,
+                    onItemsRendered = onItemsRendered,
+                    rowComponent = Row::class.rClass,
+                    height = size.height,
+                    width = size.width,
+                    itemCount = 1000,
+                    itemSize = 400
+                ) {
+                    attrs {
+                        itemSize = 10
+                    }
                 }
             }
         }
