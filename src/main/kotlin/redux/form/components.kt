@@ -87,3 +87,16 @@ fun <
             this.component = component.unsafeCast<JsClass<Component<WrappedFieldArrayProps<FieldValue>, RState>>>()
         }
     }
+
+fun <
+    FieldValue,
+    P : _BaseFieldArrayProps<*, FieldValue>,
+    C : Component<WrappedFieldArrayProps<FieldValue>, RState>
+    > RBuilder.fieldArray(property: KProperty<Collection<FieldValue>>, component: KClass<C>) =
+
+    child(FieldArray::class as KClass<Component<P, RState>>) {
+        attrs {
+            this.name = property.name
+            this.component = component.js as JsClass<Component<WrappedFieldArrayProps<FieldValue>, RState>>
+        }
+    }

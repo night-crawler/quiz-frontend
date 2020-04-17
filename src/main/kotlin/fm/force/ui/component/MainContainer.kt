@@ -25,6 +25,10 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
                 loginForm()
             }
 
+            route("/questions", exact = true) {
+                questionList()
+            }
+
             route("/questions/create") {
                 createQuestionForm()
             }

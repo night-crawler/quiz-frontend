@@ -28,6 +28,7 @@ class CreateQuestionSuccess(val questionEditDTO: QuestionEditDTO) : RAction
 
 private val logger = KotlinLogging.logger("CreateQuestionThunk")
 
+
 class CreateQuestionThunk(private val questionEditDTO: QuestionEditDTO) : ThunkForm() {
     override suspend fun run(
         originalAction: RAction,

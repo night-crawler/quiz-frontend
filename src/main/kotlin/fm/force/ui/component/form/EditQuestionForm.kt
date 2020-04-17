@@ -67,7 +67,7 @@ val EditQuestionForm = functionalComponent<EditQuestionFormProps> { props ->
                 }
             )
 
-            fieldArray("answers", AnswerArrayField::class)
+            fieldArray(QuestionEditDTO::answers, AnswerArrayField::class)
 
             mButton(
                 "Save",

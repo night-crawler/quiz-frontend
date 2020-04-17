@@ -117,6 +117,9 @@ kotlin {
                 implementation(npm("bufferutil"))
 
                 implementation(npm("@material-ui/lab", "4.0.0-alpha.47"))
+
+                implementation(npm("react-window", "1.8.5"))
+                implementation(npm("react-window-infinite-loader", "1.0.5"))
             }
         }
 
