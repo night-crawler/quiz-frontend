@@ -38,6 +38,6 @@ external interface InfiniteLoaderProps : RProps {
 }
 
 @JsName("default")
-external open class InfiniteLoader : Component<InfiniteLoaderProps, RState> {
+open external class InfiniteLoader : Component<InfiniteLoaderProps, RState> {
     override fun render(): ReactElement?
 }

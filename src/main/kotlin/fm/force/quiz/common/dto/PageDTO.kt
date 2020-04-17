@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PageDTO(
+    val currentPage: Int,
     val sort: SortDTO,
     val numberOfElements: Int,
     val totalElements: Long,

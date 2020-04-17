@@ -26,10 +26,10 @@ external interface AutoSizerProps : RProps {
     var className: String?
         get() = definedExternally
         set(value) = definedExternally
-    var defaultHeight: Number?
+    var defaultHeight: Int?
         get() = definedExternally
         set(value) = definedExternally
-    var defaultWidth: Number?
+    var defaultWidth: Int?
         get() = definedExternally
         set(value) = definedExternally
     var disableHeight: Boolean?

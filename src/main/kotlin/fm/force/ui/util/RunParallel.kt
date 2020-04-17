@@ -15,3 +15,8 @@ suspend fun <T, R> Iterator<T>.runParallelIndexed(transform: suspend (index: Int
         .asSequence().toList()
         .mapIndexed { index, item -> GlobalScope.promise { transform(index, item) } }
         .map { it.await() }
+
+suspend fun <T, R> Collection<T>.runParallel(transform: suspend (T) -> R): List<R> =
+    this
+        .map { GlobalScope.promise { transform(it) } }
+        .map { it.await() }

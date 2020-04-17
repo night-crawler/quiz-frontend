@@ -6,6 +6,7 @@ import fm.force.quiz.common.dto.SortDTO
 
 data class PageWrapper<T : DTOMarker>(
     val sort: SortDTO,
+    val currentPage: Int,
     val numberOfElements: Int,
     val totalElements: Long,
     val totalPages: Int,
@@ -19,6 +20,7 @@ data class PageWrapper<T : DTOMarker>(
 
 fun <T : DTOMarker> PageDTO.toTypedPage() = PageWrapper(
     sort = sort,
+    currentPage = currentPage,
     numberOfElements = numberOfElements,
     totalElements = totalElements,
     totalPages = totalPages,

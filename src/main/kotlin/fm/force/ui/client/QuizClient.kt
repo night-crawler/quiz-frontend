@@ -59,6 +59,20 @@ open class QuizClient(
             )
         )
 
+    suspend fun findQuestions(page: Int, pageSize: Int = 25, query: String, sort: String): PageWrapper<QuestionFullDTO> {
+        val params = mapOf(
+            "page" to page,
+            "query" to query,
+            "sort" to sort,
+            "pageSize" to pageSize
+        )
+        return fetchAdapter.fetch<PageDTO>(
+            HttpMethod.GET, prepareUri("questions", params = params), null,
+            headers = jsonHeaders,
+            buildResponse = { request, response -> buildResponse(request, response) }
+        ).toTypedPage()
+    }
+
     suspend fun createQuestion(patchDTO: QuestionPatchDTO) = fetchAdapter.fetch<QuestionFullDTO>(
         HttpMethod.POST, prepareUri("questions"), patchDTO,
         headers = jsonHeaders,

@@ -3,7 +3,6 @@
 package react.virtualized.auto.sizer
 
 import react.RBuilder
-import react.RElementBuilder
 import react.ReactElement
 
 fun RBuilder.autoSizer(
