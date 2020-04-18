@@ -1,22 +1,12 @@
 package fm.force.ui.reducer.action
 
-import fm.force.quiz.common.dto.AnswerFullDTO
-import fm.force.quiz.common.dto.AnswerPatchDTO
-import fm.force.quiz.common.dto.ErrorMessage
-import fm.force.quiz.common.dto.QuestionPatchDTO
-import fm.force.quiz.common.dto.TagFullDTO
-import fm.force.quiz.common.dto.TopicFullDTO
+import fm.force.quiz.common.dto.*
 import fm.force.ui.client.FetchError
 import fm.force.ui.client.QuizClient
-import fm.force.ui.component.form.AnswerEditDTO
-import fm.force.ui.component.form.QuestionEditDTO
+import fm.force.ui.component.question.create.AnswerEditDTO
+import fm.force.ui.component.question.create.QuestionEditDTO
 import fm.force.ui.reducer.State
-import fm.force.ui.util.DynamicIterator
-import fm.force.ui.util.IconName
-import fm.force.ui.util.deepSet
-import fm.force.ui.util.dynamicIterator
-import fm.force.ui.util.isFalsy
-import fm.force.ui.util.runParallelIndexed
+import fm.force.ui.util.*
 import mu.KotlinLogging
 import redux.RAction
 import redux.WrapperAction
@@ -26,7 +16,6 @@ class CreateQuestionStart(val questionEditDTO: QuestionEditDTO) : RAction
 class CreateQuestionSuccess(val questionEditDTO: QuestionEditDTO) : RAction
 
 private val logger = KotlinLogging.logger("CreateQuestionThunk")
-
 
 class CreateQuestionThunk(private val questionEditDTO: QuestionEditDTO) : ThunkForm() {
     override suspend fun run(

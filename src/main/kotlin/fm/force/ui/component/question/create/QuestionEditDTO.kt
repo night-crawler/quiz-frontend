@@ -1,4 +1,4 @@
-package fm.force.ui.component.form
+package fm.force.ui.component.question.create
 
 import fm.force.quiz.common.dto.TagFullDTO
 import fm.force.quiz.common.dto.TopicFullDTO

@@ -50,6 +50,6 @@ external interface AutoSizerProps : RProps {
 }
 
 @JsName("default")
-external class AutoSizer: Component<AutoSizerProps, RState> {
+external class AutoSizer : Component<AutoSizerProps, RState> {
     override fun render(): ReactElement?
 }

@@ -45,8 +45,8 @@ class MainFrame(props: MainFrameProps) : RComponent<MainFrameProps, RState>(prop
                         width = 100.pct
                     }
 
-                    appBar() {}
-                    drawer() {}
+                    appBar {}
+                    drawer {}
 
                     // Main content area
                     styledDiv {
@@ -70,7 +70,7 @@ class MainFrame(props: MainFrameProps) : RComponent<MainFrameProps, RState>(prop
                                 padding(2.spacingUnits)
                                 backgroundColor = Color(theme.palette.background.default)
                             }
-                            mainContainer() {}
+                            mainContainer {}
                         }
                     }
                 }

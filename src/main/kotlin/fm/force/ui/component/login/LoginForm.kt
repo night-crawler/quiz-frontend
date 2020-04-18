@@ -1,4 +1,4 @@
-package fm.force.ui.component.form
+package fm.force.ui.component.login
 
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.button.MButtonVariant

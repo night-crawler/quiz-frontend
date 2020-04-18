@@ -17,6 +17,6 @@ fun UserFullDTO.Companion.of() = UserFullDTO(
 fun AppPreferences.Companion.of() = AppPreferences(
     themeType = "light",
     appTitle = "Quiz",
-    activeViewDisplayName = "1",
+    activeViewDisplayName = "",
     responsiveDrawerOpen = false
 )

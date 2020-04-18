@@ -11,11 +11,7 @@ import fm.force.ui.util.customEnhancer
 import history.History
 import history.createBrowserHistory
 import react.router.connected.routerMiddleware
-import redux.RAction
-import redux.Store
-import redux.WrapperAction
-import redux.applyMiddleware
-import redux.createStore
+import redux.*
 
 class ReduxStore(
     val store: Store<State, RAction, WrapperAction>,

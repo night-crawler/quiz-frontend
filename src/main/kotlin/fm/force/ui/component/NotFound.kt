@@ -1,17 +1,8 @@
 package fm.force.ui.component
 
-import com.ccfraser.muirwik.components.MIconFontSize
-import com.ccfraser.muirwik.components.MTypographyVariant
-import com.ccfraser.muirwik.components.mIcon
-import com.ccfraser.muirwik.components.mTypography
-import com.ccfraser.muirwik.components.spacingUnits
+import com.ccfraser.muirwik.components.*
 import fm.force.ui.util.IconName
-import kotlinx.css.TextAlign
-import kotlinx.css.em
-import kotlinx.css.fontSize
-import kotlinx.css.padding
-import kotlinx.css.paddingBottom
-import kotlinx.css.textAlign
+import kotlinx.css.*
 import react.RBuilder
 import react.RComponent
 import react.RProps

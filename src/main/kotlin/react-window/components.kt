@@ -1,12 +1,12 @@
 package react.window
 
+import kotlin.browser.window
 import react.RBuilder
 import react.RClass
 import react.RElementBuilder
 import react.RRef
 import react.ref
 import react.window.infinite.loader.OnItemsRendered
-import kotlin.browser.window
 
 fun RBuilder.fixedSizeList(
     ref: RRef,
@@ -29,7 +29,6 @@ fun RBuilder.fixedSizeList(
     }
     handler?.invoke(this)
 }
-
 
 fun RBuilder.variableSizeList(
     ref: RRef,

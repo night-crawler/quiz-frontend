@@ -69,7 +69,6 @@ external interface CommonProps : RProps {
         set(value) = definedExternally
 }
 
-
 external interface ListOnItemsRenderedProps {
     var overscanStartIndex: Int
     var overscanStopIndex: Int
@@ -116,7 +115,6 @@ external interface `T$4` {
     var rowIndex: Int
     var data: Any
 }
-
 
 external interface GridOnItemsRenderedProps {
     var overscanColumnStartIndex: Int
@@ -233,7 +231,7 @@ external interface `T$1` {
         set(value) = definedExternally
 }
 
-external open class FixedSizeGrid : Component<FixedSizeGridProps, RState> {
+open external class FixedSizeGrid : Component<FixedSizeGridProps, RState> {
     open fun scrollTo(params: `T$0`)
     open fun scrollToItem(params: `T$1`)
     override fun render(): ReactElement

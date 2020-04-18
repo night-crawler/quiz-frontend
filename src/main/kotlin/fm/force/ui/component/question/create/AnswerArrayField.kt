@@ -1,10 +1,9 @@
-package fm.force.ui.component.form
+package fm.force.ui.component.question.create
 
 import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.button.mIconButton
 import com.ccfraser.muirwik.components.card.mCard
 import com.ccfraser.muirwik.components.card.mCardActions
-import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.form.mFormControl
 import fm.force.quiz.common.dto.FieldError
 import fm.force.ui.component.field.WrappedCheckboxField
@@ -12,12 +11,7 @@ import fm.force.ui.component.field.WrappedMultilineField
 import fm.force.ui.component.field.fieldErrors
 import fm.force.ui.util.IconName
 import fm.force.ui.util.jsApply
-import kotlinx.css.Direction
-import kotlinx.css.direction
-import kotlinx.css.marginTop
-import kotlinx.css.paddingLeft
-import kotlinx.css.paddingRight
-import kotlinx.css.px
+import kotlinx.css.*
 import react.RBuilder
 import react.RComponent
 import react.RState
@@ -30,7 +24,17 @@ class AnswerArrayField(props: WrappedFieldArrayProps<AnswerEditDTO>) :
     RComponent<WrappedFieldArrayProps<AnswerEditDTO>, RState>(props) {
 
     override fun RBuilder.render() {
-        mButton(caption = "Add answer", onClick = { props.fields.push(AnswerEditDTO("", isCorrect = false)) })
+        mButton(
+            caption = "Add answer",
+            onClick = {
+                props.fields.push(
+                    AnswerEditDTO(
+                        "",
+                        isCorrect = false
+                    )
+                )
+            }
+        )
 
         props.fields.map { member: String, index: Int, fields ->
             mCard {
@@ -47,7 +51,8 @@ class AnswerArrayField(props: WrappedFieldArrayProps<AnswerEditDTO>) :
                         WrappedMultilineField,
                         jsApply {
                             label = "Answer Text"
-                            variant = MFormControlVariant.outlined
+                            variant =
+                                com.ccfraser.muirwik.components.form.MFormControlVariant.outlined
                             rows = 2
                             rowsMax = 8
                         },
@@ -60,7 +65,8 @@ class AnswerArrayField(props: WrappedFieldArrayProps<AnswerEditDTO>) :
                         jsApply {
                             fieldType = kotlinx.html.InputType.checkBox
                             label = "Is correct"
-                            variant = MFormControlVariant.outlined
+                            variant =
+                                com.ccfraser.muirwik.components.form.MFormControlVariant.outlined
                         },
                         prefix = member
                     )

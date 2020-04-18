@@ -5,15 +5,7 @@ import kotlin.reflect.KProperty1
 import kotlinext.js.Object
 import kotlinext.js.assign
 import kotlinext.js.js
-import redux.Action
-import redux.Enhancer
-import redux.RAction
-import redux.Reducer
-import redux.Store
-import redux.StoreCreator
-import redux.WrapperAction
-import redux.combineReducers
-import redux.compose
+import redux.*
 
 /**
  * Helper function that combines reducers using [combineReducers] where the keys in the map are

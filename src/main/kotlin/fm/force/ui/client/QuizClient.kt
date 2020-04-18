@@ -1,20 +1,8 @@
 package fm.force.ui.client
 
-import fm.force.quiz.common.dto.AnswerFullDTO
-import fm.force.quiz.common.dto.AnswerPatchDTO
-import fm.force.quiz.common.dto.PageDTO
-import fm.force.quiz.common.dto.QuestionFullDTO
-import fm.force.quiz.common.dto.QuestionPatchDTO
-import fm.force.quiz.common.dto.TagFullDTO
-import fm.force.quiz.common.dto.TagPatchDTO
-import fm.force.quiz.common.dto.TopicFullDTO
-import fm.force.quiz.common.dto.TopicPatchDTO
-import fm.force.ui.client.dto.JwtAccessTokenDTO
-import fm.force.ui.client.dto.JwtResponseTokensDTO
-import fm.force.ui.client.dto.LoginRequestDTO
-import fm.force.ui.client.dto.PageWrapper
+import fm.force.quiz.common.dto.*
+import fm.force.ui.client.dto.*
 import fm.force.ui.client.dto.UserFullDTO
-import fm.force.ui.client.dto.toTypedPage
 import fm.force.ui.util.QueryBuilder
 import kotlinx.coroutines.await
 import kotlinx.serialization.json.Json
@@ -59,7 +47,12 @@ open class QuizClient(
             )
         )
 
-    suspend fun findQuestions(page: Int, pageSize: Int = 25, query: String, sort: String): PageWrapper<QuestionFullDTO> {
+    suspend fun findQuestions(
+        page: Int,
+        pageSize: Int = 25,
+        query: String,
+        sort: String
+    ): PageWrapper<QuestionFullDTO> {
         val params = mapOf(
             "page" to page,
             "query" to query,

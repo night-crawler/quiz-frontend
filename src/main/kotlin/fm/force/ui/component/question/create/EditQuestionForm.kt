@@ -1,4 +1,4 @@
-package fm.force.ui.component.form
+package fm.force.ui.component.question.create
 
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.button.MButtonVariant
@@ -6,28 +6,25 @@ import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.form.mFormControl
 import fm.force.quiz.common.dto.FieldError
-import fm.force.ui.component.field.TagsAutocompleteField
-import fm.force.ui.component.field.TopicsAutocompleteField
-import fm.force.ui.component.field.WrappedMultilineField
-import fm.force.ui.component.field.WrappedTextField
-import fm.force.ui.component.field.fieldErrors
+import fm.force.ui.component.field.*
+import fm.force.ui.component.helmet
 import fm.force.ui.reducer.action.CreateQuestionThunk
 import fm.force.ui.util.jsApply
 import kotlinx.html.InputType
 import kotlinx.html.onSubmit
 import react.RBuilder
 import react.RProps
+import react.dom.title
 import react.functionalComponent
-import redux.form.ConfigProps
-import redux.form.InjectedFormProps
-import redux.form.field
-import redux.form.fieldArray
-import redux.form.reduxForm
+import redux.form.*
 import styled.styledForm
 
 interface EditQuestionFormProps : InjectedFormProps<QuestionEditDTO, RProps, Any>
 
 val EditQuestionForm = functionalComponent<EditQuestionFormProps> { props ->
+    helmet {
+        title("Create new Question")
+    }
     styledForm {
         attrs {
             onSubmit = props.handleSubmit.asDynamic()
@@ -87,7 +84,7 @@ val EditQuestionForm = functionalComponent<EditQuestionFormProps> { props ->
                 attrs.asDynamic().type = "submit"
             }
 
-            props.error?.let { fieldErrors(it.unsafeCast<List<FieldError>>()) }
+            props.error.let { fieldErrors(it.unsafeCast<List<FieldError>>()) }
         }
     }
 }
