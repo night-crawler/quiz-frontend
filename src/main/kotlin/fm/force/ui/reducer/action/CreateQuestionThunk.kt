@@ -16,7 +16,6 @@ import fm.force.ui.util.IconName
 import fm.force.ui.util.deepSet
 import fm.force.ui.util.dynamicIterator
 import fm.force.ui.util.isFalsy
-import fm.force.ui.util.relist
 import fm.force.ui.util.runParallelIndexed
 import mu.KotlinLogging
 import redux.RAction
@@ -58,18 +57,19 @@ class CreateQuestionThunk(private val questionEditDTO: QuestionEditDTO) : ThunkF
 
             val answers = createAnswers(client, questionEditDTO.answers)
             val correctAnswerIds = answers
-                .zip(questionEditDTO.answers.relist())
+                .zip(questionEditDTO.answers)
                 .filter { (_, editDTO) -> editDTO.isCorrect }
                 .map { (created, _) -> created.id }
                 .toSet()
 
             val questionDTO = QuestionPatchDTO(
+                title = questionEditDTO.title,
                 text = questionEditDTO.text,
                 correctAnswers = correctAnswerIds,
                 difficulty = questionEditDTO.difficulty,
                 answers = answers.map(AnswerFullDTO::id).toSet(),
-                tags = questionEditDTO.tags.relist().map(TagFullDTO::id).toSet(),
-                topics = questionEditDTO.topics.relist().map(TopicFullDTO::id).toSet()
+                tags = questionEditDTO.tags.map(TagFullDTO::id).toSet(),
+                topics = questionEditDTO.topics.map(TopicFullDTO::id).toSet()
             )
 
             val question = client.createQuestion(questionDTO)
@@ -93,7 +93,7 @@ class CreateQuestionThunk(private val questionEditDTO: QuestionEditDTO) : ThunkF
         }
     }
 
-    private suspend fun createAnswers(client: QuizClient, patches: Collection<AnswerEditDTO>) =
+    private suspend fun createAnswers(client: QuizClient, patches: Array<AnswerEditDTO>) =
         DynamicIterator<AnswerEditDTO>(patches).runParallelIndexed { index, answer ->
             try {
                 client.createAnswer(AnswerPatchDTO(answer.text))

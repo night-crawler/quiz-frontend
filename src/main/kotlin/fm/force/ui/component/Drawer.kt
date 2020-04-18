@@ -61,9 +61,9 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
                     wordBreak = WordBreak.keepAll
                 }
 
-                routeLink("/sample/haha/222") { pathInfo ->
+                routeLink("/questions") { pathInfo ->
                     mListItem(
-                        "I AM HERE", selected = pathInfo.isActive,
+                        "Questions", selected = pathInfo.isActive,
                         onClick = {
                             props.onResponsiveDrawerOpenToggle(false)
                             pathInfo.onClick(it)
@@ -71,9 +71,9 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
                     )
                 }
 
-                routeLink("/sample") { pathInfo ->
+                routeLink("/questions/create") { pathInfo ->
                     mListItem(
-                        "HAHA", selected = pathInfo.isActive,
+                        "Create Question", selected = pathInfo.isActive,
                         onClick = {
                             props.onResponsiveDrawerOpenToggle(false)
                             pathInfo.onClick(it)

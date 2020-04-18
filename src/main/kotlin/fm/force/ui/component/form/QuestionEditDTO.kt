@@ -4,9 +4,10 @@ import fm.force.quiz.common.dto.TagFullDTO
 import fm.force.quiz.common.dto.TopicFullDTO
 
 data class QuestionEditDTO(
-    val tags: List<TagFullDTO>,
-    val topics: List<TopicFullDTO>,
+    val tags: Array<TagFullDTO>,
+    val topics: Array<TopicFullDTO>,
+    val title: String,
     val text: String,
     val difficulty: Int,
-    val answers: List<AnswerEditDTO>
+    val answers: Array<AnswerEditDTO>
 )

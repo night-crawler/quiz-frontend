@@ -34,14 +34,13 @@ val EditQuestionForm = functionalComponent<EditQuestionFormProps> { props ->
         }
         mFormControl(fullWidth = true) {
             field(
-                QuestionEditDTO::tags,
-                TagsAutocompleteField,
-                jsApply { label = "Tags" }
-            )
-            field(
-                QuestionEditDTO::topics,
-                TopicsAutocompleteField,
-                jsApply { label = "Topics" }
+                QuestionEditDTO::title,
+                WrappedTextField,
+                jsApply {
+                    label = "Question title"
+                    helperText = "Input question title (multiline)"
+                    variant = MFormControlVariant.outlined
+                }
             )
             field(
                 QuestionEditDTO::text,
@@ -53,6 +52,16 @@ val EditQuestionForm = functionalComponent<EditQuestionFormProps> { props ->
                     rows = 2
                     rowsMax = 8
                 }
+            )
+            field(
+                QuestionEditDTO::tags,
+                TagsAutocompleteField,
+                jsApply { label = "Tags" }
+            )
+            field(
+                QuestionEditDTO::topics,
+                TopicsAutocompleteField,
+                jsApply { label = "Topics" }
             )
             field(
                 QuestionEditDTO::difficulty,

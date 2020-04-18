@@ -9,6 +9,7 @@ data class QuestionFullDTO(
     @ContextualSerialization
     val id: Long,
 
+    val title: String,
     val text: String,
     val answers: Collection<AnswerFullDTO>,
     val correctAnswers: Collection<AnswerFullDTO>,
@@ -28,6 +29,7 @@ data class QuestionRestrictedDTO(
     @ContextualSerialization
     val id: Long,
 
+    val title: String,
     val text: String,
     val answers: Collection<AnswerRestrictedDTO>,
     val difficulty: Int
@@ -35,6 +37,7 @@ data class QuestionRestrictedDTO(
 
 @Serializable
 data class QuestionPatchDTO(
+    val title: String? = null,
     val text: String? = null,
     val answers: Set<Long>? = null,
     val correctAnswers: Set<Long>? = null,
