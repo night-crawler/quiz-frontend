@@ -16,6 +16,7 @@ import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
+import kotlin.browser.window
 
 interface RowProps : RProps {
     var index: Int
@@ -26,13 +27,25 @@ class QuestionRow(props: RowProps) : RComponent<RowProps, RState>(props) {
     var thisRef: dynamic = null
 
     private fun forceListRecalculateHeights() {
-        if (thisRef != null && thisRef.clientHeight != null) {
-            val oldHeight = PaginatedQuestions.getHeight(props.index)
-            val newHeight: Int = thisRef.clientHeight as Int
-            if (oldHeight != newHeight) {
-                PaginatedQuestions.setHeight(props.index, newHeight)
-                PaginatedQuestions.infiniteListRef.resetAfterIndex(props.index, true)
-            }
+        if (thisRef == null || thisRef.clientHeight == null) {
+            // it's likely that this element is in cache and it's not visible
+            return
+        }
+
+        // We don't display infinite list while loading, so there's no it's ref.
+        // But this ref will not be set immediately, so we guess it must be rendered later
+        if (!PaginatedQuestions.isInitialized) {
+            window.setTimeout({
+                forceListRecalculateHeights()
+            }, 0)
+            return
+        }
+
+        val oldHeight = PaginatedQuestions.getHeight(props.index)
+        val newHeight: Int = thisRef.clientHeight as Int
+        if (oldHeight != newHeight) {
+            PaginatedQuestions.setHeight(props.index, newHeight)
+            PaginatedQuestions.infiniteListRef!!.resetAfterIndex(props.index, true)
         }
     }
 
@@ -44,11 +57,7 @@ class QuestionRow(props: RowProps) : RComponent<RowProps, RState>(props) {
     override fun RBuilder.render() {
         val question = PaginatedQuestions.getItem(props.index)
         if (question == null) {
-            mCard {
-                mCardContent {
-                    mTypography(align = MTypographyAlign.center) { +"Loading" }
-                }
-            }
+            loadingCard()
             return
         }
 

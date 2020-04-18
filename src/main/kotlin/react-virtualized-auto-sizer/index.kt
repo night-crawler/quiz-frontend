@@ -17,8 +17,8 @@ import react.RState
 import react.ReactElement
 
 external interface Size {
-    var height: Number
-    var width: Number
+    var height: Int
+    var width: Int
 }
 
 external interface AutoSizerProps : RProps {

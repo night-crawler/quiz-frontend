@@ -93,7 +93,7 @@ external interface InjectedFormProps<FormData, P, ErrorType> : RProps {
     fun clearAsyncError(field: String)
     fun destroy()
     var dirty: Boolean
-    var error: ErrorType
+    var error: ErrorType?
     var form: String
     var handleSubmit: SubmitHandler<FormData, P, ErrorType>
     fun initialize(data: FormData)

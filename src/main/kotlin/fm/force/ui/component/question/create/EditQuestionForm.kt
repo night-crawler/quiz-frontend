@@ -84,7 +84,7 @@ val EditQuestionForm = functionalComponent<EditQuestionFormProps> { props ->
                 attrs.asDynamic().type = "submit"
             }
 
-            props.error.let { fieldErrors(it.unsafeCast<List<FieldError>>()) }
+            props.error?.let { fieldErrors(it.unsafeCast<List<FieldError>>()) }
         }
     }
 }

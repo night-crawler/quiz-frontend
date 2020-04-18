@@ -10,7 +10,8 @@ import kotlinx.coroutines.promise
 
 internal val PaginatedQuestions = object : AbstractPageContext<QuestionFullDTO>() {
     override suspend fun getPage(query: String, sort: String, page: Int): PageWrapper<QuestionFullDTO> {
-        notifyLoaded(false)
+        val notify = notifyLoaded ?: throw IllegalStateException("Set notifyLoaded")
+        notify(false)
         val questionPage = ReduxStore.DEFAULT.client.findQuestions(
             page = page,
             query = query,
@@ -20,7 +21,7 @@ internal val PaginatedQuestions = object : AbstractPageContext<QuestionFullDTO>(
         totalElements = questionPage.totalElements
         totalPages = questionPage.totalPages
         store[questionPage.currentPage] = questionPage.content
-        notifyLoaded(true)
+        notify(true)
         return questionPage
     }
 
@@ -30,7 +31,9 @@ internal val PaginatedQuestions = object : AbstractPageContext<QuestionFullDTO>(
         startIndex: Int,
         stopIndex: Int
     ): Promise<List<PageWrapper<QuestionFullDTO>>> {
-        notifyLoaded(false)
+        val notify = notifyLoaded ?: throw IllegalStateException("Set notifyLoaded")
+
+        notify(false)
         val startPage = startIndex / pageSize + 1
         val stopPage = stopIndex / pageSize + 1
 
@@ -39,7 +42,7 @@ internal val PaginatedQuestions = object : AbstractPageContext<QuestionFullDTO>(
         return GlobalScope.promise {
             realRange.runParallel {
                 getPage(query, sort, it)
-            }.also { notifyLoaded(true) }
+            }.also { notify(true) }
         }
     }
 }

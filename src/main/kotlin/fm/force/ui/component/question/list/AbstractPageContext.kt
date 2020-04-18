@@ -13,14 +13,23 @@ abstract class AbstractPageContext<T : DTOMarker> {
     var totalElements: Long = 0
     var pageSize: Int = 25
 
-    lateinit var notifyLoaded: RSetState<Boolean>
-    lateinit var infiniteListRef: VariableSizeList
+    var notifyLoaded: RSetState<Boolean>? = null
+    var infiniteListRef: VariableSizeList? = null
 
     private val refHeightMap = mutableMapOf<Int, Int>()
 
     val averageHeight = refHeightMap.values.sum() / refHeightMap.size
 
     abstract suspend fun getPage(query: String, sort: String, page: Int): PageWrapper<T>
+
+    val isInitialized get() = notifyLoaded != null && infiniteListRef != null
+
+    fun clear() {
+        store.clear()
+        refHeightMap.clear()
+        infiniteListRef = null
+        notifyLoaded = null
+    }
 
     abstract fun loadMoreRows(
         query: String,
