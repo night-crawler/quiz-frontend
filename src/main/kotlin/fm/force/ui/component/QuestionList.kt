@@ -1,11 +1,13 @@
 package fm.force.ui.component
 
+import com.ccfraser.muirwik.components.MTypographyAlign
 import com.ccfraser.muirwik.components.button.mIconButton
 import com.ccfraser.muirwik.components.card.mCard
 import com.ccfraser.muirwik.components.card.mCardActions
 import com.ccfraser.muirwik.components.card.mCardContent
 import com.ccfraser.muirwik.components.card.mCardHeader
 import com.ccfraser.muirwik.components.mAvatar
+import com.ccfraser.muirwik.components.mTypography
 import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.ReduxStore
 import fm.force.ui.client.dto.PageWrapper
@@ -128,6 +130,15 @@ class QuestionRow(props: RowProps) : RComponent<RowProps, RState>(props) {
 
     override fun RBuilder.render() {
         val question = PaginatedQuestions.getItem(props.index)
+        if (question == null) {
+            mCard {
+                mCardContent {
+                    mTypography(align = MTypographyAlign.center) { +"Loading" }
+                }
+            }
+            return
+        }
+
         mCard {
             ref {
                 reference = it
