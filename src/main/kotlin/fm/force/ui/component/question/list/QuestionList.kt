@@ -9,6 +9,7 @@ import fm.force.ui.effect.useDebounce
 import kotlin.math.max
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
+import kotlinx.css.padding
 import react.*
 import react.dom.title
 import react.virtualized.auto.sizer.autoSizer
@@ -16,16 +17,12 @@ import react.window.VariableSizeList
 import react.window.infinite.loader.OnItemsRendered
 import react.window.infinite.loader.infiniteLoader
 import react.window.variableSizeList
+import styled.css
 
 val QuestionList = functionalComponent<RProps> { props ->
-    helmet {
-        title("All questions")
-    }
-
     val (isLoaded, setIsLoaded) = useState(false)
     var clientHeight by UseState(0)
     var searchText by UseState("")
-
     val debouncedSearchText = useDebounce(searchText, 500)
 
     useEffect(listOf(debouncedSearchText)) {
@@ -37,8 +34,13 @@ val QuestionList = functionalComponent<RProps> { props ->
         }
     }
 
+    helmet {
+        title("All questions")
+    }
+
     mTextField("Search", fullWidth = true, margin = MFormControlMargin.none) {
         ref { if (it != null) clientHeight = it.clientHeight }
+//        css { padding = "0px" }
         attrs {
             onChange = { searchText = it.targetInputValue }
         }
