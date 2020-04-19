@@ -2,6 +2,8 @@ package fm.force.ui.client
 
 import fm.force.ui.client.dto.JwtAccessTokenDTO
 import kotlinx.coroutines.await
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
 import org.w3c.fetch.Response
@@ -13,6 +15,8 @@ data class AuthAwareAdapterConfiguration(
 
 class AuthAwareFetchAdapter(private val adapter: FetchAdapter) : FetchAdapter by adapter {
     private val logger = KotlinLogging.logger("AuthAwareFetchAdapter")
+    private val mutex = Mutex()
+
     private lateinit var accessToken: String
     lateinit var refreshUri: String
     lateinit var ignoreUriPatterns: Collection<Regex>
@@ -57,18 +61,21 @@ class AuthAwareFetchAdapter(private val adapter: FetchAdapter) : FetchAdapter by
         return false
     }
 
+
     private suspend fun prepareAuthHeaders(forceRefresh: Boolean = false): Map<String, String> {
-        if (forceRefresh || !::accessToken.isInitialized) {
-            accessToken = refresh().accessToken
-            logger.debug { "No access token; refreshing (force: $forceRefresh)" }
-        }
+        mutex.withLock {
+            if (forceRefresh || !::accessToken.isInitialized) {
+                accessToken = refresh().accessToken
+                logger.debug { "No access token; refreshing (force: $forceRefresh)" }
+            }
 
-        if (!JsJwt.decode(accessToken).isValid()) {
-            accessToken = refresh().accessToken
-            logger.debug { "Access token is not valid; refreshing (force: $forceRefresh)" }
-        }
+            if (!JsJwt.decode(accessToken).isValid()) {
+                accessToken = refresh().accessToken
+                logger.debug { "Access token is not valid; refreshing (force: $forceRefresh)" }
+            }
 
-        return mapOf("Authorization" to "Bearer $accessToken")
+            return mapOf("Authorization" to "Bearer $accessToken")
+        }
     }
 
     private suspend fun refresh() = try {
