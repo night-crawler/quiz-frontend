@@ -1,15 +1,10 @@
 package fm.force.ui.component.question.list
 
-import com.ccfraser.muirwik.components.form.MFormControlMargin
-import com.ccfraser.muirwik.components.mTextField
-import com.ccfraser.muirwik.components.targetInputValue
 import fm.force.ui.component.helmet
 import fm.force.ui.effect.UseState
 import fm.force.ui.effect.useDebounce
-import kotlin.math.max
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
-import kotlinx.css.padding
 import react.*
 import react.dom.title
 import react.virtualized.auto.sizer.autoSizer
@@ -17,7 +12,8 @@ import react.window.VariableSizeList
 import react.window.infinite.loader.OnItemsRendered
 import react.window.infinite.loader.infiniteLoader
 import react.window.variableSizeList
-import styled.css
+import kotlin.math.max
+
 
 val QuestionList = functionalComponent<RProps> { props ->
     val (isLoaded, setIsLoaded) = useState(false)
@@ -34,16 +30,15 @@ val QuestionList = functionalComponent<RProps> { props ->
         }
     }
 
-    helmet {
-        title("All questions")
+    searchBox {
+        attrs {
+            onHeightChange = { clientHeight = it }
+            onSearchTextChange = { searchText = it }
+        }
     }
 
-    mTextField("Search", fullWidth = true, margin = MFormControlMargin.none) {
-        ref { if (it != null) clientHeight = it.clientHeight }
-//        css { padding = "0px" }
-        attrs {
-            onChange = { searchText = it.targetInputValue }
-        }
+    helmet {
+        title("All questions")
     }
 
     // we don't render anything until after we have the actual height of this input
