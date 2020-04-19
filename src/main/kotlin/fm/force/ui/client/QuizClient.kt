@@ -66,6 +66,12 @@ open class QuizClient(
         ).toTypedPage()
     }
 
+    suspend fun deleteQuestion(id: Long) = fetchAdapter.fetch(
+        HttpMethod.DELETE, prepareUri("questions/$id"), null,
+        headers = jsonHeaders,
+        buildResponse = { _, _ -> Unit }
+    )
+
     suspend fun createQuestion(patchDTO: QuestionPatchDTO) = fetchAdapter.fetch<QuestionFullDTO>(
         HttpMethod.POST, prepareUri("questions"), patchDTO,
         headers = jsonHeaders,

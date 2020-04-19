@@ -1,30 +1,33 @@
 package fm.force.ui.component.question.list
 
 import com.ccfraser.muirwik.components.*
-import com.ccfraser.muirwik.components.card.mCard
-import com.ccfraser.muirwik.components.card.mCardActions
-import com.ccfraser.muirwik.components.card.mCardContent
-import com.ccfraser.muirwik.components.card.mCardHeader
+import com.ccfraser.muirwik.components.card.*
+import com.ccfraser.muirwik.components.dialog.*
 import com.ccfraser.muirwik.components.menu.mMenuItemWithIcon
 import date.fns.formatDistance
+import fm.force.quiz.common.dto.QuestionFullDTO
+import fm.force.ui.ReduxStore
 import fm.force.ui.component.iconMenu
 import fm.force.ui.component.routeLink
 import fm.force.ui.util.IconName
-import kotlin.js.Date
 import kotlinext.js.jsObject
-import react.RBuilder
-import react.RComponent
-import react.RProps
-import react.RState
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.promise
+import org.w3c.dom.events.EventTarget
+import react.*
+import styled.StyledElementBuilder
 import kotlin.browser.window
+import kotlin.js.Date
 
-interface RowProps : RProps {
+
+interface QuestionRowProps : RProps {
     var index: Int
     var style: dynamic
 }
 
-class QuestionRow(props: RowProps) : RComponent<RowProps, RState>(props) {
-    var thisRef: dynamic = null
+class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState>(props) {
+    private var thisRef: dynamic = null
+    private var deleteButtonRef: dynamic = null
 
     private fun forceListRecalculateHeights() {
         if (thisRef == null || thisRef.clientHeight == null) {
@@ -51,8 +54,13 @@ class QuestionRow(props: RowProps) : RComponent<RowProps, RState>(props) {
 
     override fun componentDidMount() = forceListRecalculateHeights()
 
-    override fun componentDidUpdate(prevProps: RowProps, prevState: RState, snapshot: Any) =
+    override fun componentDidUpdate(prevProps: QuestionRowProps, prevState: RState, snapshot: Any) =
         forceListRecalculateHeights()
+
+    private fun shouldCloseMenu(eventTarget: EventTarget?): Boolean {
+        if (eventTarget == deleteButtonRef) return false
+        return true
+    }
 
     override fun RBuilder.render() {
         val question = PaginatedQuestions.getItem(props.index)
@@ -83,14 +91,7 @@ class QuestionRow(props: RowProps) : RComponent<RowProps, RState>(props) {
             ) {
                 attrs {
                     avatar = mAvatar(addAsChild = false) { +question.title.slice(0..1) }
-                    action = iconMenu(IconName.MORE_VERT.iconMame) {
-                        routeLink("/questions/${question.id}/delete") {
-                            mMenuItemWithIcon(IconName.REMOVE.iconMame, "Delete", onClick = it.onClick)
-                        }
-                        routeLink("/questions/${question.id}/edit") {
-                            mMenuItemWithIcon(IconName.EDIT.iconMame, "Edit", onClick = it.onClick)
-                        }
-                    }
+                    action = renderAction(question)
                 }
             }
             mCardContent {
@@ -112,6 +113,34 @@ class QuestionRow(props: RowProps) : RComponent<RowProps, RState>(props) {
                     )
                 }
             }
+        }
+    }
+
+    private fun StyledElementBuilder<MCardHeaderProps>.renderAction(question: QuestionFullDTO) =
+        iconMenu(IconName.MORE_VERT.iconMame, shouldClose = ::shouldCloseMenu) {
+            confirmDeleteDialog(
+                title = RBuilder().mDialogTitle("Delete question ${question.title}?"),
+                content = RBuilder().mDialogContent {
+                    mDialogContentText("This action is permanent")
+                },
+                onConfirm = { handleConfirmDelete(question) }
+            ) { setIsOpen ->
+                mMenuItemWithIcon(IconName.REMOVE.iconMame, "Delete", onClick = {
+                    setIsOpen(true)
+                }) {
+                    ref {
+                        deleteButtonRef = it
+                    }
+                }
+            }
+            routeLink("/questions/${question.id}/edit") {
+                mMenuItemWithIcon(IconName.EDIT.iconMame, "Edit", onClick = it.onClick)
+            }
+        }
+
+    private fun handleConfirmDelete(question: QuestionFullDTO) {
+        GlobalScope.promise {
+            ReduxStore.DEFAULT.client.deleteQuestion(question.id)
         }
     }
 }

@@ -10,6 +10,7 @@ import fm.force.ui.util.treeIterator
 import kotlinx.html.onClick
 import org.w3c.dom.Node
 import org.w3c.dom.events.Event
+import org.w3c.dom.events.EventTarget
 import react.RBuilder
 import react.RComponent
 import react.RState
@@ -19,6 +20,7 @@ import styled.styledDiv
 
 interface IconMenuProps : StyledPropsWithCommonAttributes {
     var iconName: String
+    var shouldClose: ((eventTarget: EventTarget?) -> Boolean)?
     var handler: StyledHandler<out MMenuProps>
 }
 
@@ -35,9 +37,17 @@ class IconMenu(props: IconMenuProps) : RComponent<IconMenuProps, RState>(props) 
     private fun handleItemClick(event: Event) {
         val anchor = anchorElement!!
         val negativeMatches = setOf(anchor) + anchor.treeIterator().asSequence().toSet()
-        if (event.target !in negativeMatches) {
-            close()
+        val eventTarget = event.target
+        if (eventTarget !in negativeMatches) {
+            if (shouldClose(eventTarget)) {
+                close()
+            }
         }
+    }
+
+    private fun shouldClose(eventTarget: EventTarget?): Boolean {
+        val cb = props.shouldClose
+        return if (cb != null) cb(eventTarget) else true
     }
 
     private fun close() = setState { isOpened = false }
@@ -66,9 +76,14 @@ class IconMenu(props: IconMenuProps) : RComponent<IconMenuProps, RState>(props) 
     }
 }
 
-fun RBuilder.iconMenu(iconName: String, handler: StyledHandler<out MMenuProps>) = createStyled(IconMenu::class) {
+fun RBuilder.iconMenu(
+    iconName: String,
+    shouldClose: ((eventTarget: EventTarget?) -> Boolean)? = null,
+    handler: StyledHandler<out MMenuProps>
+) = createStyled(IconMenu::class) {
     attrs {
         this.iconName = iconName
         this.handler = handler
+        this.shouldClose = shouldClose
     }
 }
