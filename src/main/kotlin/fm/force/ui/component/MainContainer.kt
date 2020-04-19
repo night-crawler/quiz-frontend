@@ -3,6 +3,7 @@ package fm.force.ui.component
 import com.ccfraser.muirwik.components.button.mButton
 import fm.force.ui.component.login.loginForm
 import fm.force.ui.component.question.create.createQuestionForm
+import fm.force.ui.component.question.create.editQuestionForm
 import fm.force.ui.component.question.list.questionList
 import react.RBuilder
 import react.RComponent
@@ -18,9 +19,6 @@ interface MainContainerProps : RProps {
 class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, RState>(props) {
     override fun RBuilder.render() {
         switch {
-            route("/sample/:sub/222") {
-                intro()
-            }
 
             route("/login") {
                 loginForm()
@@ -32,6 +30,10 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
 
             route("/questions/create") {
                 createQuestionForm()
+            }
+
+            route("/questions/:id/edit") {
+                editQuestionForm()
             }
 
             route("/sample", exact = true) {

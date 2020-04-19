@@ -1,95 +1,59 @@
 package fm.force.ui.component.question.create
 
-import com.ccfraser.muirwik.components.MColor
-import com.ccfraser.muirwik.components.button.MButtonVariant
-import com.ccfraser.muirwik.components.button.mButton
-import com.ccfraser.muirwik.components.form.MFormControlVariant
-import com.ccfraser.muirwik.components.form.mFormControl
-import fm.force.quiz.common.dto.FieldError
-import fm.force.ui.component.field.*
-import fm.force.ui.component.helmet
+import fm.force.quiz.common.dto.AnswerFullDTO
+import fm.force.quiz.common.dto.QuestionFullDTO
+import fm.force.ui.ReduxStore
+import fm.force.ui.component.question.list.loadingCard
+import fm.force.ui.effect.UseState
 import fm.force.ui.reducer.action.CreateQuestionThunk
+import fm.force.ui.util.RouterContext
 import fm.force.ui.util.jsApply
-import kotlinx.html.InputType
-import kotlinx.html.onSubmit
-import react.RBuilder
-import react.RProps
-import react.dom.title
-import react.functionalComponent
-import redux.form.*
-import styled.styledForm
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.promise
+import react.*
+import redux.form.ConfigProps
+import redux.form.reduxForm
 
-interface EditQuestionFormProps : InjectedFormProps<QuestionEditDTO, RProps, Any>
+fun AnswerFullDTO.toAnswerEditDTO(correctAnswers: Collection<AnswerFullDTO>) = AnswerEditDTO(
+    text = text,
+    isCorrect = this.id in correctAnswers.map { it.id }.toSet()
+)
 
-val EditQuestionForm = functionalComponent<EditQuestionFormProps> { props ->
-    helmet {
-        title("Create new Question")
+fun QuestionFullDTO.toEditDTO() = QuestionEditDTO(
+    tags = tags.toTypedArray(),
+    topics = topics.toTypedArray(),
+    answers = answers.map { it.toAnswerEditDTO(correctAnswers) }.toTypedArray(),
+    title = title,
+    text = text,
+    difficulty = difficulty
+)
+
+val wrapper = functionalComponent<EditQuestionFormProps> {
+    val routerContext = useContext(RouterContext)
+    val params = routerContext.match.params.unsafeCast<MatchParams>()
+
+    var question: QuestionFullDTO? by UseState(null)
+
+    useEffect(listOf(params.id)) {
+        GlobalScope.promise {
+            question = ReduxStore.DEFAULT.client.getQuestion(params.id.toLong())
+        }
     }
-    styledForm {
+
+    if (question == null) {
+        loadingCard()
+        return@functionalComponent
+    }
+
+    reduxEditQuestionForm {
         attrs {
-            onSubmit = props.handleSubmit.asDynamic()
-        }
-        mFormControl(fullWidth = true) {
-            field(
-                QuestionEditDTO::title,
-                WrappedTextField,
-                jsApply {
-                    label = "Question title"
-                    helperText = "Input question title (multiline)"
-                    variant = MFormControlVariant.outlined
-                }
-            )
-            field(
-                QuestionEditDTO::text,
-                WrappedMultilineField,
-                jsApply {
-                    label = "Question text"
-                    helperText = "Input question text (multiline)"
-                    variant = MFormControlVariant.outlined
-                    rows = 2
-                    rowsMax = 8
-                }
-            )
-            field(
-                QuestionEditDTO::tags,
-                TagsAutocompleteField,
-                jsApply { label = "Tags" }
-            )
-            field(
-                QuestionEditDTO::topics,
-                TopicsAutocompleteField,
-                jsApply { label = "Topics" }
-            )
-            field(
-                QuestionEditDTO::difficulty,
-                WrappedTextField,
-                jsApply {
-                    fieldType = InputType.number
-                    label = "Difficulty"
-                    helperText = "Question difficulty in range 0-1000"
-                    variant = MFormControlVariant.outlined
-                    rows = 2
-                    rowsMax = 8
-                }
-            )
-
-            fieldArray(QuestionEditDTO::answers, AnswerArrayField::class)
-
-            mButton(
-                "Save",
-                color = MColor.primary,
-                variant = MButtonVariant.contained,
-                disabled = /*props.pristine ||*/ props.submitting
-            ) {
-                attrs.asDynamic().type = "submit"
-            }
-
-            props.error?.let { fieldErrors(it.unsafeCast<List<FieldError>>()) }
+            question?.let { initialValues = it.toEditDTO() }
         }
     }
+
 }
 
-val reduxCreateQuestionForm = reduxForm(
+val reduxEditQuestionForm = reduxForm(
     jsApply<ConfigProps<QuestionEditDTO, EditQuestionFormProps, Any>> {
         form = "editQuestion"
         onSubmit = { questionEditDTO, dispatch, _ ->
@@ -98,4 +62,7 @@ val reduxCreateQuestionForm = reduxForm(
     }
 )(EditQuestionForm)
 
-fun RBuilder.createQuestionForm() = reduxCreateQuestionForm {}
+
+fun RBuilder.editQuestionForm() = child(wrapper) {
+
+}
