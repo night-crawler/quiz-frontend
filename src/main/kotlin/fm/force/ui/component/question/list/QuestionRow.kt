@@ -18,6 +18,7 @@ import react.*
 import styled.StyledElementBuilder
 import kotlin.browser.window
 import kotlin.js.Date
+import kotlin.properties.Delegates
 
 
 interface QuestionRowProps : RProps {
@@ -26,36 +27,26 @@ interface QuestionRowProps : RProps {
 }
 
 class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState>(props) {
-    private var thisRef: dynamic = null
+    private var mCardRef: dynamic by Delegates.observable(null) { _, _, newValue ->
+        if (newValue != null) {
+            recalculateHeights(newValue)
+        }
+    }
     private var deleteButtonRef: dynamic = null
 
-    private fun forceListRecalculateHeights() {
-        if (thisRef == null || thisRef.clientHeight == null) {
-            // it's likely that this element is in cache and it's not visible
-            return
-        }
-
-        // We don't display infinite list while loading, so there's no it's ref.
-        // But this ref will not be set immediately, so we guess it must be rendered later
+    private fun recalculateHeights(capturedRef: dynamic) {
         if (!PaginatedQuestions.isInitialized) {
-            window.setTimeout({
-                forceListRecalculateHeights()
-            }, 0)
+            window.setTimeout({ recalculateHeights(capturedRef) }, 0)
             return
         }
 
         val oldHeight = PaginatedQuestions.getHeight(props.index)
-        val newHeight: Int = thisRef.clientHeight as Int
+        val newHeight: Int = capturedRef.clientHeight as Int
         if (oldHeight != newHeight) {
             PaginatedQuestions.setHeight(props.index, newHeight)
             PaginatedQuestions.infiniteListRef!!.resetAfterIndex(props.index, true)
         }
     }
-
-    override fun componentDidMount() = forceListRecalculateHeights()
-
-    override fun componentDidUpdate(prevProps: QuestionRowProps, prevState: RState, snapshot: Any) =
-        forceListRecalculateHeights()
 
     private fun shouldCloseMenu(eventTarget: EventTarget?): Boolean {
         if (eventTarget == deleteButtonRef) return false
@@ -71,7 +62,7 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
 
         mCard {
             ref {
-                thisRef = it
+                mCardRef = it
             }
             attrs {
                 val style = jsObject<dynamic> {
@@ -141,6 +132,7 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
     private fun handleConfirmDelete(question: QuestionFullDTO) {
         GlobalScope.promise {
             ReduxStore.DEFAULT.client.deleteQuestion(question.id)
+            PaginatedQuestions.deleteItem(props.index)
         }
     }
 }

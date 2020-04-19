@@ -5,6 +5,7 @@ import fm.force.ui.client.dto.PageWrapper
 import kotlin.js.Promise
 import react.RSetState
 import react.window.VariableSizeList
+import kotlin.math.max
 
 abstract class AbstractPageContext<T : DTOMarker> {
     internal val store = mutableMapOf<Int, Collection<T>>()
@@ -43,11 +44,20 @@ abstract class AbstractPageContext<T : DTOMarker> {
         return page in store
     }
 
+    fun getItemPage(index: Int) = index / pageSize + 1
+
+    fun deleteItem(index: Int) {
+        val page = getItemPage(index)
+//        (page..totalPages).forEach { store.remove(it) }
+//        infiniteListRef?.resetAfterIndex(max(0, (page - 1) * pageSize), true)
+        store.clear()
+        infiniteListRef?.resetAfterIndex(0, true)
+        infiniteListRef?.scrollToItem(0)
+    }
+
     fun getItem(index: Int): T? {
-        val page = index / pageSize + 1
         val offset = index % pageSize
-        val value = store[page]?.toList()?.get(offset)
-        return value
+        return store[getItemPage(index)]?.toList()?.get(offset)
     }
 
     fun getHeight(index: Int) = refHeightMap[index]

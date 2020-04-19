@@ -20,6 +20,7 @@ val QuestionList = functionalComponent<RProps> { props ->
     var clientHeight by UseState(0)
     var searchText by UseState("")
     val debouncedSearchText = useDebounce(searchText, 500)
+    var placeHolderToForceRerender by UseState<dynamic>(null)
 
     useEffect(listOf(debouncedSearchText)) {
         GlobalScope.promise {
@@ -46,11 +47,6 @@ val QuestionList = functionalComponent<RProps> { props ->
         return@functionalComponent
     }
 
-    if (!isLoaded) {
-        loadingCard()
-        return@functionalComponent
-    }
-
     autoSizer { size ->
         infiniteLoader(
             isItemLoaded = PaginatedQuestions::isItemLoaded,
@@ -73,8 +69,10 @@ val QuestionList = functionalComponent<RProps> { props ->
                 }
             ) {
                 this.ref {
-                    if (it != null)
+                    if (it != null) {
                         PaginatedQuestions.infiniteListRef = it.unsafeCast<VariableSizeList>()
+                        placeHolderToForceRerender = it
+                    }
                 }
             }
         }
