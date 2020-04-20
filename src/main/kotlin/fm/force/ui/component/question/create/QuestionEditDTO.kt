@@ -10,4 +10,15 @@ data class QuestionEditDTO(
     val text: String,
     val difficulty: Int,
     val answers: Array<AnswerEditDTO>
+) {
+    companion object
+}
+
+fun QuestionEditDTO.Companion.of() = QuestionEditDTO(
+    tags = emptyArray(),
+    topics = emptyArray(),
+    title = "",
+    text = "",
+    difficulty = 0,
+    answers = emptyArray()
 )

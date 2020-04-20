@@ -5,14 +5,10 @@ import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.ReduxStore
 import fm.force.ui.component.question.list.loadingCard
 import fm.force.ui.effect.UseState
-import fm.force.ui.reducer.action.CreateQuestionThunk
 import fm.force.ui.util.RouterContext
-import fm.force.ui.util.jsApply
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
 import react.*
-import redux.form.ConfigProps
-import redux.form.reduxForm
 
 fun AnswerFullDTO.toAnswerEditDTO(correctAnswers: Collection<AnswerFullDTO>) = AnswerEditDTO(
     text = text,

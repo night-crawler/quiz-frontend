@@ -69,6 +69,10 @@ class CreateQuestionThunk(private val questionEditDTO: QuestionEditDTO) : ThunkF
     }
 
     private fun validate(questionEditDto: QuestionEditDTO) {
+        if (questionEditDto.title.isFalsy) {
+            throw SubmissionError.of("title", ErrorMessage("Title must not be empty"))
+        }
+
         if (questionEditDto.text.isFalsy) {
             throw SubmissionError.of("text", ErrorMessage("Text must not be empty"))
         }

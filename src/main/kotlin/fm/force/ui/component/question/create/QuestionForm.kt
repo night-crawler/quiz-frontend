@@ -99,13 +99,13 @@ private val QuestionForm = functionalComponent<EditQuestionFormProps> { props ->
 }
 
 val reduxCreateQuestionForm = reduxForm(
-        jsApply<ConfigProps<QuestionEditDTO, EditQuestionFormProps, Any>> {
-            form = "createQuestion"
-            onSubmit = { questionEditDTO, dispatch, _ ->
-                dispatch(CreateQuestionThunk(questionEditDTO))
-            }
+    jsApply<ConfigProps<QuestionEditDTO, EditQuestionFormProps, Any>> {
+        form = "createQuestion"
+        onSubmit = { questionEditDTO, dispatch, _ ->
+            dispatch(CreateQuestionThunk(questionEditDTO))
         }
-    )(QuestionForm)
+    }
+)(QuestionForm)
 
 val reduxEditQuestionForm = reduxForm(
     jsApply<ConfigProps<QuestionEditDTO, EditQuestionFormProps, Any>> {
@@ -116,4 +116,8 @@ val reduxEditQuestionForm = reduxForm(
     }
 )(QuestionForm)
 
-fun RBuilder.createQuestionForm() = reduxCreateQuestionForm { }
+fun RBuilder.createQuestionForm() = reduxCreateQuestionForm {
+    attrs {
+        initialValues = QuestionEditDTO.of()
+    }
+}

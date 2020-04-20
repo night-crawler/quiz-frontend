@@ -17,14 +17,17 @@ private interface MainContainerStateProps : RProps {
     var locationPathname: String
 }
 
-private interface MainContainerDispatchProps : RProps
+private interface MainContainerDispatchProps : RProps {
+    var dispatch: (RAction) -> WrapperAction
+}
 
 private val mapStateToProps: MainContainerStateProps.(State, MainContainerConnectedProps) -> Unit = { state, _ ->
     locationPathname = state.router.location.pathname
 }
 
 private val mapDispatchToProps: MainContainerDispatchProps.((RAction) -> WrapperAction, MainContainerConnectedProps) -> Unit =
-    { _, _ ->
+    { dispatch, _ ->
+        this.dispatch = dispatch
     }
 
 val mainContainer: RClass<MainContainerConnectedProps> =
