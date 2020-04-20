@@ -28,7 +28,7 @@ fun QuestionFullDTO.toEditDTO() = QuestionEditDTO(
     difficulty = difficulty
 )
 
-val wrapper = functionalComponent<EditQuestionFormProps> {
+val EditQuestionFormHoc = functionalComponent<EditQuestionFormProps> {
     val routerContext = useContext(RouterContext)
     val params = routerContext.match.params.unsafeCast<MatchParams>()
 
@@ -53,16 +53,7 @@ val wrapper = functionalComponent<EditQuestionFormProps> {
 
 }
 
-val reduxEditQuestionForm = reduxForm(
-    jsApply<ConfigProps<QuestionEditDTO, EditQuestionFormProps, Any>> {
-        form = "editQuestion"
-        onSubmit = { questionEditDTO, dispatch, _ ->
-            dispatch(CreateQuestionThunk(questionEditDTO))
-        }
-    }
-)(EditQuestionForm)
 
-
-fun RBuilder.editQuestionForm() = child(wrapper) {
+fun RBuilder.editQuestionForm() = child(EditQuestionFormHoc) {
 
 }

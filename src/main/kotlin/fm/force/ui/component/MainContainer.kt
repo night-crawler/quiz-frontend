@@ -19,32 +19,12 @@ interface MainContainerProps : RProps {
 class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, RState>(props) {
     override fun RBuilder.render() {
         switch {
-
-            route("/login") {
-                loginForm()
-            }
-
-            route("/questions", exact = true) {
-                questionList()
-            }
-
-            route("/questions/create") {
-                createQuestionForm()
-            }
-
-            route("/questions/:id/edit") {
-                editQuestionForm()
-            }
-
-            route("/sample", exact = true) {
-                mButton("/sample")
-            }
-            route("/", exact = true) {
-                mButton("/")
-            }
-            route("*") {
-                notFound()
-            }
+            route("/login") { loginForm() }
+            route("/questions", exact = true) { questionList() }
+            route("/questions/create", exact = true) { createQuestionForm() }
+            route("/questions/:id/edit") { editQuestionForm() }
+            route("/", exact = true) { mButton("/") }
+            route("*") { notFound() }
         }
     }
 }
