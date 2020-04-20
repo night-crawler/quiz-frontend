@@ -5,6 +5,7 @@ import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.dialog.mDialog
 import com.ccfraser.muirwik.components.dialog.mDialogActions
 import react.*
+import react.dom.div
 
 interface ConfirmDeleteDialogProps : RProps {
     var handler: RBuilder.(setter: (Boolean) -> Unit) -> Unit
@@ -12,6 +13,7 @@ interface ConfirmDeleteDialogProps : RProps {
     var onCancel: (() -> Unit)?
     var title: ReactElement
     var content: ReactElement
+    var refCallback: ((value: dynamic) -> Unit)?
 }
 
 class ConfirmDeleteDialog(props: ConfirmDeleteDialogProps) : RComponent<ConfirmDeleteDialogProps, RState>(props) {
@@ -19,31 +21,39 @@ class ConfirmDeleteDialog(props: ConfirmDeleteDialogProps) : RComponent<ConfirmD
     private fun setIsOpen(value: Boolean) = setState { isOpen = value }
 
     override fun RBuilder.render() {
-        props.handler(this, ::setIsOpen)
-        mDialog(
-            isOpen,
-            onClose = { _, _ ->
-                setIsOpen(false)
+        div {
+            ref {
+                props.refCallback?.invoke(it)
             }
-        ) {
-            childList.add(props.title)
-            childList.add(props.content)
+            props.handler(this, ::setIsOpen)
+            mDialog(
+                isOpen,
+                onClose = { _, _ ->
+                    setIsOpen(false)
+                }
+            ) {
+                ref {
+                    props.refCallback?.invoke(it)
+                }
+                childList.add(props.title)
+                childList.add(props.content)
 
-            mDialogActions {
-                mButton(
-                    "Cancel", MColor.secondary,
-                    onClick = {
-                        setIsOpen(false)
-                        props.onCancel?.invoke()
-                    }
-                )
-                mButton(
-                    "Confirm", MColor.primary,
-                    onClick = {
-                        props.onConfirm?.invoke()
-                        setIsOpen(false)
-                    }
-                )
+                mDialogActions {
+                    mButton(
+                        "Cancel", MColor.secondary,
+                        onClick = {
+                            setIsOpen(false)
+                            props.onCancel?.invoke()
+                        }
+                    )
+                    mButton(
+                        "Confirm", MColor.primary,
+                        onClick = {
+                            props.onConfirm?.invoke()
+                            setIsOpen(false)
+                        }
+                    )
+                }
             }
         }
     }
@@ -54,13 +64,15 @@ fun RBuilder.confirmDeleteDialog(
     content: ReactElement,
     onCancel: (() -> Unit)? = null,
     onConfirm: (() -> Unit)? = null,
-    handler: RBuilder.(RSetState<Boolean>) -> Unit
+    dialogRef: ((value: dynamic) -> Unit)? = null,
+    nestedHandler: RBuilder.(RSetState<Boolean>) -> Unit
 ) = child(ConfirmDeleteDialog::class) {
     attrs {
-        this.handler = handler
+        this.handler = nestedHandler
         this.onCancel = onCancel
         this.onConfirm = onConfirm
         this.title = title
         this.content = content
+        this.refCallback = dialogRef
     }
 }

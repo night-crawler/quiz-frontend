@@ -12,17 +12,20 @@ import fm.force.ui.ReduxStore
 import fm.force.ui.component.iconMenu
 import fm.force.ui.component.routeLink
 import fm.force.ui.util.IconName
+import fm.force.ui.util.treeIterator
 import kotlin.browser.window
 import kotlin.js.Date
 import kotlin.properties.Delegates
 import kotlinext.js.jsObject
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
+import org.w3c.dom.Node
 import org.w3c.dom.events.EventTarget
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
+import react.dom.findDOMNode
 import styled.StyledElementBuilder
 
 interface QuestionRowProps : RProps {
@@ -31,6 +34,7 @@ interface QuestionRowProps : RProps {
 }
 
 class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState>(props) {
+    private var dialogRef: Node? = null
     private var mCardRef: dynamic by Delegates.observable(null) { _, _, newValue ->
         if (newValue != null) {
             recalculateHeights(newValue)
@@ -53,8 +57,10 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
     }
 
     private fun shouldCloseMenu(eventTarget: EventTarget?): Boolean {
-        if (eventTarget == deleteButtonRef) return false
-        return true
+        val anchor = dialogRef ?: return true
+        val negativeMatches = setOf(anchor) + anchor.treeIterator().asSequence().toSet()
+        if (eventTarget in negativeMatches) return false
+        return false
     }
 
     override fun RBuilder.render() {
@@ -114,6 +120,7 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
     private fun StyledElementBuilder<MCardHeaderProps>.renderAction(question: QuestionFullDTO) =
         iconMenu(IconName.MORE_VERT.iconMame, shouldClose = ::shouldCloseMenu) {
             confirmDeleteDialog(
+                dialogRef = { dialogRef = findDOMNode(it) },
                 title = RBuilder().mDialogTitle("Delete question ${question.title}?"),
                 content = RBuilder().mDialogContent {
                     mDialogContentText("This action is permanent")
