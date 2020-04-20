@@ -4,6 +4,7 @@ import fm.force.quiz.common.dto.TagFullDTO
 import fm.force.quiz.common.dto.TopicFullDTO
 
 data class QuestionEditDTO(
+    val id: Long? = null,
     val tags: Array<TagFullDTO>,
     val topics: Array<TopicFullDTO>,
     val title: String,

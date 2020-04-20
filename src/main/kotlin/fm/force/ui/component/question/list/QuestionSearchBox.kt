@@ -31,7 +31,7 @@ class QuestionSearchBox(props: QuestionSearchBoxProps) : RComponent<QuestionSear
                 margin = "0px"
             }
             attrs {
-                onChange = { props.onSearchTextChange(it.targetInputValue)  }
+                onChange = { props.onSearchTextChange(it.targetInputValue) }
             }
         }
     }

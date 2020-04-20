@@ -8,7 +8,8 @@ import fm.force.quiz.common.dto.FieldError
 import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.component.field.*
 import fm.force.ui.component.helmet
-import fm.force.ui.reducer.action.CreateQuestionThunk
+import fm.force.ui.component.question.create.action.CreateQuestionThunk
+import fm.force.ui.component.question.create.action.EditQuestionThunk
 import fm.force.ui.util.jsApply
 import kotlinx.html.onSubmit
 import react.RBuilder
@@ -17,7 +18,6 @@ import react.dom.title
 import react.functionalComponent
 import redux.form.*
 import styled.styledForm
-
 
 interface EditQuestionFormProps : InjectedFormProps<QuestionEditDTO, RProps, Any> {
     var question: QuestionFullDTO
@@ -111,7 +111,7 @@ val reduxEditQuestionForm = reduxForm(
     jsApply<ConfigProps<QuestionEditDTO, EditQuestionFormProps, Any>> {
         form = "editQuestion"
         onSubmit = { questionEditDTO, dispatch, _ ->
-            dispatch(CreateQuestionThunk(questionEditDTO))
+            dispatch(EditQuestionThunk(questionEditDTO))
         }
     }
 )(QuestionForm)

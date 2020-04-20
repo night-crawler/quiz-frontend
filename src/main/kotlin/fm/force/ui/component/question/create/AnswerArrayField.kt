@@ -12,6 +12,7 @@ import fm.force.ui.component.field.fieldErrors
 import fm.force.ui.util.IconName
 import fm.force.ui.util.jsApply
 import kotlinx.css.*
+import org.w3c.dom.events.Event
 import react.RBuilder
 import react.RComponent
 import react.RState
@@ -23,19 +24,10 @@ import styled.css
 class AnswerArrayField(props: WrappedFieldArrayProps<AnswerEditDTO>) :
     RComponent<WrappedFieldArrayProps<AnswerEditDTO>, RState>(props) {
 
-    override fun RBuilder.render() {
-        mButton(
-            caption = "Add answer",
-            onClick = {
-                props.fields.push(
-                    AnswerEditDTO(
-                        "",
-                        isCorrect = false
-                    )
-                )
-            }
-        )
+    @Suppress("UNUSED_PARAMETER")
+    private fun addAnswer(event: Event?) = props.fields.push(AnswerEditDTO.of())
 
+    override fun RBuilder.render() {
         props.fields.map { member: String, index: Int, fields ->
             mCard {
                 css {
@@ -93,6 +85,8 @@ class AnswerArrayField(props: WrappedFieldArrayProps<AnswerEditDTO>) :
                 }
             }
         }
+
+        mButton(caption = "Add answer", onClick = ::addAnswer)
 
         props.meta.error?.let { fieldErrors(it.unsafeCast<List<FieldError>>()) }
     }

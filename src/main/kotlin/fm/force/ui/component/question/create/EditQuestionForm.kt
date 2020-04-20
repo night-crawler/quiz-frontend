@@ -11,11 +11,13 @@ import kotlinx.coroutines.promise
 import react.*
 
 fun AnswerFullDTO.toAnswerEditDTO(correctAnswers: Collection<AnswerFullDTO>) = AnswerEditDTO(
+    id = id,
     text = text,
     isCorrect = this.id in correctAnswers.map { it.id }.toSet()
 )
 
 fun QuestionFullDTO.toEditDTO() = QuestionEditDTO(
+    id = id,
     tags = tags.toTypedArray(),
     topics = topics.toTypedArray(),
     answers = answers.map { it.toAnswerEditDTO(correctAnswers) }.toTypedArray(),
@@ -46,10 +48,7 @@ val EditQuestionFormHoc = functionalComponent<EditQuestionFormProps> {
             question?.let { initialValues = it.toEditDTO() }
         }
     }
-
 }
 
-
 fun RBuilder.editQuestionForm() = child(EditQuestionFormHoc) {
-
 }

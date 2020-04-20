@@ -3,9 +3,9 @@ package fm.force.ui.component.question.list
 import fm.force.quiz.common.dto.DTOMarker
 import fm.force.ui.client.dto.PageWrapper
 import kotlin.js.Promise
+import kotlin.math.max
 import react.RSetState
 import react.window.VariableSizeList
-import kotlin.math.max
 
 abstract class AbstractPageContext<T : DTOMarker> {
     internal val store = mutableMapOf<Int, Collection<T>>()
@@ -19,7 +19,8 @@ abstract class AbstractPageContext<T : DTOMarker> {
 
     private val refHeightMap = mutableMapOf<Int, Int>()
 
-    val averageHeight = refHeightMap.values.sum() / refHeightMap.size
+    private val averageHeight: Int
+        get() = refHeightMap.values.sum() / refHeightMap.size
 
     abstract suspend fun getPage(query: String, sort: String, page: Int): PageWrapper<T>
 
@@ -44,7 +45,7 @@ abstract class AbstractPageContext<T : DTOMarker> {
         return page in store
     }
 
-    fun getItemPage(index: Int) = index / pageSize + 1
+    private fun getItemPage(index: Int) = index / pageSize + 1
 
     fun deleteItem(index: Int) {
         val page = getItemPage(index)
@@ -63,5 +64,14 @@ abstract class AbstractPageContext<T : DTOMarker> {
     fun getHeight(index: Int) = refHeightMap[index]
     fun setHeight(index: Int, height: Int) {
         refHeightMap[index] = height
+    }
+
+    fun getEffectiveHeight(index: Int): Int {
+        val measuredHeight = PaginatedQuestions.getHeight(index)
+        if (measuredHeight != null && measuredHeight > 0) {
+            return measuredHeight + 5
+        }
+
+        return max(PaginatedQuestions.averageHeight, 300) + 5
     }
 }

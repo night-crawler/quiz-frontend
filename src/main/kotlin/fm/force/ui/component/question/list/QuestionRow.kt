@@ -2,7 +2,9 @@ package fm.force.ui.component.question.list
 
 import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.card.*
-import com.ccfraser.muirwik.components.dialog.*
+import com.ccfraser.muirwik.components.dialog.mDialogContent
+import com.ccfraser.muirwik.components.dialog.mDialogContentText
+import com.ccfraser.muirwik.components.dialog.mDialogTitle
 import com.ccfraser.muirwik.components.menu.mMenuItemWithIcon
 import date.fns.formatDistance
 import fm.force.quiz.common.dto.QuestionFullDTO
@@ -10,16 +12,18 @@ import fm.force.ui.ReduxStore
 import fm.force.ui.component.iconMenu
 import fm.force.ui.component.routeLink
 import fm.force.ui.util.IconName
+import kotlin.browser.window
+import kotlin.js.Date
+import kotlin.properties.Delegates
 import kotlinext.js.jsObject
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
 import org.w3c.dom.events.EventTarget
-import react.*
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
 import styled.StyledElementBuilder
-import kotlin.browser.window
-import kotlin.js.Date
-import kotlin.properties.Delegates
-
 
 interface QuestionRowProps : RProps {
     var index: Int
@@ -116,9 +120,12 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
                 },
                 onConfirm = { handleConfirmDelete(question) }
             ) { setIsOpen ->
-                mMenuItemWithIcon(IconName.REMOVE.iconMame, "Delete", onClick = {
-                    setIsOpen(true)
-                }) {
+                mMenuItemWithIcon(
+                    IconName.REMOVE.iconMame, "Delete",
+                    onClick = {
+                        setIsOpen(true)
+                    }
+                ) {
                     ref {
                         deleteButtonRef = it
                     }

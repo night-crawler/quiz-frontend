@@ -20,3 +20,8 @@ suspend fun <T, R> Collection<T>.runParallel(transform: suspend (T) -> R): List<
     this
         .map { GlobalScope.promise { transform(it) } }
         .map { it.await() }
+
+suspend fun <T, R> Array<T>.runParallelIndexed(transform: suspend (index: Int, item: T) -> R): List<R> =
+    this
+        .mapIndexed { index, item -> GlobalScope.promise { transform(index, item) } }
+        .map { it.await() }

@@ -12,8 +12,6 @@ import react.window.VariableSizeList
 import react.window.infinite.loader.OnItemsRendered
 import react.window.infinite.loader.infiniteLoader
 import react.window.variableSizeList
-import kotlin.math.max
-
 
 val QuestionList = functionalComponent<RProps> { props ->
     val (isLoaded, setIsLoaded) = useState(false)
@@ -62,11 +60,7 @@ val QuestionList = functionalComponent<RProps> { props ->
                 height = size.height - clientHeight,
                 width = size.width,
                 itemCount = PaginatedQuestions.totalElements.toInt(),
-                itemSize = {
-                    (PaginatedQuestions.getHeight(it) ?: max(
-                        PaginatedQuestions.averageHeight, 100
-                    )) + 5
-                }
+                itemSize = PaginatedQuestions::getEffectiveHeight
             ) {
                 this.ref {
                     if (it != null) {

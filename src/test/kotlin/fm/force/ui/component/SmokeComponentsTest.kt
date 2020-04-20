@@ -17,7 +17,7 @@ class SmokeComponentsTest {
         val q = a.styledDiv {
             provider(reduxStore.store) {
                 connectedRouter(reduxStore.history) {
-                    appBar() {}
+                    appBar {}
                 }
             }
         }

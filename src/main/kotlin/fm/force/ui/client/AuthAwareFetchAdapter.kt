@@ -61,7 +61,6 @@ class AuthAwareFetchAdapter(private val adapter: FetchAdapter) : FetchAdapter by
         return false
     }
 
-
     private suspend fun prepareAuthHeaders(forceRefresh: Boolean = false): Map<String, String> {
         mutex.withLock {
             if (forceRefresh || !::accessToken.isInitialized) {
