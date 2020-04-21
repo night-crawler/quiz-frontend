@@ -123,6 +123,10 @@ kotlin {
                 implementation(npm("react-virtualized-auto-sizer", "1.0.2"))
 
                 implementation(npm("date-fns", "2.12.0"))
+                implementation(npm("codemirror", "5.53.2"))
+                implementation(npm("react-codemirror2", "7.1.0"))
+                implementation(npm("style-loader"))
+                implementation(npm("css-loader"))
             }
         }
 
