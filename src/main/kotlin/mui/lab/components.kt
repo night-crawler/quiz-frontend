@@ -16,7 +16,7 @@ fun <T> RBuilder.labAutocompleteField(
 ) =
     child(Autocomplete::class as KClass<Component<AutocompleteProps<T>, RState>>) {
         attrs {
-            this.asDynamic().multiple = true
+            this.asDynamic().multiple = false
             this.options = options.toTypedArray()
             renderOption = { option, state ->
                 span {

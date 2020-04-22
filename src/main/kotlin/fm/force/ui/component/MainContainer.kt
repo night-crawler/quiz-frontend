@@ -5,6 +5,7 @@ import fm.force.ui.component.login.loginForm
 import fm.force.ui.component.question.create.createQuestionForm
 import fm.force.ui.component.question.create.editQuestionForm
 import fm.force.ui.component.question.list.questionList
+import fm.force.ui.component.quiz.create.createQuizForm
 import fm.force.ui.reducer.action.ChangeAppViewName
 import react.RBuilder
 import react.RComponent
@@ -32,12 +33,16 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
                 questionList()
             }
             route("/questions/create", exact = true) {
-                props.dispatch(ChangeAppViewName("Create question"))
+                props.dispatch(ChangeAppViewName("Create Question"))
                 createQuestionForm()
             }
             route("/questions/:id/edit") {
-                props.dispatch(ChangeAppViewName("Edit question"))
+                props.dispatch(ChangeAppViewName("Edit Question"))
                 editQuestionForm()
+            }
+            route("/quizzes/create", exact = true) {
+                props.dispatch(ChangeAppViewName("Create Quiz"))
+                createQuizForm()
             }
             route("/", exact = true) {
                 props.dispatch(ChangeAppViewName("Home"))

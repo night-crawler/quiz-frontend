@@ -80,6 +80,16 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
                         }
                     )
                 }
+
+                routeLink("/quizzes/create") { pathInfo ->
+                    mListItem(
+                        "Create Quiz", selected = pathInfo.isActive,
+                        onClick = {
+                            props.onResponsiveDrawerOpenToggle(false)
+                            pathInfo.onClick(it)
+                        }
+                    )
+                }
             }
         }
     }

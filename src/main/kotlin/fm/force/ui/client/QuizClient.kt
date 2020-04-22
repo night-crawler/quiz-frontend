@@ -78,6 +78,12 @@ open class QuizClient(
         buildResponse = { request, response -> buildResponse(request, response) }
     )
 
+    suspend fun createQuiz(patchDTO: QuizPatchDTO) = fetchAdapter.fetch<QuizFullDTO>(
+        HttpMethod.POST, prepareUri("quizzes"), patchDTO,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
     suspend fun createQuestion(patchDTO: QuestionPatchDTO) = fetchAdapter.fetch<QuestionFullDTO>(
         HttpMethod.POST, prepareUri("questions"), patchDTO,
         headers = jsonHeaders,
