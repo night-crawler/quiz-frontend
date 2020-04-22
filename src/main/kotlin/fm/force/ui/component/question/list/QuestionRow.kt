@@ -13,9 +13,6 @@ import fm.force.ui.component.iconMenu
 import fm.force.ui.component.routeLink
 import fm.force.ui.util.IconName
 import fm.force.ui.util.treeIterator
-import kotlin.browser.window
-import kotlin.js.Date
-import kotlin.properties.Delegates
 import kotlinext.js.jsObject
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
@@ -27,6 +24,9 @@ import react.RProps
 import react.RState
 import react.dom.findDOMNode
 import styled.StyledElementBuilder
+import kotlin.browser.window
+import kotlin.js.Date
+import kotlin.properties.Delegates
 
 interface QuestionRowProps : RProps {
     var index: Int
@@ -40,7 +40,6 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
             recalculateHeights(newValue)
         }
     }
-    private var deleteButtonRef: dynamic = null
 
     private fun recalculateHeights(capturedRef: dynamic) {
         if (!PaginatedQuestions.isInitialized) {
@@ -96,8 +95,10 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
                 }
             }
             mCardContent {
-                mTypography {
-                    +question.text
+                child(ReadOnlyQuestionCode::class) {
+                    attrs {
+                        this.question = question
+                    }
                 }
                 renderQuestionAnswers(question)
             }
@@ -132,11 +133,7 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
                     onClick = {
                         setIsOpen(true)
                     }
-                ) {
-                    ref {
-                        deleteButtonRef = it
-                    }
-                }
+                )
             }
             routeLink("/questions/${question.id}/edit") {
                 mMenuItemWithIcon(IconName.EDIT.iconMame, "Edit", onClick = it.onClick)

@@ -25,7 +25,7 @@ val QuestionList = functionalComponent<RProps> { props ->
             PaginatedQuestions.clear()
             // we pass this helper function down to the context, so it can call it after everything's loaded
             PaginatedQuestions.notifyLoaded = setIsLoaded
-            PaginatedQuestions.getPage(debouncedSearchText, "text", 1)
+            PaginatedQuestions.getPage(debouncedSearchText, "-createdAt", 1)
         }
     }
 

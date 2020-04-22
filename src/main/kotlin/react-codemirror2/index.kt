@@ -11,9 +11,9 @@ package react.codemirror
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.Event
 import react.Component
-import react.RProps
 import react.RState
 import react.ReactElement
+import react.dom.WithClassName
 
 
 external interface IDefineModeOptions {
@@ -57,14 +57,11 @@ external interface `T$0` {
         set(value) = definedExternally
 }
 
-external interface ICodeMirror : RProps {
+external interface ICodeMirror : WithClassName {
     var autoCursor: Boolean?
         get() = definedExternally
         set(value) = definedExternally
     var autoScroll: Boolean?
-        get() = definedExternally
-        set(value) = definedExternally
-    var className: String?
         get() = definedExternally
         set(value) = definedExternally
     var cursor: Any?

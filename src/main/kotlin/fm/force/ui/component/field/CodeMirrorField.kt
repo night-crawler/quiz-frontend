@@ -7,11 +7,12 @@ import com.ccfraser.muirwik.components.mTypography
 import com.ccfraser.muirwik.components.themeContext
 import fm.force.ui.effect.UseState
 import fm.force.ui.effect.useDebounce
+import fm.force.ui.extension.codeMirrorTheme
 import fm.force.ui.util.jsApply
 import kotlinx.css.Color
 import kotlinx.css.color
+import react.codemirror.Controlled
 import react.codemirror.IUnControlledCodeMirror
-import react.codemirror.UnControlled
 import react.functionalComponent
 import react.useEffect
 import redux.form.WrappedFieldProps
@@ -22,23 +23,17 @@ interface WrappedCodeMirrorFieldProps : WrappedFieldProps, IUnControlledCodeMirr
 }
 
 val CodeMirrorField = functionalComponent<WrappedCodeMirrorFieldProps> { props ->
-    var rawValue by UseState(props.input.value.toString())
-    val debouncedText = useDebounce(rawValue, 500)
+    var state by UseState(props.input.value.toString())
+    val debouncedText = useDebounce(state, 500)
 
     useEffect(listOf(debouncedText)) {
         props.input.onChange(debouncedText)
     }
 
     themeContext.Consumer { theme ->
-        val cmTheme = when (theme.palette.type) {
-            "light" -> "idea"
-            "dark" -> "darcula"
-            else -> "idea"
-        }
         val cmOptions = jsApply<EditorConfiguration> {
             this.asDynamic().matchBrackets = true
-            mode = "text/x-kotlin"
-            this.theme = cmTheme
+            this.theme = theme.codeMirrorTheme
             lineNumbers = true
         }
         mFormControl {
@@ -48,11 +43,10 @@ val CodeMirrorField = functionalComponent<WrappedCodeMirrorFieldProps> { props -
                 }
                 +props.label
             }
-            child(UnControlled::class) {
+            child(Controlled::class) {
                 attrs {
-                    this.asDynamic().id = "trash"
-                    value = props.input.value.unsafeCast<String>()
-                    onChange = { _, _, value -> rawValue = value }
+                    value = state
+                    onBeforeChange = { _, _, value -> state = value }
                     options = cmOptions
                 }
             }
