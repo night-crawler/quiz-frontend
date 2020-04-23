@@ -1,37 +1,39 @@
 package fm.force.ui.component.question.list
 
+import com.benasher44.uuid.uuid4
 import fm.force.ui.component.helmet
+import fm.force.ui.component.infinitePaginator
 import fm.force.ui.effect.UseState
 import fm.force.ui.effect.useDebounce
+import fm.force.ui.effect.useForceUpdate
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
 import react.*
 import react.dom.title
-import react.virtualized.auto.sizer.autoSizer
-import react.window.VariableSizeList
-import react.window.infinite.loader.OnItemsRendered
-import react.window.infinite.loader.infiniteLoader
-import react.window.variableSizeList
 
 val QuestionList = functionalComponent<RProps> { props ->
-    val (isLoaded, setIsLoaded) = useState(false)
-    var clientHeight by UseState(0)
+    var searchBoxHeight by UseState(0)
     var searchText by UseState("")
     val debouncedSearchText = useDebounce(searchText, 500)
-    var placeHolderToForceRerender by UseState<dynamic>(null)
+    val forceUpdate = useForceUpdate()
+    var uniqueKey by UseState(uuid4().toString())
+
+    val sort = "-createdAt"
 
     useEffect(listOf(debouncedSearchText)) {
         GlobalScope.promise {
             PaginatedQuestions.clear()
             // we pass this helper function down to the context, so it can call it after everything's loaded
-            PaginatedQuestions.notifyLoaded = setIsLoaded
-            PaginatedQuestions.getPage(debouncedSearchText, "-createdAt", 1)
+//            PaginatedQuestions.notifyLoaded = setIsLoaded
+            PaginatedQuestions.forceUpdate = forceUpdate
+            PaginatedQuestions.getPage(debouncedSearchText, sort, 1)
+            forceUpdate()
         }
     }
 
-    searchBox {
+    questionSearchBox {
         attrs {
-            onHeightChange = { clientHeight = it }
+            onHeightChange = { searchBoxHeight = it }
             onSearchTextChange = { searchText = it }
         }
     }
@@ -41,36 +43,18 @@ val QuestionList = functionalComponent<RProps> { props ->
     }
 
     // we don't render anything until after we have the actual height of this input
-    if (clientHeight == 0) {
+    if (searchBoxHeight == 0) {
         return@functionalComponent
     }
-
-    autoSizer { size ->
-        infiniteLoader(
-            isItemLoaded = PaginatedQuestions::isItemLoaded,
-            loadMoreItems = { startIndex: Int, stopIndex: Int ->
-                PaginatedQuestions.loadMoreRows(debouncedSearchText, "text", startIndex, stopIndex)
-            },
-            itemCount = PaginatedQuestions.totalElements.toInt()
-        ) { onItemsRendered: OnItemsRendered, ref: RRef ->
-            variableSizeList(
-                ref = ref,
-                onItemsRendered = onItemsRendered,
-                rowComponent = QuestionRow::class.rClass,
-                height = size.height - clientHeight,
-                width = size.width,
-                itemCount = PaginatedQuestions.totalElements.toInt(),
-                itemSize = PaginatedQuestions::getEffectiveHeight
-            ) {
-                this.ref {
-                    if (it != null) {
-                        PaginatedQuestions.infiniteListRef = it.unsafeCast<VariableSizeList>()
-                        placeHolderToForceRerender = it
-                    }
-                }
-            }
-        }
-    }
+    infinitePaginator(
+        rowComponent = QuestionRow::class.rClass,
+        paginator = PaginatedQuestions,
+        offsetTop = searchBoxHeight,
+        searchText = debouncedSearchText,
+        sort = sort,
+        forceUpdate = forceUpdate,
+        uniqueKey = uniqueKey
+    )
 }
 
 fun RBuilder.questionList() = child(QuestionList) { }

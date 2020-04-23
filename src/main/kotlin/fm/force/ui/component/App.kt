@@ -1,4 +1,4 @@
-package fm.force.ui.component.question.list
+package fm.force.ui.component
 
 import com.ccfraser.muirwik.components.mCssBaseline
 import com.ccfraser.muirwik.components.mThemeProvider
@@ -6,7 +6,6 @@ import com.ccfraser.muirwik.components.styles.PaletteOptions
 import com.ccfraser.muirwik.components.styles.ThemeOptions
 import com.ccfraser.muirwik.components.styles.TypographyOptions
 import com.ccfraser.muirwik.components.styles.createMuiTheme
-import fm.force.ui.component.mainFrame
 import fm.force.ui.util.jsApply
 import kotlinext.js.js
 import react.RBuilder

@@ -18,10 +18,6 @@ interface QuestionSearchBoxProps : StyledPropsWithCommonAttributes {
     var onHeightChange: (newHeight: Int) -> Unit
 }
 
-fun RBuilder.searchBox(handler: StyledHandler<QuestionSearchBoxProps>) = createStyled(QuestionSearchBox::class) {
-    handler(this)
-}
-
 class QuestionSearchBox(props: QuestionSearchBoxProps) : RComponent<QuestionSearchBoxProps, RState>(props) {
     override fun RBuilder.render() {
         mTextField("Search", fullWidth = true, margin = MFormControlMargin.none) {
@@ -35,4 +31,8 @@ class QuestionSearchBox(props: QuestionSearchBoxProps) : RComponent<QuestionSear
             }
         }
     }
+}
+
+fun RBuilder.questionSearchBox(handler: StyledHandler<QuestionSearchBoxProps>) = createStyled(QuestionSearchBox::class) {
+    handler(this)
 }

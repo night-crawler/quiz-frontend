@@ -1,7 +1,12 @@
-package fm.force.ui.component.question.list
+package fm.force.ui.component
 
 import fm.force.quiz.common.dto.DTOMarker
+import fm.force.quiz.common.dto.QuizFullDTO
 import fm.force.ui.client.dto.PageWrapper
+import fm.force.ui.component.question.list.PaginatedQuestions
+import fm.force.ui.util.runParallel
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.promise
 import kotlin.js.Promise
 import kotlin.math.max
 import react.RSetState
@@ -14,7 +19,8 @@ abstract class AbstractPageContext<T : DTOMarker> {
     var totalElements: Long = 0
     var pageSize: Int = 25
 
-    var notifyLoaded: RSetState<Boolean>? = null
+//    var notifyLoaded: RSetState<Boolean>? = null
+    var forceUpdate: (() -> Unit)? = null
     var infiniteListRef: VariableSizeList? = null
 
     private val refHeightMap = mutableMapOf<Int, Int>()
@@ -24,21 +30,34 @@ abstract class AbstractPageContext<T : DTOMarker> {
 
     abstract suspend fun getPage(query: String, sort: String, page: Int): PageWrapper<T>
 
-    val isInitialized get() = notifyLoaded != null && infiniteListRef != null
+    val isInitialized get() = forceUpdate != null && infiniteListRef != null
 
     fun clear() {
         store.clear()
         refHeightMap.clear()
         infiniteListRef = null
-        notifyLoaded = null
+//        notifyLoaded = null
     }
 
-    abstract fun loadMoreRows(
+    open fun loadMoreRows(
         query: String,
         sort: String,
         startIndex: Int,
         stopIndex: Int
-    ): Promise<List<PageWrapper<T>>>
+    ): Promise<List<PageWrapper<T>>> {
+//        val notify = forceUpdate ?: throw IllegalStateException("Set notifyLoaded")
+//        notify(false)
+        val startPage = startIndex / pageSize + 1
+        val stopPage = stopIndex / pageSize + 1
+
+        val realRange = (startPage..stopPage).toSet() - store.keys
+
+        return GlobalScope.promise {
+            realRange.runParallel {
+                getPage(query, sort, it)
+            }.also { forceUpdate?.invoke() }
+        }
+    }
 
     fun isItemLoaded(index: Int): Boolean {
         val page = index / pageSize + 1
@@ -49,11 +68,12 @@ abstract class AbstractPageContext<T : DTOMarker> {
 
     fun deleteItem(index: Int) {
         val page = getItemPage(index)
-//        (page..totalPages).forEach { store.remove(it) }
-//        infiniteListRef?.resetAfterIndex(max(0, (page - 1) * pageSize), true)
         store.clear()
         infiniteListRef?.resetAfterIndex(0, true)
-        infiniteListRef?.scrollToItem(0)
+        infiniteListRef?.scrollToItem(index)
+//        forceUpdate?.invoke()
+
+//        notifyLoaded?.invoke(false)
     }
 
     fun getItem(index: Int): T? {

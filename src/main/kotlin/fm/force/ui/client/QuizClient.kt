@@ -66,6 +66,25 @@ open class QuizClient(
         ).toTypedPage()
     }
 
+    suspend fun findQuizzes(
+        page: Int,
+        pageSize: Int = 25,
+        query: String,
+        sort: String
+    ): PageWrapper<QuizFullDTO> {
+        val params = mapOf(
+            "page" to page,
+            "query" to query,
+            "sort" to sort,
+            "pageSize" to pageSize
+        )
+        return fetchAdapter.fetch<PageDTO>(
+            HttpMethod.GET, prepareUri("quizzes", params = params), null,
+            headers = jsonHeaders,
+            buildResponse = { request, response -> buildResponse(request, response) }
+        ).toTypedPage()
+    }
+
     suspend fun deleteQuestion(id: Long) = fetchAdapter.fetch(
         HttpMethod.DELETE, prepareUri("questions/$id"), null,
         headers = jsonHeaders,

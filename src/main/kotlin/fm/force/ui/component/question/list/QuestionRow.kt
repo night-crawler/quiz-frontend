@@ -9,6 +9,7 @@ import com.ccfraser.muirwik.components.menu.mMenuItemWithIcon
 import date.fns.formatDistance
 import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.ReduxStore
+import fm.force.ui.component.confirmDeleteDialog
 import fm.force.ui.component.iconMenu
 import fm.force.ui.component.loadingCard
 import fm.force.ui.component.routeLink
@@ -66,6 +67,7 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
     override fun RBuilder.render() {
         val question = PaginatedQuestions.getItem(props.index)
         if (question == null) {
+            console.log("HERE???")
             loadingCard()
             return
         }
@@ -143,7 +145,7 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
 
     private fun handleConfirmDelete(question: QuestionFullDTO) {
         GlobalScope.promise {
-            ReduxStore.DEFAULT.client.deleteQuestion(question.id)
+//            ReduxStore.DEFAULT.client.deleteQuestion(question.id)
             PaginatedQuestions.deleteItem(props.index)
         }
     }
