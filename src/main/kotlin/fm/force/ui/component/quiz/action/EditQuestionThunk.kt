@@ -16,13 +16,13 @@ import react.router.connected.replace
 import redux.RAction
 import redux.WrapperAction
 
-class CreateQuizStart(val quizEditDTO: QuizEditDTO) : RAction
+class EditQuizStart(val quizEditDTO: QuizEditDTO) : RAction
 
-class CreateQuizSuccess(val quizEditDTO: QuizFullDTO) : RAction
+class EditQuizSuccess(val quizEditDTO: QuizFullDTO) : RAction
 
-private val logger = KotlinLogging.logger("CreateQuizThunk")
+private val logger = KotlinLogging.logger("EditQuizThunk")
 
-class CreateQuizThunk(private val quizEditDTO: QuizEditDTO) : ThunkForm() {
+class EditQuizThunk(private val quizEditDTO: QuizEditDTO) : ThunkForm() {
     override suspend fun run(
         originalAction: RAction,
         dispatch: (RAction) -> WrapperAction,
@@ -31,7 +31,7 @@ class CreateQuizThunk(private val quizEditDTO: QuizEditDTO) : ThunkForm() {
         client: QuizClient
     ): WrapperAction {
         return checkedRun(
-            start = { dispatch(CreateQuizStart(quizEditDTO)) },
+            start = { dispatch(EditQuizStart(quizEditDTO)) },
             error = { original, transformed ->
                 logger.error { "Original error: $original" }
                 logger.error { "Transformed error: $transformed" }
@@ -49,7 +49,8 @@ class CreateQuizThunk(private val quizEditDTO: QuizEditDTO) : ThunkForm() {
         ) {
             quizEditDTO.validate()
 
-            val quiz = client.createQuiz(
+            val quiz = client.patchQuiz(
+                quizEditDTO.id!!,
                 QuizPatchDTO(
                     title = quizEditDTO.title,
                     topics = quizEditDTO.topics.map { it.id }.toSet(),
@@ -57,7 +58,7 @@ class CreateQuizThunk(private val quizEditDTO: QuizEditDTO) : ThunkForm() {
                     questions = quizEditDTO.questionWrappers.mapNotNull { it.question?.id }
                 )
             )
-            dispatch(CreateQuizSuccess(quiz))
+            dispatch(EditQuizSuccess(quiz))
             dispatch(replace("/quizzes/${quiz.id}/edit").unsafeCast<RAction>())
         }
     }

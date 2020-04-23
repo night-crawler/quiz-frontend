@@ -7,8 +7,7 @@ import fm.force.ui.util.Thunk
 import redux.RAction
 import redux.WrapperAction
 
-abstract class ThunkForm :
-    Thunk<State, RAction, WrapperAction, QuizClient> {
+abstract class ThunkForm : Thunk<State, RAction, WrapperAction, QuizClient> {
     suspend fun checkedRun(
         start: suspend () -> WrapperAction,
         error: suspend (original: FetchError, transformed: SubmissionError) -> WrapperAction,

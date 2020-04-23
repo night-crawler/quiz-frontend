@@ -78,6 +78,12 @@ open class QuizClient(
         buildResponse = { request, response -> buildResponse(request, response) }
     )
 
+    suspend fun patchQuiz(id: Long, patchDTO: QuizPatchDTO) = fetchAdapter.fetch<QuizFullDTO>(
+        HttpMethod.PATCH, prepareUri("quizzes/$id"), patchDTO,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
     suspend fun createQuiz(patchDTO: QuizPatchDTO) = fetchAdapter.fetch<QuizFullDTO>(
         HttpMethod.POST, prepareUri("quizzes"), patchDTO,
         headers = jsonHeaders,
@@ -116,6 +122,12 @@ open class QuizClient(
 
     suspend fun getQuestion(id: Long) = fetchAdapter.fetch<QuestionFullDTO>(
         HttpMethod.GET, prepareUri("questions/$id"), null,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
+    suspend fun getQuiz(id: Long) = fetchAdapter.fetch<QuizFullDTO>(
+        HttpMethod.GET, prepareUri("quizzes/$id"), null,
         headers = jsonHeaders,
         buildResponse = { request, response -> buildResponse(request, response) }
     )

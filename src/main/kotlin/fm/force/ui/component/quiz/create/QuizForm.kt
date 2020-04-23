@@ -3,11 +3,13 @@ package fm.force.ui.component.quiz.create
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.button.MButtonVariant
 import com.ccfraser.muirwik.components.button.mButton
+import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.form.mFormControl
 import fm.force.quiz.common.dto.*
 import fm.force.ui.component.field.*
 import fm.force.ui.component.helmet
 import fm.force.ui.component.quiz.action.CreateQuizThunk
+import fm.force.ui.component.quiz.action.EditQuizThunk
 import fm.force.ui.util.jsApply
 import kotlinx.html.onSubmit
 import react.RBuilder
@@ -39,7 +41,7 @@ private val QuizForm = functionalComponent<EditQuizFormProps> { props ->
                 WrappedTextField,
                 jsApply {
                     label = "Quiz title"
-                    variant = com.ccfraser.muirwik.components.form.MFormControlVariant.outlined
+                    variant = MFormControlVariant.outlined
                 }
             )
             field(
@@ -54,7 +56,7 @@ private val QuizForm = functionalComponent<EditQuizFormProps> { props ->
             )
             fieldArray(
                 QuizEditDTO::questionWrappers,
-                QuizQuestionArrayField::class
+                QuizQuestionWrapperField::class
             )
 
             mButton(
@@ -84,7 +86,7 @@ val reduxEditQuizForm = reduxForm(
     jsApply<ConfigProps<QuizEditDTO, EditQuizFormProps, Any>> {
         form = "editQuiz"
         onSubmit = { quizEditDTO, dispatch, _ ->
-//            dispatch(EditQuizThunk(quizEditDTO))
+            dispatch(EditQuizThunk(quizEditDTO))
         }
     }
 )(QuizForm)

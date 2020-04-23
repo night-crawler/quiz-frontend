@@ -3,7 +3,7 @@ package fm.force.ui.component.question.create
 import fm.force.quiz.common.dto.AnswerFullDTO
 import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.ReduxStore
-import fm.force.ui.component.question.list.loadingCard
+import fm.force.ui.component.loadingCard
 import fm.force.ui.effect.UseState
 import fm.force.ui.util.RouterContext
 import kotlinx.coroutines.GlobalScope

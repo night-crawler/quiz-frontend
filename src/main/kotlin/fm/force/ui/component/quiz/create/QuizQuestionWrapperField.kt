@@ -2,14 +2,11 @@ package fm.force.ui.component.quiz.create
 
 import com.benasher44.uuid.uuid4
 import com.ccfraser.muirwik.components.button.mButton
-import com.ccfraser.muirwik.components.button.mIconButton
 import com.ccfraser.muirwik.components.card.mCard
-import com.ccfraser.muirwik.components.card.mCardActions
 import com.ccfraser.muirwik.components.form.mFormControl
 import fm.force.quiz.common.dto.FieldError
 import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.component.field.*
-import fm.force.ui.util.IconName
 import fm.force.ui.util.jsApply
 import kotlinx.css.*
 import org.w3c.dom.events.Event
@@ -30,14 +27,14 @@ data class QuestionWrapperDTO(
 fun QuestionWrapperDTO.Companion.of() = QuestionWrapperDTO()
 
 // this one must remain a class component since styled is created dynamically
-class QuizQuestionArrayField(props: WrappedFieldArrayProps<QuestionWrapperDTO>) :
+class QuizQuestionWrapperField(props: WrappedFieldArrayProps<QuestionWrapperDTO>) :
     RComponent<WrappedFieldArrayProps<QuestionWrapperDTO>, RState>(props) {
 
     @Suppress("UNUSED_PARAMETER")
     private fun addAnswer(event: Event?) = props.fields.push(QuestionWrapperDTO.of())
 
     override fun RBuilder.render() {
-        props.fields.map { member: String, index: Int, fields ->
+        props.fields.map { member: String, index: Int, _ ->
             mCard {
                 css {
                     marginTop = 5.px
@@ -55,25 +52,7 @@ class QuizQuestionArrayField(props: WrappedFieldArrayProps<QuestionWrapperDTO>) 
                         prefix = member
                     )
 
-                    mCardActions {
-                        css {
-                            direction = Direction.rtl
-                        }
-                        mIconButton(IconName.DELETE_OUTLINE.iconMame, onClick = { props.fields.remove(index) })
-                        if (index > 0) {
-                            mIconButton(
-                                IconName.KEYBOARD_ARROW_UP.iconMame,
-                                onClick = { props.fields.move(index, index - 1) }
-                            )
-                        }
-
-                        if (index < fields.length - 1) {
-                            mIconButton(
-                                IconName.KEYBOARD_ARROW_DOWN.iconMame,
-                                onClick = { props.fields.move(index, index + 1) }
-                            )
-                        }
-                    }
+                    arrayFieldMoveButtons(props, index)
                 }
             }
         }

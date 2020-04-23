@@ -39,7 +39,7 @@ val QuestionAutocompleteField = functionalComponent<QuestionsAutocompleteFieldPr
     labAutocompleteField(props.label, questions) {
         attrs {
             freeSolo = false
-            value = props.input.value
+            value = if (props.input.value == "") null else props.input.value
             onInputChange = { _, text, _ -> searchText = text }
             renderOption = { option, _ ->
                 span { +option.title }

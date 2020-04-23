@@ -6,6 +6,7 @@ import fm.force.ui.component.question.create.createQuestionForm
 import fm.force.ui.component.question.create.editQuestionForm
 import fm.force.ui.component.question.list.questionList
 import fm.force.ui.component.quiz.create.createQuizForm
+import fm.force.ui.component.quiz.create.editQuizForm
 import fm.force.ui.reducer.action.ChangeAppViewName
 import react.RBuilder
 import react.RComponent
@@ -43,6 +44,10 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
             route("/quizzes/create", exact = true) {
                 props.dispatch(ChangeAppViewName("Create Quiz"))
                 createQuizForm()
+            }
+            route("/quizzes/:id/edit", exact = true) {
+                props.dispatch(ChangeAppViewName("Edit Quiz"))
+                editQuizForm()
             }
             route("/", exact = true) {
                 props.dispatch(ChangeAppViewName("Home"))

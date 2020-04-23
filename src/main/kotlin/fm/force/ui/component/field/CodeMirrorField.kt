@@ -5,6 +5,7 @@ import com.ccfraser.muirwik.components.MTypographyColor
 import com.ccfraser.muirwik.components.form.mFormControl
 import com.ccfraser.muirwik.components.mTypography
 import com.ccfraser.muirwik.components.themeContext
+import fm.force.quiz.common.dto.FieldError
 import fm.force.ui.effect.UseState
 import fm.force.ui.effect.useDebounce
 import fm.force.ui.extension.codeMirrorTheme
@@ -50,6 +51,7 @@ val CodeMirrorField = functionalComponent<WrappedCodeMirrorFieldProps> { props -
                     options = cmOptions
                 }
             }
+            props.meta.error?.let { fieldErrors(it.unsafeCast<List<FieldError>>()) }
         }
     }
 }

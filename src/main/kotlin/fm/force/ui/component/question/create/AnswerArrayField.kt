@@ -1,17 +1,19 @@
 package fm.force.ui.component.question.create
 
 import com.ccfraser.muirwik.components.button.mButton
-import com.ccfraser.muirwik.components.button.mIconButton
 import com.ccfraser.muirwik.components.card.mCard
-import com.ccfraser.muirwik.components.card.mCardActions
+import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.form.mFormControl
 import fm.force.quiz.common.dto.FieldError
 import fm.force.ui.component.field.WrappedCheckboxField
 import fm.force.ui.component.field.WrappedMultilineField
+import fm.force.ui.component.field.arrayFieldMoveButtons
 import fm.force.ui.component.field.fieldErrors
-import fm.force.ui.util.IconName
 import fm.force.ui.util.jsApply
-import kotlinx.css.*
+import kotlinx.css.marginTop
+import kotlinx.css.paddingLeft
+import kotlinx.css.paddingRight
+import kotlinx.css.px
 import org.w3c.dom.events.Event
 import react.RBuilder
 import react.RComponent
@@ -43,8 +45,7 @@ class AnswerArrayField(props: WrappedFieldArrayProps<AnswerEditDTO>) :
                         WrappedMultilineField,
                         jsApply {
                             label = "Answer Text"
-                            variant =
-                                com.ccfraser.muirwik.components.form.MFormControlVariant.outlined
+                            variant = MFormControlVariant.outlined
                             rows = 2
                             rowsMax = 8
                         },
@@ -57,31 +58,12 @@ class AnswerArrayField(props: WrappedFieldArrayProps<AnswerEditDTO>) :
                         jsApply {
                             fieldType = kotlinx.html.InputType.checkBox
                             label = "Is correct"
-                            variant =
-                                com.ccfraser.muirwik.components.form.MFormControlVariant.outlined
+                            variant = MFormControlVariant.outlined
                         },
                         prefix = member
                     )
 
-                    mCardActions {
-                        css {
-                            direction = Direction.rtl
-                        }
-                        mIconButton(IconName.DELETE_OUTLINE.iconMame, onClick = { props.fields.remove(index) })
-                        if (index > 0) {
-                            mIconButton(
-                                IconName.KEYBOARD_ARROW_UP.iconMame,
-                                onClick = { props.fields.move(index, index - 1) }
-                            )
-                        }
-
-                        if (index < fields.length - 1) {
-                            mIconButton(
-                                IconName.KEYBOARD_ARROW_DOWN.iconMame,
-                                onClick = { props.fields.move(index, index + 1) }
-                            )
-                        }
-                    }
+                    arrayFieldMoveButtons(props, index)
                 }
             }
         }

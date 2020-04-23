@@ -1,4 +1,4 @@
-package fm.force.ui.component.question.list
+package fm.force.ui.component
 
 import com.ccfraser.muirwik.components.MTypographyAlign
 import com.ccfraser.muirwik.components.card.mCard
