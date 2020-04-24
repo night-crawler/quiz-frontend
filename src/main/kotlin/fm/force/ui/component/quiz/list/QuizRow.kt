@@ -1,4 +1,112 @@
 package fm.force.ui.component.quiz.list
 
-class QuizRow {
+import com.ccfraser.muirwik.components.*
+import com.ccfraser.muirwik.components.card.*
+import com.ccfraser.muirwik.components.dialog.mDialogContent
+import com.ccfraser.muirwik.components.dialog.mDialogContentText
+import com.ccfraser.muirwik.components.dialog.mDialogTitle
+import com.ccfraser.muirwik.components.list.mList
+import com.ccfraser.muirwik.components.list.mListItem
+import com.ccfraser.muirwik.components.menu.mMenuItemWithIcon
+import date.fns.formatDistance
+import fm.force.quiz.common.dto.QuizFullDTO
+import fm.force.ui.component.confirmDeleteDialog
+import fm.force.ui.component.iconMenu
+import fm.force.ui.component.question.list.questionList
+import fm.force.ui.component.routeLink
+import fm.force.ui.util.IconName
+import fm.force.ui.util.treeIterator
+import kotlinx.css.marginBottom
+import kotlinx.css.px
+import org.w3c.dom.Node
+import org.w3c.dom.events.EventTarget
+import react.RBuilder
+import react.RComponent
+import react.RProps
+import react.RState
+import react.dom.findDOMNode
+import styled.StyledElementBuilder
+import styled.css
+import kotlin.js.Date
+
+interface QuizRowProps : RProps {
+    var quiz: QuizFullDTO
+    var onDelete: (quiz: QuizFullDTO) -> Unit
+}
+
+class QuizRow(props: QuizRowProps) : RComponent<QuizRowProps, RState>(props) {
+    private var dialogRef: Node? = null
+
+    private fun shouldCloseMenu(eventTarget: EventTarget?): Boolean {
+        val anchor = dialogRef ?: return true
+        val negativeMatches = setOf(anchor) + anchor.treeIterator().asSequence().toSet()
+        if (eventTarget in negativeMatches) return false
+        return false
+    }
+
+    override fun RBuilder.render() {
+        val quiz = props.quiz
+        mCard(raised = true) {
+            css {
+                marginBottom = 5.px
+            }
+            mCardHeader(
+                title = quiz.title,
+                subHeader = "Created " + formatDistance(quiz.createdAt, Date()) + " ago"
+            ) {
+                attrs {
+                    avatar = mAvatar(addAsChild = false) { +quiz.title.slice(0..1) }
+                    action = renderAction(quiz)
+                }
+            }
+            mCardContent {
+                mList(dense = true) {
+                    quiz.quizQuestions.forEach { quizQuestion ->
+                        mListItem {
+                            +quizQuestion.question.title
+                        }
+                    }
+                }
+            }
+            mCardActions {
+                quiz.tags.forEach {
+                    mChip(it.name, size = MChipSize.small, variant = MChipVariant.outlined, color = MChipColor.primary)
+                }
+                quiz.topics.forEach {
+                    mChip(
+                        it.title,
+                        size = MChipSize.small,
+                        variant = MChipVariant.outlined,
+                        color = MChipColor.secondary
+                    )
+                }
+            }
+        }
+    }
+
+    private fun StyledElementBuilder<MCardHeaderProps>.renderAction(quiz: QuizFullDTO) =
+        iconMenu(IconName.MORE_VERT.iconMame, shouldClose = ::shouldCloseMenu) {
+            confirmDeleteDialog(
+                dialogRef = { dialogRef = findDOMNode(it) },
+                title = RBuilder().mDialogTitle("Delete quiz ${quiz.title}?"),
+                content = RBuilder().mDialogContent {
+                    mDialogContentText("This action is permanent")
+                },
+                onConfirm = { handleConfirmDelete(quiz) }
+            ) { setIsOpen ->
+                mMenuItemWithIcon(
+                    IconName.REMOVE.iconMame, "Delete",
+                    onClick = {
+                        setIsOpen(true)
+                    }
+                )
+            }
+            routeLink("/quizzes/${quiz.id}/edit") {
+                mMenuItemWithIcon(IconName.EDIT.iconMame, "Edit", onClick = it.onClick)
+            }
+        }
+
+    private fun handleConfirmDelete(quiz: QuizFullDTO) {
+        props.onDelete(quiz)
+    }
 }

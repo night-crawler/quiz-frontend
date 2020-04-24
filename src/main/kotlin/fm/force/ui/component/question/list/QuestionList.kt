@@ -4,13 +4,14 @@ import com.ccfraser.muirwik.components.table.mTablePagination
 import com.ccfraser.muirwik.components.targetValue
 import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.ReduxStore
-import fm.force.ui.client.QuestionSearchCriteria
+import fm.force.ui.client.DefaultSearchCriteria
 import fm.force.ui.client.dto.PageWrapper
 import fm.force.ui.client.fromQueryString
 import fm.force.ui.client.toQueryString
 import fm.force.ui.component.helmet
 import fm.force.ui.component.loadingCard
 import fm.force.ui.component.noElements
+import fm.force.ui.component.textSearchBox
 import fm.force.ui.effect.UseState
 import fm.force.ui.effect.useDispatch
 import fm.force.ui.util.RouterContext
@@ -27,7 +28,7 @@ val QuestionList = functionalComponent<RProps> { props ->
     val routerContext = useContext(RouterContext)
     val dispatch = useDispatch()
 
-    var searchCriteria by UseState(QuestionSearchCriteria.fromQueryString(routerContext.location.search))
+    var searchCriteria by UseState(DefaultSearchCriteria.fromQueryString(routerContext.location.search))
 
     useEffect(listOf(searchCriteria.hashCode())) {
         GlobalScope.promise {
@@ -41,7 +42,7 @@ val QuestionList = functionalComponent<RProps> { props ->
 
     helmet { title("All questions") }
 
-    questionSearchBox(
+    textSearchBox(
         initialCriteria = searchCriteria,
         onSearchCriteriaChange = { searchCriteria = it.copy(page = 1) }
     )
@@ -59,6 +60,7 @@ val QuestionList = functionalComponent<RProps> { props ->
     questionPage.content.forEach { question ->
         child(QuestionRow::class) {
             attrs {
+                key = "question:${question.id}"
                 this.question = question
                 onDelete = {
                     GlobalScope.promise {

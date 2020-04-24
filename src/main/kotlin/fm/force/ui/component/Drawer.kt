@@ -4,6 +4,7 @@ import com.ccfraser.muirwik.components.MDrawerAnchor
 import com.ccfraser.muirwik.components.MDrawerVariant
 import com.ccfraser.muirwik.components.MHiddenImplementation
 import com.ccfraser.muirwik.components.MPaperProps
+import com.ccfraser.muirwik.components.list.MListProps
 import com.ccfraser.muirwik.components.list.mList
 import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.mCssBaseline
@@ -26,6 +27,7 @@ import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
+import styled.StyledElementBuilder
 import styled.css
 
 interface DrawerProps : RProps {
@@ -46,7 +48,30 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
         }
     }.unsafeCast<MPaperProps>()
 
-    private fun RBuilder.demoItems() {
+    override fun RBuilder.render() {
+        mCssBaseline()
+
+        mHidden(mdUp = true) {
+            mDrawer(
+                props.responsiveDrawerOpen,
+                MDrawerAnchor.left,
+                MDrawerVariant.temporary,
+                paperProps = paperProps,
+                onClose = { props.onResponsiveDrawerOpenToggle(!props.responsiveDrawerOpen) }
+            ) {
+                spacer()
+                renderRouteLinks()
+            }
+        }
+        mHidden(smDown = true, implementation = MHiddenImplementation.css) {
+            mDrawer(true, MDrawerAnchor.left, MDrawerVariant.permanent, paperProps = paperProps) {
+                spacer()
+                renderRouteLinks()
+            }
+        }
+    }
+
+    private fun RBuilder.renderRouteLinks() {
         themeContext.Consumer { theme ->
             mList {
                 css {
@@ -61,59 +86,52 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
                     wordBreak = WordBreak.keepAll
                 }
 
-                routeLink("/questions") { pathInfo ->
-                    mListItem(
-                        "Questions", selected = pathInfo.isActive,
-                        onClick = {
-                            props.onResponsiveDrawerOpenToggle(false)
-                            pathInfo.onClick(it)
-                        }
-                    )
-                }
-
-                routeLink("/questions/create") { pathInfo ->
-                    mListItem(
-                        "Create Question", selected = pathInfo.isActive,
-                        onClick = {
-                            props.onResponsiveDrawerOpenToggle(false)
-                            pathInfo.onClick(it)
-                        }
-                    )
-                }
-
-                routeLink("/quizzes/create") { pathInfo ->
-                    mListItem(
-                        "Create Quiz", selected = pathInfo.isActive,
-                        onClick = {
-                            props.onResponsiveDrawerOpenToggle(false)
-                            pathInfo.onClick(it)
-                        }
-                    )
-                }
+                renderQuestionRouteLinks()
+                renderQuizRouteLinks()
             }
         }
     }
 
-    override fun RBuilder.render() {
-        mCssBaseline()
-
-        mHidden(mdUp = true) {
-            mDrawer(
-                props.responsiveDrawerOpen,
-                MDrawerAnchor.left,
-                MDrawerVariant.temporary,
-                paperProps = paperProps,
-                onClose = { props.onResponsiveDrawerOpenToggle(!props.responsiveDrawerOpen) }
-            ) {
-                spacer()
-                demoItems()
-            }
+    private fun StyledElementBuilder<MListProps>.renderQuizRouteLinks() {
+        routeLink("/quizzes") { pathInfo ->
+            mListItem(
+                "Quizzes", selected = pathInfo.isActive,
+                onClick = {
+                    props.onResponsiveDrawerOpenToggle(false)
+                    pathInfo.onClick(it)
+                }
+            )
         }
-        mHidden(smDown = true, implementation = MHiddenImplementation.css) {
-            mDrawer(true, MDrawerAnchor.left, MDrawerVariant.permanent, paperProps = paperProps) {
-                spacer()
-                demoItems()
-            }
+        routeLink("/quizzes/create") { pathInfo ->
+            mListItem(
+                "Create Quiz", selected = pathInfo.isActive,
+                onClick = {
+                    props.onResponsiveDrawerOpenToggle(false)
+                    pathInfo.onClick(it)
+                }
+            )
+        }
+    }
+
+    private fun StyledElementBuilder<MListProps>.renderQuestionRouteLinks() {
+        routeLink("/questions") { pathInfo ->
+            mListItem(
+                "Questions", selected = pathInfo.isActive,
+                onClick = {
+                    props.onResponsiveDrawerOpenToggle(false)
+                    pathInfo.onClick(it)
+                }
+            )
+        }
+
+        routeLink("/questions/create") { pathInfo ->
+            mListItem(
+                "Create Question", selected = pathInfo.isActive,
+                onClick = {
+                    props.onResponsiveDrawerOpenToggle(false)
+                    pathInfo.onClick(it)
+                }
+            )
         }
     }
 }

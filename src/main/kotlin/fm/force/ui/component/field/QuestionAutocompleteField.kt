@@ -3,7 +3,7 @@ package fm.force.ui.component.field
 import com.ccfraser.muirwik.components.mTextField
 import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.ReduxStore
-import fm.force.ui.client.QuestionSearchCriteria
+import fm.force.ui.client.DefaultSearchCriteria
 import fm.force.ui.effect.UseState
 import fm.force.ui.effect.useDebounce
 import kotlinext.js.Object
@@ -30,7 +30,7 @@ val QuestionAutocompleteField = functionalComponent<QuestionsAutocompleteFieldPr
     useEffect(listOf(debouncedSearchText)) {
         GlobalScope.promise {
             questions = ReduxStore.DEFAULT.client.findQuestions(
-                QuestionSearchCriteria(
+                DefaultSearchCriteria(
                     page = 1,
                     sort = "title",
                     query = debouncedSearchText,

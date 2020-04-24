@@ -7,6 +7,7 @@ import fm.force.ui.component.question.create.editQuestionForm
 import fm.force.ui.component.question.list.questionList
 import fm.force.ui.component.quiz.create.createQuizForm
 import fm.force.ui.component.quiz.create.editQuizForm
+import fm.force.ui.component.quiz.list.quizList
 import fm.force.ui.reducer.action.ChangeAppViewName
 import react.RBuilder
 import react.RComponent
@@ -29,26 +30,10 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
                 props.dispatch(ChangeAppViewName("Login"))
                 loginForm()
             }
-            route("/questions", exact = true) {
-                props.dispatch(ChangeAppViewName("Questions"))
-                questionList()
-            }
-            route("/questions/create", exact = true) {
-                props.dispatch(ChangeAppViewName("Create Question"))
-                createQuestionForm()
-            }
-            route("/questions/:id/edit") {
-                props.dispatch(ChangeAppViewName("Edit Question"))
-                editQuestionForm()
-            }
-            route("/quizzes/create", exact = true) {
-                props.dispatch(ChangeAppViewName("Create Quiz"))
-                createQuizForm()
-            }
-            route("/quizzes/:id/edit", exact = true) {
-                props.dispatch(ChangeAppViewName("Edit Quiz"))
-                editQuizForm()
-            }
+
+            renderQuestionRoutes()
+            renderQuizRoutes()
+
             route("/", exact = true) {
                 props.dispatch(ChangeAppViewName("Home"))
                 mButton("/")
@@ -57,6 +42,36 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
                 props.dispatch(ChangeAppViewName("Not Found"))
                 notFound()
             }
+        }
+    }
+
+    private fun RBuilder.renderQuestionRoutes() {
+        route("/questions", exact = true) {
+            props.dispatch(ChangeAppViewName("Questions"))
+            questionList()
+        }
+        route("/questions/create", exact = true) {
+            props.dispatch(ChangeAppViewName("Create Question"))
+            createQuestionForm()
+        }
+        route("/questions/:id/edit") {
+            props.dispatch(ChangeAppViewName("Edit Question"))
+            editQuestionForm()
+        }
+    }
+
+    private fun RBuilder.renderQuizRoutes() {
+        route("/quizzes", exact = true) {
+            props.dispatch(ChangeAppViewName("Quizzes"))
+            quizList()
+        }
+        route("/quizzes/create", exact = true) {
+            props.dispatch(ChangeAppViewName("Create Quiz"))
+            createQuizForm()
+        }
+        route("/quizzes/:id/edit", exact = true) {
+            props.dispatch(ChangeAppViewName("Edit Quiz"))
+            editQuizForm()
         }
     }
 }

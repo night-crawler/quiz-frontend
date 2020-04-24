@@ -1,27 +1,24 @@
-package fm.force.ui.component.question.list
+package fm.force.ui.component
 
 import com.ccfraser.muirwik.components.StyledPropsWithCommonAttributes
 import com.ccfraser.muirwik.components.form.MFormControlMargin
 import com.ccfraser.muirwik.components.mTextField
 import com.ccfraser.muirwik.components.targetInputValue
-import fm.force.ui.client.QuestionSearchCriteria
+import fm.force.ui.client.DefaultSearchCriteria
 import fm.force.ui.effect.UseState
 import fm.force.ui.effect.useDebounce
-import kotlinx.css.margin
-import kotlinx.css.padding
 import react.RBuilder
 import react.child
 import react.functionalComponent
 import react.useEffect
-import styled.css
 
-interface QuestionSearchBoxProps : StyledPropsWithCommonAttributes {
-    var initialCriteria: QuestionSearchCriteria
-    var onSearchCriteriaChange: (newCriteria: QuestionSearchCriteria) -> Unit
+interface TextSearchBoxProps : StyledPropsWithCommonAttributes {
+    var initialCriteria: DefaultSearchCriteria
+    var onSearchCriteriaChange: (newCriteria: DefaultSearchCriteria) -> Unit
     var onHeightChange: ((newHeight: Int) -> Unit)?
 }
 
-val QuestionSearchBox = functionalComponent<QuestionSearchBoxProps> { props ->
+val TextSearchBox = functionalComponent<TextSearchBoxProps> { props ->
     var criteria by UseState(props.initialCriteria)
     val debouncedCriteria = useDebounce(criteria, 500)
 
@@ -38,11 +35,11 @@ val QuestionSearchBox = functionalComponent<QuestionSearchBoxProps> { props ->
     }
 }
 
-fun RBuilder.questionSearchBox(
-    initialCriteria: QuestionSearchCriteria,
-    onSearchCriteriaChange: (newCriteria: QuestionSearchCriteria) -> Unit,
+fun RBuilder.textSearchBox(
+    initialCriteria: DefaultSearchCriteria,
+    onSearchCriteriaChange: (newCriteria: DefaultSearchCriteria) -> Unit,
     onHeightChange: ((newHeight: Int) -> Unit)? = null
-) = child(QuestionSearchBox) {
+) = child(TextSearchBox) {
     attrs {
         this.initialCriteria = initialCriteria
         this.onSearchCriteriaChange = onSearchCriteriaChange

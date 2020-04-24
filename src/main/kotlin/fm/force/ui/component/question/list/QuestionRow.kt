@@ -13,8 +13,6 @@ import fm.force.ui.component.iconMenu
 import fm.force.ui.component.routeLink
 import fm.force.ui.util.IconName
 import fm.force.ui.util.treeIterator
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.promise
 import kotlinx.css.marginBottom
 import kotlinx.css.px
 import org.w3c.dom.Node

@@ -14,7 +14,7 @@ import org.w3c.fetch.Response
 interface SearchCriteria
 
 @Serializable
-data class QuestionSearchCriteria(
+data class DefaultSearchCriteria(
     val query: String = "",
     val sort: String = "-createdAt",
     val page: Int = 1,
@@ -24,16 +24,16 @@ data class QuestionSearchCriteria(
 }
 
 
-fun QuestionSearchCriteria.toMap() = mapOf(
+fun DefaultSearchCriteria.toMap() = mapOf(
     "page" to page,
     "query" to query,
     "sort" to sort,
     "pageSize" to pageSize
 )
 
-fun QuestionSearchCriteria.toQueryString() = QueryBuilder.of(toMap()).toString()
+fun DefaultSearchCriteria.toQueryString() = QueryBuilder.of(toMap()).toString()
 
-fun QuestionSearchCriteria.Companion.fromQueryString(rawString: String): QuestionSearchCriteria {
+fun DefaultSearchCriteria.Companion.fromQueryString(rawString: String): DefaultSearchCriteria {
 //    val dyn = parseQueryString(rawString)
 //    return DynamicObjectParser().parse(dyn)
     val s = JSON.stringify(parseQueryString(rawString))
@@ -78,31 +78,26 @@ open class QuizClient(
             )
         )
 
-    suspend fun findQuestions(criteria: QuestionSearchCriteria): PageWrapper<QuestionFullDTO> =
+    suspend fun findQuestions(criteria: DefaultSearchCriteria): PageWrapper<QuestionFullDTO> =
         fetchAdapter.fetch<PageDTO>(
             HttpMethod.GET, prepareUri("questions", params = criteria.toMap()), null,
             headers = jsonHeaders,
             buildResponse = { request, response -> buildResponse(request, response) }
         ).toTypedPage()
 
-    suspend fun findQuizzes(
-        page: Int,
-        pageSize: Int = 25,
-        query: String,
-        sort: String
-    ): PageWrapper<QuizFullDTO> {
-        val params = mapOf(
-            "page" to page,
-            "query" to query,
-            "sort" to sort,
-            "pageSize" to pageSize
-        )
+    suspend fun findQuizzes(searchCriteria: DefaultSearchCriteria): PageWrapper<QuizFullDTO> {
         return fetchAdapter.fetch<PageDTO>(
-            HttpMethod.GET, prepareUri("quizzes", params = params), null,
+            HttpMethod.GET, prepareUri("quizzes", params = searchCriteria.toMap()), null,
             headers = jsonHeaders,
             buildResponse = { request, response -> buildResponse(request, response) }
         ).toTypedPage()
     }
+
+    suspend fun deleteQuiz(id: Long) = fetchAdapter.fetch(
+        HttpMethod.DELETE, prepareUri("quizzes/$id"), null,
+        headers = jsonHeaders,
+        buildResponse = { _, _ -> Unit }
+    )
 
     suspend fun deleteQuestion(id: Long) = fetchAdapter.fetch(
         HttpMethod.DELETE, prepareUri("questions/$id"), null,
