@@ -17,9 +17,17 @@ import react.RRef
 import react.RState
 import react.ReactElement
 
+external interface ListStyles {
+    var position: String
+    var left: Int
+    var top: Int
+    var height: Int
+    var width: Any
+}
+
 external interface ListChildComponentProps {
     var index: Int
-    var style: Any
+    var style: ListStyles
     var data: Any
     var isScrolling: Boolean?
         get() = definedExternally

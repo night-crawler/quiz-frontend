@@ -4,10 +4,41 @@ import fm.force.quiz.common.dto.*
 import fm.force.ui.client.dto.*
 import fm.force.ui.client.dto.UserFullDTO
 import fm.force.ui.util.QueryBuilder
+import fm.force.ui.util.parseQueryString
 import kotlinx.coroutines.await
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
 import org.w3c.fetch.Response
+
+interface SearchCriteria
+
+@Serializable
+data class QuestionSearchCriteria(
+    val query: String = "",
+    val sort: String = "-createdAt",
+    val page: Int = 1,
+    val pageSize: Int = 25
+) : SearchCriteria {
+    companion object
+}
+
+
+fun QuestionSearchCriteria.toMap() = mapOf(
+    "page" to page,
+    "query" to query,
+    "sort" to sort,
+    "pageSize" to pageSize
+)
+
+fun QuestionSearchCriteria.toQueryString() = QueryBuilder.of(toMap()).toString()
+
+fun QuestionSearchCriteria.Companion.fromQueryString(rawString: String): QuestionSearchCriteria {
+//    val dyn = parseQueryString(rawString)
+//    return DynamicObjectParser().parse(dyn)
+    val s = JSON.stringify(parseQueryString(rawString))
+    return Json.parse(serializer(), s)
+}
 
 open class QuizClient(
     scheme: String = "http",
@@ -47,24 +78,12 @@ open class QuizClient(
             )
         )
 
-    suspend fun findQuestions(
-        page: Int,
-        pageSize: Int = 25,
-        query: String,
-        sort: String
-    ): PageWrapper<QuestionFullDTO> {
-        val params = mapOf(
-            "page" to page,
-            "query" to query,
-            "sort" to sort,
-            "pageSize" to pageSize
-        )
-        return fetchAdapter.fetch<PageDTO>(
-            HttpMethod.GET, prepareUri("questions", params = params), null,
+    suspend fun findQuestions(criteria: QuestionSearchCriteria): PageWrapper<QuestionFullDTO> =
+        fetchAdapter.fetch<PageDTO>(
+            HttpMethod.GET, prepareUri("questions", params = criteria.toMap()), null,
             headers = jsonHeaders,
             buildResponse = { request, response -> buildResponse(request, response) }
         ).toTypedPage()
-    }
 
     suspend fun findQuizzes(
         page: Int,

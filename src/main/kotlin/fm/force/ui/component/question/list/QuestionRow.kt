@@ -8,16 +8,15 @@ import com.ccfraser.muirwik.components.dialog.mDialogTitle
 import com.ccfraser.muirwik.components.menu.mMenuItemWithIcon
 import date.fns.formatDistance
 import fm.force.quiz.common.dto.QuestionFullDTO
-import fm.force.ui.ReduxStore
 import fm.force.ui.component.confirmDeleteDialog
 import fm.force.ui.component.iconMenu
-import fm.force.ui.component.loadingCard
 import fm.force.ui.component.routeLink
 import fm.force.ui.util.IconName
 import fm.force.ui.util.treeIterator
-import kotlinext.js.jsObject
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
+import kotlinx.css.marginBottom
+import kotlinx.css.px
 import org.w3c.dom.Node
 import org.w3c.dom.events.EventTarget
 import react.RBuilder
@@ -26,36 +25,16 @@ import react.RProps
 import react.RState
 import react.dom.findDOMNode
 import styled.StyledElementBuilder
-import kotlin.browser.window
+import styled.css
 import kotlin.js.Date
-import kotlin.properties.Delegates
 
 interface QuestionRowProps : RProps {
-    var index: Int
-    var style: dynamic
+    var question: QuestionFullDTO
+    var onDelete: (question: QuestionFullDTO) -> Unit
 }
 
 class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState>(props) {
     private var dialogRef: Node? = null
-    private var mCardRef: dynamic by Delegates.observable(null) { _, _, newValue ->
-        if (newValue != null) {
-            recalculateHeights(newValue)
-        }
-    }
-
-    private fun recalculateHeights(capturedRef: dynamic) {
-        if (!PaginatedQuestions.isInitialized) {
-            window.setTimeout({ recalculateHeights(capturedRef) }, 0)
-            return
-        }
-
-        val oldHeight = PaginatedQuestions.getHeight(props.index)
-        val newHeight: Int = capturedRef.clientHeight as Int
-        if (oldHeight != newHeight) {
-            PaginatedQuestions.setHeight(props.index, newHeight)
-            PaginatedQuestions.infiniteListRef!!.resetAfterIndex(props.index, true)
-        }
-    }
 
     private fun shouldCloseMenu(eventTarget: EventTarget?): Boolean {
         val anchor = dialogRef ?: return true
@@ -65,28 +44,10 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
     }
 
     override fun RBuilder.render() {
-        val question = PaginatedQuestions.getItem(props.index)
-        if (question == null) {
-            console.log("HERE???")
-            loadingCard()
-            return
-        }
-
-        mCard {
-            ref {
-                mCardRef = it
-            }
-            attrs {
-                val style = jsObject<dynamic> {
-                    position = props.style.position
-                    left = props.style.left
-                    top = props.style.top
-                    // don't touch height
-                    // height: 0
-                    width = props.style.width
-                }
-
-                this.asDynamic().style = style
+        val question = props.question
+        mCard(raised = true) {
+            css {
+                marginBottom = 5.px
             }
             mCardHeader(
                 title = question.title,
@@ -144,9 +105,6 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
         }
 
     private fun handleConfirmDelete(question: QuestionFullDTO) {
-        GlobalScope.promise {
-//            ReduxStore.DEFAULT.client.deleteQuestion(question.id)
-            PaginatedQuestions.deleteItem(props.index)
-        }
+        props.onDelete(question)
     }
 }

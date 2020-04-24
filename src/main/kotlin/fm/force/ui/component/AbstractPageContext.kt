@@ -1,15 +1,12 @@
 package fm.force.ui.component
 
 import fm.force.quiz.common.dto.DTOMarker
-import fm.force.quiz.common.dto.QuizFullDTO
 import fm.force.ui.client.dto.PageWrapper
-import fm.force.ui.component.question.list.PaginatedQuestions
 import fm.force.ui.util.runParallel
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
 import kotlin.js.Promise
 import kotlin.math.max
-import react.RSetState
 import react.window.VariableSizeList
 
 abstract class AbstractPageContext<T : DTOMarker> {
@@ -87,11 +84,11 @@ abstract class AbstractPageContext<T : DTOMarker> {
     }
 
     fun getEffectiveHeight(index: Int): Int {
-        val measuredHeight = PaginatedQuestions.getHeight(index)
+        val measuredHeight = getHeight(index)
         if (measuredHeight != null && measuredHeight > 0) {
             return measuredHeight + 5
         }
 
-        return max(PaginatedQuestions.averageHeight, 300) + 5
+        return max(averageHeight, 300) + 5
     }
 }

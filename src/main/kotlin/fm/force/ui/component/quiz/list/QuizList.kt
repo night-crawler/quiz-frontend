@@ -1,7 +1,6 @@
 package fm.force.ui.component.quiz.list
 
 import fm.force.ui.component.helmet
-import fm.force.ui.component.infinitePaginator
 import fm.force.ui.effect.UseState
 import fm.force.ui.effect.useDebounce
 import fm.force.ui.effect.useForceUpdate
@@ -11,7 +10,6 @@ import react.*
 import react.dom.title
 
 val QuizList = functionalComponent<RProps> { props ->
-//    val (isLoaded, setIsLoaded) = useState(false)
     var searchBoxHeight by UseState(0)
     var searchText by UseState("")
     val debouncedSearchText = useDebounce(searchText, 500)

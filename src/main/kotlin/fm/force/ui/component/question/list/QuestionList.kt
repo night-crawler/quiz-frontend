@@ -1,59 +1,84 @@
 package fm.force.ui.component.question.list
 
-import com.benasher44.uuid.uuid4
+import com.ccfraser.muirwik.components.table.mTablePagination
+import com.ccfraser.muirwik.components.targetValue
+import fm.force.quiz.common.dto.QuestionFullDTO
+import fm.force.ui.ReduxStore
+import fm.force.ui.client.QuestionSearchCriteria
+import fm.force.ui.client.dto.PageWrapper
+import fm.force.ui.client.fromQueryString
+import fm.force.ui.client.toQueryString
 import fm.force.ui.component.helmet
-import fm.force.ui.component.infinitePaginator
+import fm.force.ui.component.loadingCard
+import fm.force.ui.component.noElements
 import fm.force.ui.effect.UseState
-import fm.force.ui.effect.useDebounce
-import fm.force.ui.effect.useForceUpdate
+import fm.force.ui.effect.useDispatch
+import fm.force.ui.util.RouterContext
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
 import react.*
 import react.dom.title
+import react.router.connected.push
+import redux.RAction
+
 
 val QuestionList = functionalComponent<RProps> { props ->
-    var searchBoxHeight by UseState(0)
-    var searchText by UseState("")
-    val debouncedSearchText = useDebounce(searchText, 500)
-    val forceUpdate = useForceUpdate()
-    var uniqueKey by UseState(uuid4().toString())
+    val (questionPage, setQuestionPage) = useState<PageWrapper<QuestionFullDTO>?>(null)
+    val routerContext = useContext(RouterContext)
+    val dispatch = useDispatch()
 
-    val sort = "-createdAt"
+    var searchCriteria by UseState(QuestionSearchCriteria.fromQueryString(routerContext.location.search))
 
-    useEffect(listOf(debouncedSearchText)) {
+    useEffect(listOf(searchCriteria.hashCode())) {
         GlobalScope.promise {
-            PaginatedQuestions.clear()
-            // we pass this helper function down to the context, so it can call it after everything's loaded
-//            PaginatedQuestions.notifyLoaded = setIsLoaded
-            PaginatedQuestions.forceUpdate = forceUpdate
-            PaginatedQuestions.getPage(debouncedSearchText, sort, 1)
-            forceUpdate()
+            ReduxStore.DEFAULT.client.findQuestions(searchCriteria).apply(setQuestionPage)
         }
     }
 
-    questionSearchBox {
-        attrs {
-            onHeightChange = { searchBoxHeight = it }
-            onSearchTextChange = { searchText = it }
-        }
+    useEffect(listOf(searchCriteria.hashCode())) {
+        dispatch(push("/questions?${searchCriteria.toQueryString()}").unsafeCast<RAction>())
     }
 
-    helmet {
-        title("All questions")
-    }
+    helmet { title("All questions") }
 
-    // we don't render anything until after we have the actual height of this input
-    if (searchBoxHeight == 0) {
+    questionSearchBox(
+        initialCriteria = searchCriteria,
+        onSearchCriteriaChange = { searchCriteria = it.copy(page = 1) }
+    )
+
+    if (questionPage == null) {
+        loadingCard()
         return@functionalComponent
     }
-    infinitePaginator(
-        rowComponent = QuestionRow::class.rClass,
-        paginator = PaginatedQuestions,
-        offsetTop = searchBoxHeight,
-        searchText = debouncedSearchText,
-        sort = sort,
-        forceUpdate = forceUpdate,
-        uniqueKey = uniqueKey
+
+    if (questionPage.totalElements == 0L) {
+        noElements()
+        return@functionalComponent
+    }
+
+    questionPage.content.forEach { question ->
+        child(QuestionRow::class) {
+            attrs {
+                this.question = question
+                onDelete = {
+                    GlobalScope.promise {
+                        ReduxStore.DEFAULT.client.deleteQuestion(it.id)
+                        ReduxStore.DEFAULT.client.findQuestions(searchCriteria).apply(setQuestionPage)
+                    }
+                }
+            }
+        }
+    }
+    mTablePagination(
+        rowsPerPage = questionPage.pageSize,
+        page = searchCriteria.page - 1,
+        count = questionPage.totalElements.toInt(),
+        onChangePage = { _, page ->
+            searchCriteria = searchCriteria.copy(page = page + 1)
+        },
+        onChangeRowsPerPage = { event ->
+            searchCriteria = searchCriteria.copy(pageSize = event.targetValue.toString().toInt(), page = 1)
+        }
     )
 }
 
