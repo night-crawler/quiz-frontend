@@ -2,9 +2,7 @@ package fm.force.ui.component.question.list
 
 import CodeMirror.EditorConfiguration
 import com.ccfraser.muirwik.components.themeContext
-import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.extension.codeMirrorTheme
-import fm.force.ui.extension.guessLanguage
 import fm.force.ui.util.jsApply
 import kotlinx.css.LinearDimension
 import kotlinx.css.height
@@ -16,7 +14,6 @@ import react.codemirror.IUnControlledCodeMirror
 import react.codemirror.UnControlled
 import styled.StyledElementBuilder
 import styled.css
-
 
 interface ReadOnlyQuestionCodeProps : RProps {
     var text: String

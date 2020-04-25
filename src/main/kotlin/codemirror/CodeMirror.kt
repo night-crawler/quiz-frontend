@@ -10,6 +10,7 @@
 
 package CodeMirror
 
+import kotlin.js.RegExp
 import org.w3c.dom.DragEvent
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLTextAreaElement
@@ -17,7 +18,6 @@ import org.w3c.dom.events.Event
 import org.w3c.dom.events.FocusEvent
 import org.w3c.dom.events.KeyboardEvent
 import org.w3c.dom.events.MouseEvent
-import kotlin.js.RegExp
 
 external var Pos: PositionConstructor
 

@@ -10,7 +10,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
 import react.*
 
-
 val EditQuestionFormHoc = functionalComponent<EditQuestionFormProps> {
     val routerContext = useContext(RouterContext)
     val params = routerContext.match.params.unsafeCast<MatchParams>()

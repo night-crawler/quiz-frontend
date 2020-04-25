@@ -12,3 +12,6 @@ data class QuestionWrapperDTO(
 
 fun QuestionWrapperDTO.Companion.of() =
     QuestionWrapperDTO()
+
+fun QuestionFullDTO.toQuestionWrapperDTO() =
+    QuestionWrapperDTO(question = this)

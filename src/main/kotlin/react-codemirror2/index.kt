@@ -15,7 +15,6 @@ import react.RState
 import react.ReactElement
 import react.dom.WithClassName
 
-
 external interface IDefineModeOptions {
     var fn: () -> CodeMirror.Mode<Any>
     var name: String
@@ -197,9 +196,8 @@ external interface IUnControlledCodeMirror : ICodeMirror {
         set(value) = definedExternally
 }
 
-open external class Controlled : Component<IControlledCodeMirror, RState>{
+open external class Controlled : Component<IControlledCodeMirror, RState> {
     override fun render(): ReactElement?
-
 }
 
 open external class UnControlled : Component<IUnControlledCodeMirror, RState> {

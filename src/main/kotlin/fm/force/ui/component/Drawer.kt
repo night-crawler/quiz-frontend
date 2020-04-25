@@ -1,19 +1,14 @@
 package fm.force.ui.component
 
-import com.ccfraser.muirwik.components.MDrawerAnchor
-import com.ccfraser.muirwik.components.MDrawerVariant
-import com.ccfraser.muirwik.components.MHiddenImplementation
-import com.ccfraser.muirwik.components.MPaperProps
+import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.list.MListProps
 import com.ccfraser.muirwik.components.list.mList
 import com.ccfraser.muirwik.components.list.mListItem
-import com.ccfraser.muirwik.components.mCssBaseline
-import com.ccfraser.muirwik.components.mDrawer
-import com.ccfraser.muirwik.components.mHidden
+import com.ccfraser.muirwik.components.list.mListItemIcon
 import com.ccfraser.muirwik.components.styles.Breakpoint
 import com.ccfraser.muirwik.components.styles.down
 import com.ccfraser.muirwik.components.styles.up
-import com.ccfraser.muirwik.components.themeContext
+import fm.force.ui.util.IconName
 import kotlinext.js.js
 import kotlinx.css.Overflow
 import kotlinx.css.WordBreak
@@ -94,28 +89,32 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
     }
 
     private fun StyledElementBuilder<MListProps>.renderDifficultyScaleRouteLinks() {
-        renderLink("/difficulty-scales/create", "Create Difficulty Scale")
+        renderLink("/difficulty-scales", "Difficulty Scales", IconName.VIEW_LIST)
+        renderLink("/difficulty-scales/create", "Create Difficulty Scale", IconName.ACCESSIBILITY_NEW)
     }
 
     private fun StyledElementBuilder<MListProps>.renderQuizRouteLinks() {
-        renderLink("/quizzes", "Quizzes")
-        renderLink("/quizzes/create", "Create Quiz")
+        renderLink("/quizzes", "Quizzes", IconName.LIST_ALT)
+        renderLink("/quizzes/create", "Create Quiz", IconName.NEW_RELEASES)
     }
 
     private fun StyledElementBuilder<MListProps>.renderQuestionRouteLinks() {
-        renderLink("/questions", "Questions")
-        renderLink("/questions/create", "Create Question")
+        renderLink("/questions", "Questions", IconName.FORMAT_LIST_NUMBERED)
+        renderLink("/questions/create", "Create Question", IconName.PLAYLIST_ADD)
     }
 
-    private fun StyledElementBuilder<MListProps>.renderLink(path: String, name: String) {
+    private fun StyledElementBuilder<MListProps>.renderLink(path: String, name: String, iconName: IconName) {
         routeLink(path) { pathInfo ->
             mListItem(
-                primaryText = name, selected = pathInfo.isActive,
+                primaryText = name,
+                selected = pathInfo.isActive,
                 onClick = {
                     props.onResponsiveDrawerOpenToggle(false)
                     pathInfo.onClick(it)
                 }
-            )
+            ) {
+                mListItemIcon(iconName.iconMame)
+            }
         }
     }
 }

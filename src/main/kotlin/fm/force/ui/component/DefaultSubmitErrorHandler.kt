@@ -8,7 +8,10 @@ import fm.force.ui.util.IconName
 import redux.RAction
 import redux.WrapperAction
 
-fun defaultSubmitErrorHandler(dispatch: (RAction) -> WrapperAction): suspend (original: FetchError, transformed: SubmissionError) -> WrapperAction {
+fun defaultSubmitErrorHandler(dispatch: (RAction) -> WrapperAction): suspend (
+    original: FetchError,
+    transformed: SubmissionError
+) -> WrapperAction {
     return { original, _ ->
         dispatch(
             ShowSnack(

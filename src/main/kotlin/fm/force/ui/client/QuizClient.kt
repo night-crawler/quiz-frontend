@@ -24,7 +24,6 @@ data class DefaultSearchCriteria(
     companion object
 }
 
-
 fun DefaultSearchCriteria.toMap() = mapOf(
     "page" to page,
     "query" to query,
@@ -86,6 +85,13 @@ open class QuizClient(
             buildResponse = { request, response -> buildResponse(request, response) }
         ).toTypedPage()
 
+    suspend fun findDifficultyScales(criteria: DefaultSearchCriteria): PageWrapper<DifficultyScaleFullDTO> =
+        fetchAdapter.fetch<PageDTO>(
+            HttpMethod.GET, prepareUri("difficultyScales", params = criteria.toMap()), null,
+            headers = jsonHeaders,
+            buildResponse = { request, response -> buildResponse(request, response) }
+        ).toTypedPage()
+
     suspend fun findQuizzes(searchCriteria: DefaultSearchCriteria): PageWrapper<QuizFullDTO> {
         return fetchAdapter.fetch<PageDTO>(
             HttpMethod.GET, prepareUri("quizzes", params = searchCriteria.toMap()), null,
@@ -93,6 +99,12 @@ open class QuizClient(
             buildResponse = { request, response -> buildResponse(request, response) }
         ).toTypedPage()
     }
+
+    suspend fun deleteDifficultyScale(id: Long) = fetchAdapter.fetch(
+        HttpMethod.DELETE, prepareUri("difficultyScales/$id"), null,
+        headers = jsonHeaders,
+        buildResponse = { _, _ -> Unit }
+    )
 
     suspend fun deleteQuiz(id: Long) = fetchAdapter.fetch(
         HttpMethod.DELETE, prepareUri("quizzes/$id"), null,
@@ -118,11 +130,12 @@ open class QuizClient(
         buildResponse = { request, response -> buildResponse(request, response) }
     )
 
-    suspend fun patchDifficultyScale(id: Long, patchDTO: DifficultyScalePatchDTO) = fetchAdapter.fetch<DifficultyScaleFullDTO>(
-        HttpMethod.PATCH, prepareUri("difficultyScales/$id"), patchDTO,
-        headers = jsonHeaders,
-        buildResponse = { request, response -> buildResponse(request, response) }
-    )
+    suspend fun patchDifficultyScale(id: Long, patchDTO: DifficultyScalePatchDTO) =
+        fetchAdapter.fetch<DifficultyScaleFullDTO>(
+            HttpMethod.PATCH, prepareUri("difficultyScales/$id"), patchDTO,
+            headers = jsonHeaders,
+            buildResponse = { request, response -> buildResponse(request, response) }
+        )
 
     suspend fun createQuiz(patchDTO: QuizPatchDTO) = fetchAdapter.fetch<QuizFullDTO>(
         HttpMethod.POST, prepareUri("quizzes"), patchDTO,

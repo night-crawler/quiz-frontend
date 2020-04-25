@@ -1,7 +1,6 @@
 package fm.force.ui.component.difficultyscale.dto
 
 import com.benasher44.uuid.uuid4
-import fm.force.quiz.common.dto.DifficultyScalePatchDTO
 import fm.force.quiz.common.dto.DifficultyScaleRangePatchDTO
 
 data class DifficultyScaleRangeEditDTO(

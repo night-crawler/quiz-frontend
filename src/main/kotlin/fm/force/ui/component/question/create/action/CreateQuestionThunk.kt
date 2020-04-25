@@ -40,5 +40,4 @@ class CreateQuestionThunk(private val editDTO: QuestionEditDTO) : ThunkForm() {
             dispatch(replace("/questions/${question.id}/edit").unsafeCast<RAction>())
         }
     }
-
 }

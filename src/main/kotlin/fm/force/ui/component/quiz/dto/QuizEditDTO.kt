@@ -1,19 +1,14 @@
 package fm.force.ui.component.quiz.dto
 
-import fm.force.quiz.common.dto.ErrorMessage
-import fm.force.quiz.common.dto.TagFullDTO
-import fm.force.quiz.common.dto.TopicFullDTO
-import fm.force.ui.reducer.action.SubmissionError
-import fm.force.ui.reducer.action.of
-import fm.force.ui.util.isFalsy
+import fm.force.quiz.common.dto.*
 
 data class QuizEditDTO(
     val id: Long? = null,
     val title: String,
     val tags: Array<TagFullDTO>,
     val topics: Array<TopicFullDTO>,
-    val questionWrappers: Array<QuestionWrapperDTO>
-//    val difficultyScale: DifficultyScaleFullDTO?,
+    val questionWrappers: Array<QuestionWrapperDTO>,
+    val difficultyScale: DifficultyScaleFullDTO?
 ) {
     companion object
 }
@@ -24,22 +19,23 @@ fun QuizEditDTO.Companion.of() =
         title = "",
         tags = arrayOf(),
         topics = arrayOf(),
-        questionWrappers = arrayOf()
+        questionWrappers = arrayOf(),
+        difficultyScale = null
     )
 
+fun QuizFullDTO.toEditDTO() = QuizEditDTO(
+    id = id,
+    title = title,
+    tags = tags.toTypedArray(),
+    topics = topics.toTypedArray(),
+    questionWrappers = quizQuestions.map { it.question.toQuestionWrapperDTO() }.toTypedArray(),
+    difficultyScale = difficultyScale
+)
 
-fun QuizEditDTO.validate() {
-    if (title.isFalsy) {
-        throw SubmissionError.of(
-            QuizEditDTO::title.name,
-            ErrorMessage("Title must not be empty")
-        )
-    }
-
-    if (questionWrappers.isFalsy || questionWrappers?.mapNotNull { it.question }.isEmpty()) {
-        throw SubmissionError.of(
-            "${QuizEditDTO::questionWrappers.name}._error",
-            ErrorMessage("Questions must not be empty")
-        )
-    }
-}
+fun QuizEditDTO.toPatchDTO() = QuizPatchDTO(
+    title = title,
+    topics = topics.map { it.id }.toSet(),
+    tags = tags.map { it.id }.toSet(),
+    difficultyScale = difficultyScale?.id,
+    questions = questionWrappers.mapNotNull { it.question?.id }
+)

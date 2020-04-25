@@ -1,6 +1,6 @@
 package fm.force.ui.util
 
-fun parseQueryString(rawString: String) : dynamic {
+fun parseQueryString(rawString: String): dynamic {
     val parts = rawString
         .split("?").last()
         .split("&")

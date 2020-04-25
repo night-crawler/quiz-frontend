@@ -1,15 +1,12 @@
 package fm.force.ui.component.question.create.action
 
-import fm.force.quiz.common.dto.*
+import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.client.QuizClient
 import fm.force.ui.component.defaultSubmitErrorHandler
 import fm.force.ui.component.question.dto.QuestionEditDTO
 import fm.force.ui.component.question.dto.toPatchDTO
 import fm.force.ui.reducer.State
-import fm.force.ui.reducer.action.ShowSnack
-import fm.force.ui.reducer.action.Snack
 import fm.force.ui.reducer.action.ThunkForm
-import fm.force.ui.util.IconName
 import mu.KotlinLogging
 import redux.RAction
 import redux.WrapperAction

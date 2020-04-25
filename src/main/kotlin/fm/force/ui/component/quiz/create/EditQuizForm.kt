@@ -1,27 +1,14 @@
 package fm.force.ui.component.quiz.create
 
-import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.quiz.common.dto.QuizFullDTO
 import fm.force.ui.ReduxStore
 import fm.force.ui.component.loadingCard
-import fm.force.ui.component.quiz.dto.QuestionWrapperDTO
-import fm.force.ui.component.quiz.dto.QuizEditDTO
+import fm.force.ui.component.quiz.dto.toEditDTO
 import fm.force.ui.effect.UseState
 import fm.force.ui.util.RouterContext
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
 import react.*
-
-fun QuestionFullDTO.toQuestionWrapperDTO() =
-    QuestionWrapperDTO(question = this)
-
-fun QuizFullDTO.toEditDTO() = QuizEditDTO(
-    id = id,
-    title = title,
-    tags = tags.toTypedArray(),
-    topics = topics.toTypedArray(),
-    questionWrappers = quizQuestions.map { it.question.toQuestionWrapperDTO() }.toTypedArray()
-)
 
 val EditQuizFormHoc = functionalComponent<EditQuizFormProps> {
     val routerContext = useContext(RouterContext)

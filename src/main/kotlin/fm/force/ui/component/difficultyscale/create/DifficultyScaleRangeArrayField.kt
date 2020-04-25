@@ -7,7 +7,9 @@ import com.ccfraser.muirwik.components.form.mFormControl
 import fm.force.quiz.common.dto.FieldError
 import fm.force.ui.component.difficultyscale.dto.DifficultyScaleRangeEditDTO
 import fm.force.ui.component.difficultyscale.dto.of
-import fm.force.ui.component.field.*
+import fm.force.ui.component.field.WrappedTextField
+import fm.force.ui.component.field.arrayFieldMoveButtons
+import fm.force.ui.component.field.fieldErrors
 import fm.force.ui.util.jsApply
 import kotlinx.css.*
 import kotlinx.html.InputType
@@ -71,7 +73,7 @@ class DifficultyScaleRangeArrayField(props: WrappedFieldArrayProps<DifficultySca
                             WrappedTextField,
                             jsApply {
                                 label = "Max"
-                                variant =  MFormControlVariant.outlined
+                                variant = MFormControlVariant.outlined
                                 fieldType = InputType.number
                             },
                             key = props.meta.form + "max" + fields[index].uuid,

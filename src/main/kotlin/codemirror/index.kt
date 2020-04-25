@@ -15,8 +15,7 @@ external fun CodeMirror(
     options: CodeMirror.EditorConfiguration = definedExternally
 ): CodeMirror.Editor
 
-
-//external fun CodeMirror(
+// external fun CodeMirror(
 //    callback: (host: HTMLElement) -> Unit,
 //    options: CodeMirror.EditorConfiguration = definedExternally
-//): CodeMirror.Editor
+// ): CodeMirror.Editor

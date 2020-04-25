@@ -7,9 +7,7 @@ import fm.force.ui.component.difficultyscale.dto.DifficultyScaleEditDTO
 import fm.force.ui.component.difficultyscale.dto.toPatchDTO
 import fm.force.ui.component.difficultyscale.dto.validate
 import fm.force.ui.reducer.State
-import fm.force.ui.reducer.action.Noop
 import fm.force.ui.reducer.action.ThunkForm
-import mu.KotlinLogging
 import react.router.connected.replace
 import redux.RAction
 import redux.WrapperAction

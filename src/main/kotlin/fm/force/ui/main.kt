@@ -2,12 +2,12 @@ package fm.force.ui
 
 import connected.react.router.connectedRouter
 import fm.force.ui.container.app
+import kotlin.browser.document
 import kotlinext.js.require
 import mu.KotlinLoggingConfiguration
 import mu.KotlinLoggingLevel
 import react.dom.render
 import react.redux.provider
-import kotlin.browser.document
 
 val reduxStore = ReduxStore.DEFAULT
 

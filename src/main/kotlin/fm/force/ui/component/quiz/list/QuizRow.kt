@@ -12,10 +12,10 @@ import date.fns.formatDistance
 import fm.force.quiz.common.dto.QuizFullDTO
 import fm.force.ui.component.confirmDeleteDialog
 import fm.force.ui.component.iconMenu
-import fm.force.ui.component.question.list.questionList
 import fm.force.ui.component.routeLink
 import fm.force.ui.util.IconName
 import fm.force.ui.util.treeIterator
+import kotlin.js.Date
 import kotlinx.css.marginBottom
 import kotlinx.css.px
 import org.w3c.dom.Node
@@ -27,7 +27,6 @@ import react.RState
 import react.dom.findDOMNode
 import styled.StyledElementBuilder
 import styled.css
-import kotlin.js.Date
 
 interface QuizRowProps : RProps {
     var quiz: QuizFullDTO
@@ -66,6 +65,9 @@ class QuizRow(props: QuizRowProps) : RComponent<QuizRowProps, RState>(props) {
                             +quizQuestion.question.title
                         }
                     }
+                }
+                mTypography(gutterBottom = true) {
+                    +"Difficulty Scale: ${quiz.difficultyScale?.name ?: "-"}"
                 }
             }
             mCardActions {

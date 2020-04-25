@@ -5,14 +5,13 @@ import fm.force.ui.ReduxStore
 import fm.force.ui.component.difficultyScale.create.EditDifficultyScaleFormProps
 import fm.force.ui.component.difficultyScale.create.MatchParams
 import fm.force.ui.component.difficultyScale.create.reduxEditDifficultyScaleForm
-import fm.force.ui.component.loadingCard
 import fm.force.ui.component.difficultyscale.dto.toEditDTO
+import fm.force.ui.component.loadingCard
 import fm.force.ui.effect.UseState
 import fm.force.ui.util.RouterContext
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
 import react.*
-
 
 val EditDifficultyScaleFormHoc = functionalComponent<EditDifficultyScaleFormProps> {
     val routerContext = useContext(RouterContext)

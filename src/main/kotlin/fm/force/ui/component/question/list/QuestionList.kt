@@ -22,7 +22,6 @@ import react.dom.title
 import react.router.connected.push
 import redux.RAction
 
-
 val QuestionList = functionalComponent<RProps> { props ->
     val (questionPage, setQuestionPage) = useState<PageWrapper<QuestionFullDTO>?>(null)
     val routerContext = useContext(RouterContext)

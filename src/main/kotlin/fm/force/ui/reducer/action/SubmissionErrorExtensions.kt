@@ -7,7 +7,6 @@ import fm.force.quiz.common.serializer.QuizJson
 import fm.force.ui.client.FetchClientNetworkError
 import fm.force.ui.client.FetchError
 import fm.force.ui.client.isJson
-import fm.force.ui.client.toReduxFormErrors
 import fm.force.ui.util.deepSet
 import fm.force.ui.util.toJson
 

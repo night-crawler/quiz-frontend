@@ -5,7 +5,8 @@ import com.ccfraser.muirwik.components.button.MButtonVariant
 import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.form.mFormControl
-import fm.force.quiz.common.dto.*
+import fm.force.quiz.common.dto.FieldError
+import fm.force.quiz.common.dto.QuizFullDTO
 import fm.force.ui.component.field.*
 import fm.force.ui.component.helmet
 import fm.force.ui.component.quiz.action.CreateQuizThunk
@@ -55,6 +56,11 @@ private val QuizForm = functionalComponent<EditQuizFormProps> { props ->
                 QuizEditDTO::topics,
                 TopicsAutocompleteField,
                 jsApply { label = "Topics" }
+            )
+            field(
+                QuizEditDTO::difficultyScale,
+                DifficultyScalesAutocompleteField,
+                jsApply { label = "Difficulty Scale" }
             )
             fieldArray(
                 QuizEditDTO::questionWrappers,
