@@ -2,8 +2,8 @@ package fm.force.ui.component.question.create.action
 
 import fm.force.quiz.common.dto.AnswerFullDTO
 import fm.force.quiz.common.dto.ErrorMessage
-import fm.force.ui.component.question.create.AnswerEditDTO
-import fm.force.ui.component.question.create.QuestionEditDTO
+import fm.force.ui.component.question.dto.AnswerEditDTO
+import fm.force.ui.component.question.dto.QuestionEditDTO
 import fm.force.ui.reducer.action.SubmissionError
 import fm.force.ui.reducer.action.of
 import fm.force.ui.util.dynamicIterator

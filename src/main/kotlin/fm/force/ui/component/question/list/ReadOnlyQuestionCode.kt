@@ -19,7 +19,8 @@ import styled.css
 
 
 interface ReadOnlyQuestionCodeProps : RProps {
-    var question: QuestionFullDTO
+    var text: String
+    var mode: String
 }
 
 class ReadOnlyQuestionCode(props: ReadOnlyQuestionCodeProps) : RComponent<ReadOnlyQuestionCodeProps, RState>(props) {
@@ -36,7 +37,7 @@ class ReadOnlyQuestionCode(props: ReadOnlyQuestionCodeProps) : RComponent<ReadOn
                     lineNumbers = true
                     // we need this to make codemirror component fit the size of the text
                     viewportMargin = Double.POSITIVE_INFINITY
-                    mode = props.question.guessLanguage().first.codeMirrorModeName
+                    mode = props.mode
                     this.theme = theme.codeMirrorTheme
                 }
             builder.css {
@@ -46,10 +47,17 @@ class ReadOnlyQuestionCode(props: ReadOnlyQuestionCodeProps) : RComponent<ReadOn
                 }
             }
             builder.attrs {
-                value = props.question.text
+                value = props.text
                 options = cmOptions
             }
             child(builder.create())
         }
+    }
+}
+
+fun RBuilder.readOnlyQuestionCode(text: String, mode: String) = child(ReadOnlyQuestionCode::class) {
+    attrs {
+        this.text = text
+        this.mode = mode
     }
 }

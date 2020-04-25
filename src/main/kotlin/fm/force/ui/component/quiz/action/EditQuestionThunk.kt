@@ -3,10 +3,10 @@ package fm.force.ui.component.quiz.action
 import fm.force.quiz.common.dto.QuizFullDTO
 import fm.force.quiz.common.dto.QuizPatchDTO
 import fm.force.ui.client.QuizClient
-import fm.force.ui.component.quiz.create.QuizEditDTO
-import fm.force.ui.component.quiz.create.validate
+import fm.force.ui.component.defaultSubmitErrorHandler
+import fm.force.ui.component.quiz.dto.QuizEditDTO
+import fm.force.ui.component.quiz.dto.validate
 import fm.force.ui.reducer.State
-import fm.force.ui.reducer.action.Noop
 import fm.force.ui.reducer.action.ShowSnack
 import fm.force.ui.reducer.action.Snack
 import fm.force.ui.reducer.action.ThunkForm
@@ -32,20 +32,7 @@ class EditQuizThunk(private val quizEditDTO: QuizEditDTO) : ThunkForm() {
     ): WrapperAction {
         return checkedRun(
             start = { dispatch(EditQuizStart(quizEditDTO)) },
-            error = { original, transformed ->
-                logger.error { "Original error: $original" }
-                logger.error { "Transformed error: $transformed" }
-
-                dispatch(
-                    ShowSnack(
-                        Snack(
-                            title = "Submission error",
-                            iconName = IconName.ERROR,
-                            timeout = null
-                        )
-                    )
-                )
-            }
+            error = defaultSubmitErrorHandler(dispatch)
         ) {
             quizEditDTO.validate()
 

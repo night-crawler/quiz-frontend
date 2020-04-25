@@ -1,12 +1,12 @@
 package fm.force.ui.component.quiz.create
 
-import com.benasher44.uuid.uuid4
 import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.card.mCard
 import com.ccfraser.muirwik.components.form.mFormControl
 import fm.force.quiz.common.dto.FieldError
-import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.component.field.*
+import fm.force.ui.component.quiz.dto.QuestionWrapperDTO
+import fm.force.ui.component.quiz.dto.of
 import fm.force.ui.util.jsApply
 import kotlinx.css.*
 import org.w3c.dom.events.Event
@@ -16,15 +16,6 @@ import react.RState
 import redux.form.WrappedFieldArrayProps
 import redux.form.field
 import styled.css
-
-data class QuestionWrapperDTO(
-    val question: QuestionFullDTO? = null,
-    val uuid: String = uuid4().toString()
-) {
-    companion object
-}
-
-fun QuestionWrapperDTO.Companion.of() = QuestionWrapperDTO()
 
 // this one must remain a class component since styled is created dynamically
 class QuizQuestionWrapperField(props: WrappedFieldArrayProps<QuestionWrapperDTO>) :

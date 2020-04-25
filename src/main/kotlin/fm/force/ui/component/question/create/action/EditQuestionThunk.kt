@@ -2,7 +2,9 @@ package fm.force.ui.component.question.create.action
 
 import fm.force.quiz.common.dto.*
 import fm.force.ui.client.QuizClient
-import fm.force.ui.component.question.create.QuestionEditDTO
+import fm.force.ui.component.defaultSubmitErrorHandler
+import fm.force.ui.component.question.dto.QuestionEditDTO
+import fm.force.ui.component.question.dto.toPatchDTO
 import fm.force.ui.reducer.State
 import fm.force.ui.reducer.action.ShowSnack
 import fm.force.ui.reducer.action.Snack
@@ -18,7 +20,7 @@ class EditQuestionSuccess(val questionEditDTO: QuestionFullDTO) : RAction
 
 private val logger = KotlinLogging.logger("EditQuestionThunk")
 
-class EditQuestionThunk(private val questionEditDTO: QuestionEditDTO) : ThunkForm() {
+class EditQuestionThunk(private val editDTO: QuestionEditDTO) : ThunkForm() {
     override suspend fun run(
         originalAction: RAction,
         dispatch: (RAction) -> WrapperAction,
@@ -27,39 +29,18 @@ class EditQuestionThunk(private val questionEditDTO: QuestionEditDTO) : ThunkFor
         client: QuizClient
     ): WrapperAction {
         return checkedRun(
-            start = { dispatch(EditQuestionStart(questionEditDTO)) },
-            error = { original, transformed ->
-                logger.error { "Original error: $original" }
-                logger.error { "Transformed error: $transformed" }
-
-                dispatch(
-                    ShowSnack(
-                        Snack(
-                            title = "Submission error",
-                            iconName = IconName.ERROR,
-                            timeout = null
-                        )
-                    )
-                )
-            }
+            start = { dispatch(EditQuestionStart(editDTO)) },
+            error = defaultSubmitErrorHandler(dispatch)
         ) {
-            questionEditDTO.validate()
+            editDTO.validate()
 
-            val modifiedAnswers = questionEditDTO.answers.filter { it.id != null }.toTypedArray()
-            val newAnswers = questionEditDTO.answers.filter { it.id == null }.toTypedArray()
+            val modifiedAnswers = editDTO.answers.filter { it.id != null }.toTypedArray()
+            val newAnswers = editDTO.answers.filter { it.id == null }.toTypedArray()
 
             val answers = client.updateAnswers(modifiedAnswers) + client.createAnswers(newAnswers)
-            val questionDTO = QuestionPatchDTO(
-                title = questionEditDTO.title,
-                text = questionEditDTO.text,
-                correctAnswers = questionEditDTO.getCorrectAnswerIds(answers),
-                difficulty = questionEditDTO.difficulty,
-                answers = answers.map(AnswerFullDTO::id).toSet(),
-                tags = questionEditDTO.tags.map(TagFullDTO::id).toSet(),
-                topics = questionEditDTO.topics.map(TopicFullDTO::id).toSet()
-            )
+            val questionDTO = editDTO.toPatchDTO(answers)
 
-            dispatch(EditQuestionSuccess(client.patchQuestion(questionEditDTO.id!!, questionDTO)))
+            dispatch(EditQuestionSuccess(client.patchQuestion(editDTO.id!!, questionDTO)))
         }
     }
 }

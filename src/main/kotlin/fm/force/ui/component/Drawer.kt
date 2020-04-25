@@ -88,45 +88,29 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
 
                 renderQuestionRouteLinks()
                 renderQuizRouteLinks()
+                renderDifficultyScaleRouteLinks()
             }
         }
     }
 
+    private fun StyledElementBuilder<MListProps>.renderDifficultyScaleRouteLinks() {
+        renderLink("/difficulty-scales/create", "Create Difficulty Scale")
+    }
+
     private fun StyledElementBuilder<MListProps>.renderQuizRouteLinks() {
-        routeLink("/quizzes") { pathInfo ->
-            mListItem(
-                "Quizzes", selected = pathInfo.isActive,
-                onClick = {
-                    props.onResponsiveDrawerOpenToggle(false)
-                    pathInfo.onClick(it)
-                }
-            )
-        }
-        routeLink("/quizzes/create") { pathInfo ->
-            mListItem(
-                "Create Quiz", selected = pathInfo.isActive,
-                onClick = {
-                    props.onResponsiveDrawerOpenToggle(false)
-                    pathInfo.onClick(it)
-                }
-            )
-        }
+        renderLink("/quizzes", "Quizzes")
+        renderLink("/quizzes/create", "Create Quiz")
     }
 
     private fun StyledElementBuilder<MListProps>.renderQuestionRouteLinks() {
-        routeLink("/questions") { pathInfo ->
-            mListItem(
-                "Questions", selected = pathInfo.isActive,
-                onClick = {
-                    props.onResponsiveDrawerOpenToggle(false)
-                    pathInfo.onClick(it)
-                }
-            )
-        }
+        renderLink("/questions", "Questions")
+        renderLink("/questions/create", "Create Question")
+    }
 
-        routeLink("/questions/create") { pathInfo ->
+    private fun StyledElementBuilder<MListProps>.renderLink(path: String, name: String) {
+        routeLink(path) { pathInfo ->
             mListItem(
-                "Create Question", selected = pathInfo.isActive,
+                primaryText = name, selected = pathInfo.isActive,
                 onClick = {
                     props.onResponsiveDrawerOpenToggle(false)
                     pathInfo.onClick(it)

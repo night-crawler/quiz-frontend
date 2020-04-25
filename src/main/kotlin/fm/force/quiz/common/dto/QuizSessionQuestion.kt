@@ -14,7 +14,9 @@ data class QuizSessionQuestionRestrictedDTO(
     @ContextualSerialization
     val id: Long,
 
+    val title: String,
     val text: String,
+    val help: String,
     val answers: List<QuizSessionQuestionAnswerRestrictedDTO>,
     val seq: Int
 ) : DTORestrictedSerializationMarker
@@ -31,5 +33,7 @@ data class QuizSessionQuestionSearchDTO(
     var quizSession: Long? = null,
     @ContextualSerialization
     val originalQuestion: Long? = null,
-    val text: String? = null
+    val title: String? = null,
+    val text: String? = null,
+    val help: String? = null
 ) : DTOSearchMarker

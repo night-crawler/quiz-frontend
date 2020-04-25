@@ -10,6 +10,8 @@ import fm.force.ui.component.field.*
 import fm.force.ui.component.helmet
 import fm.force.ui.component.quiz.action.CreateQuizThunk
 import fm.force.ui.component.quiz.action.EditQuizThunk
+import fm.force.ui.component.quiz.dto.QuizEditDTO
+import fm.force.ui.component.quiz.dto.of
 import fm.force.ui.util.jsApply
 import kotlinx.html.onSubmit
 import react.RBuilder

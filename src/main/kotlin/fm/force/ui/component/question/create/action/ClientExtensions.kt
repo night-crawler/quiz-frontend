@@ -3,7 +3,7 @@ package fm.force.ui.component.question.create.action
 import fm.force.quiz.common.dto.AnswerPatchDTO
 import fm.force.ui.client.FetchError
 import fm.force.ui.client.QuizClient
-import fm.force.ui.component.question.create.AnswerEditDTO
+import fm.force.ui.component.question.dto.AnswerEditDTO
 import fm.force.ui.reducer.action.SubmissionError
 import fm.force.ui.reducer.action.of
 import fm.force.ui.util.deepSet

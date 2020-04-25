@@ -11,6 +11,7 @@ import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.component.confirmDeleteDialog
 import fm.force.ui.component.iconMenu
 import fm.force.ui.component.routeLink
+import fm.force.ui.extension.guessLanguage
 import fm.force.ui.util.IconName
 import fm.force.ui.util.treeIterator
 import kotlinx.css.marginBottom
@@ -57,11 +58,14 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
                 }
             }
             mCardContent {
-                child(ReadOnlyQuestionCode::class) {
-                    attrs {
-                        this.question = question
-                    }
-                }
+                val mode = question.guessLanguage().first.codeMirrorModeName
+
+                mTypography("Text", color = MTypographyColor.textSecondary)
+                readOnlyQuestionCode(question.text, mode)
+
+                mTypography("Help", color = MTypographyColor.textSecondary)
+                readOnlyQuestionCode(question.help, mode)
+
                 renderQuestionAnswers(question)
             }
             mCardActions {

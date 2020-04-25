@@ -1,30 +1,15 @@
 package fm.force.ui.component.question.create
 
-import fm.force.quiz.common.dto.AnswerFullDTO
 import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.ReduxStore
 import fm.force.ui.component.loadingCard
+import fm.force.ui.component.question.dto.toEditDTO
 import fm.force.ui.effect.UseState
 import fm.force.ui.util.RouterContext
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
 import react.*
 
-fun AnswerFullDTO.toAnswerEditDTO(correctAnswers: Collection<AnswerFullDTO>) = AnswerEditDTO(
-    id = id,
-    text = text,
-    isCorrect = this.id in correctAnswers.map { it.id }.toSet()
-)
-
-fun QuestionFullDTO.toEditDTO() = QuestionEditDTO(
-    id = id,
-    tags = tags.toTypedArray(),
-    topics = topics.toTypedArray(),
-    answers = answers.map { it.toAnswerEditDTO(correctAnswers) }.toTypedArray(),
-    title = title,
-    text = text,
-    difficulty = difficulty
-)
 
 val EditQuestionFormHoc = functionalComponent<EditQuestionFormProps> {
     val routerContext = useContext(RouterContext)

@@ -3,6 +3,7 @@ package fm.force.ui.client
 import fm.force.quiz.common.dto.*
 import fm.force.ui.client.dto.*
 import fm.force.ui.client.dto.UserFullDTO
+import fm.force.ui.constant.DEFAULT_PAGE_SIZE
 import fm.force.ui.util.QueryBuilder
 import fm.force.ui.util.parseQueryString
 import kotlinx.coroutines.await
@@ -18,7 +19,7 @@ data class DefaultSearchCriteria(
     val query: String = "",
     val sort: String = "-createdAt",
     val page: Int = 1,
-    val pageSize: Int = 25
+    val pageSize: Int = DEFAULT_PAGE_SIZE
 ) : SearchCriteria {
     companion object
 }
@@ -117,8 +118,20 @@ open class QuizClient(
         buildResponse = { request, response -> buildResponse(request, response) }
     )
 
+    suspend fun patchDifficultyScale(id: Long, patchDTO: DifficultyScalePatchDTO) = fetchAdapter.fetch<DifficultyScaleFullDTO>(
+        HttpMethod.PATCH, prepareUri("difficultyScales/$id"), patchDTO,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
     suspend fun createQuiz(patchDTO: QuizPatchDTO) = fetchAdapter.fetch<QuizFullDTO>(
         HttpMethod.POST, prepareUri("quizzes"), patchDTO,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
+    suspend fun createDifficultyScale(patchDTO: DifficultyScalePatchDTO) = fetchAdapter.fetch<DifficultyScaleFullDTO>(
+        HttpMethod.POST, prepareUri("difficultyScales"), patchDTO,
         headers = jsonHeaders,
         buildResponse = { request, response -> buildResponse(request, response) }
     )
@@ -149,6 +162,12 @@ open class QuizClient(
 
     suspend fun getOrCreateTag(tag: TagPatchDTO) = fetchAdapter.fetch<TagFullDTO>(
         HttpMethod.POST, prepareUri("tags/getOrCreate"), tag,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
+    suspend fun getDifficultyScale(id: Long) = fetchAdapter.fetch<DifficultyScaleFullDTO>(
+        HttpMethod.GET, prepareUri("difficultyScales/$id"), null,
         headers = jsonHeaders,
         buildResponse = { request, response -> buildResponse(request, response) }
     )

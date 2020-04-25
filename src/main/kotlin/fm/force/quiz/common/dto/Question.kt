@@ -11,6 +11,7 @@ data class QuestionFullDTO(
 
     val title: String,
     val text: String,
+    val help: String,
     val answers: Collection<AnswerFullDTO>,
     val correctAnswers: Collection<AnswerFullDTO>,
     val tags: Collection<TagFullDTO>,
@@ -31,6 +32,7 @@ data class QuestionRestrictedDTO(
 
     val title: String,
     val text: String,
+    val help: String,
     val answers: Collection<AnswerRestrictedDTO>,
     val difficulty: Int
 ) : DTORestrictedSerializationMarker
@@ -39,6 +41,7 @@ data class QuestionRestrictedDTO(
 data class QuestionPatchDTO(
     val title: String? = null,
     val text: String? = null,
+    val help: String? = null,
     val answers: Set<Long>? = null,
     val correctAnswers: Set<Long>? = null,
     val tags: Set<Long>? = null,

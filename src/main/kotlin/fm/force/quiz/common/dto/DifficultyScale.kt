@@ -10,6 +10,7 @@ data class DifficultyScaleFullDTO(
     val id: Long,
 
     val name: String,
+    val max: Int,
     val difficultyScaleRanges: Collection<DifficultyScaleRangeFullDTO>,
 
     @ContextualSerialization
@@ -24,11 +25,13 @@ data class DifficultyScaleRestrictedDTO(
     @ContextualSerialization
     val id: Long,
     val name: String,
+    val max: Int,
     val difficultyScaleRanges: Collection<DifficultyScaleRangeRestrictedDTO>
 ) : DTORestrictedSerializationMarker
 
 @Serializable
 data class DifficultyScalePatchDTO(
     val name: String? = null,
-    val max: Int? = null
+    val max: Int? = null,
+    val ranges: Collection<DifficultyScaleRangePatchDTO>? = null
 ) : DTOMarker

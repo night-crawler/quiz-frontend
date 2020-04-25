@@ -1,4 +1,4 @@
-package fm.force.ui.component.quiz.create
+package fm.force.ui.component.quiz.dto
 
 import fm.force.quiz.common.dto.ErrorMessage
 import fm.force.quiz.common.dto.TagFullDTO
@@ -18,13 +18,14 @@ data class QuizEditDTO(
     companion object
 }
 
-fun QuizEditDTO.Companion.of() = QuizEditDTO(
-    id = null,
-    title = "",
-    tags = arrayOf(),
-    topics = arrayOf(),
-    questionWrappers = arrayOf()
-)
+fun QuizEditDTO.Companion.of() =
+    QuizEditDTO(
+        id = null,
+        title = "",
+        tags = arrayOf(),
+        topics = arrayOf(),
+        questionWrappers = arrayOf()
+    )
 
 
 fun QuizEditDTO.validate() {

@@ -1,7 +1,5 @@
 package fm.force.ui.component.question.create
 
-import CodeMirror
-import CodeMirror.EditorConfiguration
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.button.MButtonVariant
 import com.ccfraser.muirwik.components.button.mButton
@@ -12,16 +10,16 @@ import fm.force.ui.component.field.*
 import fm.force.ui.component.helmet
 import fm.force.ui.component.question.create.action.CreateQuestionThunk
 import fm.force.ui.component.question.create.action.EditQuestionThunk
+import fm.force.ui.component.question.dto.QuestionEditDTO
+import fm.force.ui.component.question.dto.of
 import fm.force.ui.util.jsApply
 import kotlinx.html.onSubmit
 import react.RBuilder
 import react.RProps
-import react.codemirror.UnControlled
 import react.dom.title
 import react.functionalComponent
 import redux.form.*
 import styled.styledForm
-import kotlin.browser.document
 
 interface EditQuestionFormProps : InjectedFormProps<QuestionEditDTO, RProps, Any> {
     var question: QuestionFullDTO
@@ -54,6 +52,13 @@ private val QuestionForm = functionalComponent<EditQuestionFormProps> { props ->
                 CodeMirrorField,
                 jsApply {
                     label = "Question text"
+                }
+            )
+            field(
+                QuestionEditDTO::help,
+                CodeMirrorField,
+                jsApply {
+                    label = "Question help"
                 }
             )
             field(

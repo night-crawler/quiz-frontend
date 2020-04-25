@@ -2,6 +2,7 @@ package fm.force.ui.reducer.action
 
 import fm.force.quiz.common.dto.ErrorMessage
 import fm.force.quiz.common.dto.ErrorResponse
+import fm.force.quiz.common.dto.FieldError
 import fm.force.quiz.common.serializer.QuizJson
 import fm.force.ui.client.FetchClientNetworkError
 import fm.force.ui.client.FetchError
@@ -17,8 +18,22 @@ fun SubmissionError.Companion.of(message: String) =
         ).toJson()
     )
 
-fun SubmissionError.Companion.of(errorResponse: ErrorResponse) =
-    SubmissionError(errorResponse.toReduxFormErrors().toJson())
+fun SubmissionError.Companion.of(errorResponse: ErrorResponse): SubmissionError {
+    val fieldErrors = errorResponse.errors.filterIsInstance<FieldError>()
+    val nonFieldErrors = errorResponse.errors.filterIsInstance<ErrorMessage>().toTypedArray()
+
+    val errors = js("{}")
+
+    fieldErrors.forEach { fieldError ->
+        deepSet(fieldError.fieldName, arrayOf(fieldError), errors)
+    }
+
+    errors["_error"] = nonFieldErrors
+
+    return SubmissionError(errors)
+//    val qwe = errorResponse.toReduxFormErrors()
+//    return SubmissionError(qwe.toJson())
+}
 
 fun SubmissionError.Companion.ofNestedNonField(path: String, message: String) {
     var root = mutableMapOf<String, Any>()

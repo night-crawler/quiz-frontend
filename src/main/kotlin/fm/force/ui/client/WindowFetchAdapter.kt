@@ -45,6 +45,9 @@ open class WindowFetchAdapter : FetchAdapter {
             } catch (exc: SerializationException) {
                 // probably the body is just a simple JavaScript object
                 JSON.stringify(body)
+            } catch (exc: Throwable) {
+                console.error(exc, body)
+                throw exc
             }
         }
 
