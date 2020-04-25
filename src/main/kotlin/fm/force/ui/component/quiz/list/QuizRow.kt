@@ -1,6 +1,7 @@
 package fm.force.ui.component.quiz.list
 
 import com.ccfraser.muirwik.components.*
+import com.ccfraser.muirwik.components.button.mIconButton
 import com.ccfraser.muirwik.components.card.*
 import com.ccfraser.muirwik.components.dialog.mDialogContent
 import com.ccfraser.muirwik.components.dialog.mDialogContentText
@@ -69,7 +70,17 @@ class QuizRow(props: QuizRowProps) : RComponent<QuizRowProps, RState>(props) {
                 mTypography(gutterBottom = true) {
                     +"Difficulty Scale: ${quiz.difficultyScale?.name ?: "-"}"
                 }
+                routeLink("/sessions/${quiz.id}/preview") {
+                    mIconButton(
+                        color = MColor.primary,
+                        iconName = IconName.DIRECTIONS_RUN.iconMame,
+                        onClick = it.onClick
+                    ) {
+                        +"Start Quiz Session"
+                    }
+                }
             }
+
             mCardActions {
                 quiz.tags.forEach {
                     mChip(it.name, size = MChipSize.small, variant = MChipVariant.outlined, color = MChipColor.primary)

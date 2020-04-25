@@ -1,10 +1,7 @@
 package fm.force.ui.component
 
 import com.ccfraser.muirwik.components.*
-import com.ccfraser.muirwik.components.list.MListProps
-import com.ccfraser.muirwik.components.list.mList
-import com.ccfraser.muirwik.components.list.mListItem
-import com.ccfraser.muirwik.components.list.mListItemIcon
+import com.ccfraser.muirwik.components.list.*
 import com.ccfraser.muirwik.components.styles.Breakpoint
 import com.ccfraser.muirwik.components.styles.down
 import com.ccfraser.muirwik.components.styles.up
@@ -106,7 +103,6 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
     private fun StyledElementBuilder<MListProps>.renderLink(path: String, name: String, iconName: IconName) {
         routeLink(path) { pathInfo ->
             mListItem(
-                primaryText = name,
                 selected = pathInfo.isActive,
                 onClick = {
                     props.onResponsiveDrawerOpenToggle(false)
@@ -114,6 +110,7 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
                 }
             ) {
                 mListItemIcon(iconName.iconMame)
+                mListItemText { +name }
             }
         }
     }

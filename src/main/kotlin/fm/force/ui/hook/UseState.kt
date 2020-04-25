@@ -1,4 +1,4 @@
-package fm.force.ui.effect
+package fm.force.ui.hook
 
 import kotlin.reflect.KProperty
 import react.useState

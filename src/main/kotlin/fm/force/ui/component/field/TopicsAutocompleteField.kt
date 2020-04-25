@@ -4,7 +4,8 @@ import com.ccfraser.muirwik.components.mTextField
 import fm.force.quiz.common.dto.TopicFullDTO
 import fm.force.quiz.common.dto.TopicPatchDTO
 import fm.force.ui.ReduxStore
-import fm.force.ui.effect.useDebounce
+import fm.force.ui.hook.useClient
+import fm.force.ui.hook.useDebounce
 import kotlinext.js.Object
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
@@ -25,16 +26,13 @@ interface TopicsAutocompleteFieldProps : WrappedFieldProps {
 
 val TopicsAutocompleteField = functionalComponent<TopicsAutocompleteFieldProps> { props ->
     val (searchText, setSearchText) = useState("")
-    val (Topics, setTopics) = useState(listOf<TopicFullDTO>())
     val debouncedSearchText = useDebounce(searchText, 500)
 
-    useEffect(listOf(debouncedSearchText)) {
-        GlobalScope.promise {
-            ReduxStore.DEFAULT.client.findTopics(debouncedSearchText).content.toList().apply(setTopics)
-        }
-    }
+    val topics = useClient(listOf(debouncedSearchText)) {
+        findTopics(debouncedSearchText).content.toList()
+    } ?: listOf()
 
-    labAutocompleteMultipleField(props.label, Topics) {
+    labAutocompleteMultipleField(props.label, topics) {
         attrs {
             freeSolo = true
             value = props.input.getArrayValue()

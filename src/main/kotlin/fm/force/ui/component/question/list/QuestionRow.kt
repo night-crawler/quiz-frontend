@@ -86,6 +86,9 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
 
     private fun StyledElementBuilder<MCardHeaderProps>.renderAction(question: QuestionFullDTO) =
         iconMenu(IconName.MORE_VERT.iconMame, shouldClose = ::shouldCloseMenu) {
+            routeLink("/questions/${question.id}/edit") {
+                mMenuItemWithIcon(IconName.EDIT.iconMame, "Edit", onClick = it.onClick)
+            }
             confirmDeleteDialog(
                 dialogRef = { dialogRef = findDOMNode(it) },
                 title = RBuilder().mDialogTitle("Delete question ${question.title}?"),
@@ -100,9 +103,6 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
                         setIsOpen(true)
                     }
                 )
-            }
-            routeLink("/questions/${question.id}/edit") {
-                mMenuItemWithIcon(IconName.EDIT.iconMame, "Edit", onClick = it.onClick)
             }
         }
 

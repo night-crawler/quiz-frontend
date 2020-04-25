@@ -12,8 +12,9 @@ import fm.force.ui.component.helmet
 import fm.force.ui.component.loadingCard
 import fm.force.ui.component.noElements
 import fm.force.ui.component.textSearchBox
-import fm.force.ui.effect.UseState
-import fm.force.ui.effect.useDispatch
+import fm.force.ui.hook.UseState
+import fm.force.ui.hook.useClient
+import fm.force.ui.hook.useDispatch
 import fm.force.ui.util.RouterContext
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
@@ -29,10 +30,8 @@ val DifficultyScaleList = functionalComponent<RProps> { props ->
 
     var searchCriteria by UseState(DefaultSearchCriteria.fromQueryString(routerContext.location.search))
 
-    useEffect(listOf(searchCriteria.hashCode())) {
-        GlobalScope.promise {
-            ReduxStore.DEFAULT.client.findDifficultyScales(searchCriteria).apply(setDifficultyScalePage)
-        }
+    useClient(listOf(searchCriteria.hashCode())) {
+        findDifficultyScales(searchCriteria).apply(setDifficultyScalePage)
     }
 
     useEffect(listOf(searchCriteria.hashCode())) {

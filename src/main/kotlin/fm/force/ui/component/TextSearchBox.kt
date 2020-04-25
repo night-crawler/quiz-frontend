@@ -5,8 +5,8 @@ import com.ccfraser.muirwik.components.form.MFormControlMargin
 import com.ccfraser.muirwik.components.mTextField
 import com.ccfraser.muirwik.components.targetInputValue
 import fm.force.ui.client.DefaultSearchCriteria
-import fm.force.ui.effect.UseState
-import fm.force.ui.effect.useDebounce
+import fm.force.ui.hook.UseState
+import fm.force.ui.hook.useDebounce
 import react.RBuilder
 import react.child
 import react.functionalComponent

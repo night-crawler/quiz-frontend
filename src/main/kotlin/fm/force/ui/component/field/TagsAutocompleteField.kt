@@ -3,14 +3,14 @@ package fm.force.ui.component.field
 import fm.force.quiz.common.dto.TagFullDTO
 import fm.force.quiz.common.dto.TagPatchDTO
 import fm.force.ui.ReduxStore
-import fm.force.ui.effect.useDebounce
+import fm.force.ui.hook.useClient
+import fm.force.ui.hook.useDebounce
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
 import mu.KotlinLogging
 import mui.lab.labAutocompleteMultipleField
 import react.dom.span
 import react.functionalComponent
-import react.useEffect
 import react.useState
 import redux.form.WrappedFieldProps
 import redux.form.getArrayValue
@@ -23,14 +23,11 @@ interface TagsAutocompleteFieldProps : WrappedFieldProps {
 
 val TagsAutocompleteField = functionalComponent<TagsAutocompleteFieldProps> { props ->
     val (searchText, setSearchText) = useState("")
-    val (tags, setTags) = useState(listOf<TagFullDTO>())
     val debouncedSearchText = useDebounce(searchText, 500)
 
-    useEffect(listOf(debouncedSearchText)) {
-        GlobalScope.promise {
-            ReduxStore.DEFAULT.client.findTags(debouncedSearchText).content.toList().apply(setTags)
-        }
-    }
+    val tags = useClient(listOf(debouncedSearchText)) {
+        findTags(debouncedSearchText).content.toList()
+    } ?: listOf()
 
     labAutocompleteMultipleField(props.label, tags) {
         attrs {

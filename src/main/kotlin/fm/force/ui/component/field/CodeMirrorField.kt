@@ -6,8 +6,8 @@ import com.ccfraser.muirwik.components.form.mFormControl
 import com.ccfraser.muirwik.components.mTypography
 import com.ccfraser.muirwik.components.themeContext
 import fm.force.quiz.common.dto.FieldError
-import fm.force.ui.effect.UseState
-import fm.force.ui.effect.useDebounce
+import fm.force.ui.hook.UseState
+import fm.force.ui.hook.useDebounce
 import fm.force.ui.extension.codeMirrorTheme
 import fm.force.ui.util.jsApply
 import kotlinx.css.Color

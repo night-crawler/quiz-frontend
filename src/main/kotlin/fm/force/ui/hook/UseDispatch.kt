@@ -1,4 +1,4 @@
-package fm.force.ui.effect
+package fm.force.ui.hook
 
 import fm.force.ui.ReduxStore
 

@@ -11,6 +11,7 @@ import fm.force.ui.component.question.list.questionList
 import fm.force.ui.component.quiz.create.createQuizForm
 import fm.force.ui.component.quiz.create.editQuizForm
 import fm.force.ui.component.quiz.list.quizList
+import fm.force.ui.component.session.quizSessionPreview
 import fm.force.ui.reducer.action.ChangeAppViewName
 import kotlin.browser.window
 import react.RBuilder
@@ -47,6 +48,7 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
             renderQuestionRoutes()
             renderQuizRoutes()
             renderDifficultyScaleRoutes()
+            renderQuizSessionRoutes()
 
             route("/", exact = true) {
                 deferredDispatch(ChangeAppViewName("Home"))
@@ -56,6 +58,13 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
                 deferredDispatch(ChangeAppViewName("Not Found"))
                 notFound()
             }
+        }
+    }
+
+    private fun RBuilder.renderQuizSessionRoutes() {
+        route("/sessions/:id/preview") {
+            deferredDispatch(ChangeAppViewName("Start Quiz Session"))
+            quizSessionPreview()
         }
     }
 

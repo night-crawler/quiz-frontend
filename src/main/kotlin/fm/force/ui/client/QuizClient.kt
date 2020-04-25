@@ -197,6 +197,12 @@ open class QuizClient(
         buildResponse = { request, response -> buildResponse(request, response) }
     )
 
+    suspend fun getRestrictedQuiz(id: Long) = fetchAdapter.fetch<QuizRestrictedDTO>(
+        HttpMethod.GET, prepareUri("quizzes/$id/view"), null,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
     suspend fun createTag(tag: TagPatchDTO) = fetchAdapter.fetch<TagFullDTO>(
         HttpMethod.POST, prepareUri("tags"), tag,
         headers = jsonHeaders,

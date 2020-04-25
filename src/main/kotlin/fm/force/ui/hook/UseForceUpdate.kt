@@ -1,4 +1,4 @@
-package fm.force.ui.effect
+package fm.force.ui.hook
 
 import kotlinext.js.Object
 import react.rawUseState

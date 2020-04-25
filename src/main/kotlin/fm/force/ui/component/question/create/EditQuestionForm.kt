@@ -1,25 +1,20 @@
 package fm.force.ui.component.question.create
 
-import fm.force.quiz.common.dto.QuestionFullDTO
-import fm.force.ui.ReduxStore
 import fm.force.ui.component.loadingCard
 import fm.force.ui.component.question.dto.toEditDTO
-import fm.force.ui.effect.UseState
+import fm.force.ui.hook.useClient
 import fm.force.ui.util.RouterContext
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.promise
-import react.*
+import react.RBuilder
+import react.child
+import react.functionalComponent
+import react.useContext
 
 val EditQuestionFormHoc = functionalComponent<EditQuestionFormProps> {
     val routerContext = useContext(RouterContext)
     val params = routerContext.match.params.unsafeCast<MatchParams>()
 
-    var question: QuestionFullDTO? by UseState(null)
-
-    useEffect(listOf(params.id)) {
-        GlobalScope.promise {
-            question = ReduxStore.DEFAULT.client.getQuestion(params.id.toLong())
-        }
+    val question = useClient(listOf(params.id)) {
+        getQuestion(params.id.toLong())
     }
 
     if (question == null) {
@@ -29,7 +24,7 @@ val EditQuestionFormHoc = functionalComponent<EditQuestionFormProps> {
 
     reduxEditQuestionForm {
         attrs {
-            question?.let { initialValues = it.toEditDTO() }
+            initialValues = question.toEditDTO()
         }
     }
 }

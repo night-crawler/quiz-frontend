@@ -1,4 +1,4 @@
-package fm.force.ui.effect
+package fm.force.ui.hook
 
 import kotlin.browser.window
 import react.useEffectWithCleanup

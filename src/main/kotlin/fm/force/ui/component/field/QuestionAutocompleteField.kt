@@ -1,19 +1,15 @@
 package fm.force.ui.component.field
 
 import com.ccfraser.muirwik.components.mTextField
-import fm.force.quiz.common.dto.QuestionFullDTO
-import fm.force.ui.ReduxStore
 import fm.force.ui.client.DefaultSearchCriteria
-import fm.force.ui.effect.UseState
-import fm.force.ui.effect.useDebounce
+import fm.force.ui.hook.UseState
+import fm.force.ui.hook.useClient
+import fm.force.ui.hook.useDebounce
 import kotlinext.js.Object
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.promise
 import mu.KotlinLogging
 import mui.lab.labAutocompleteField
 import react.dom.span
 import react.functionalComponent
-import react.useEffect
 import redux.form.WrappedFieldProps
 
 private val logger = KotlinLogging.logger("QuestionsAutocompleteField")
@@ -24,21 +20,18 @@ interface QuestionsAutocompleteFieldProps : WrappedFieldProps {
 
 val QuestionAutocompleteField = functionalComponent<QuestionsAutocompleteFieldProps> { props ->
     var searchText by UseState("")
-    var questions by UseState(listOf<QuestionFullDTO>())
     val debouncedSearchText = useDebounce(searchText, 500)
 
-    useEffect(listOf(debouncedSearchText)) {
-        GlobalScope.promise {
-            questions = ReduxStore.DEFAULT.client.findQuestions(
-                DefaultSearchCriteria(
-                    page = 1,
-                    sort = "title",
-                    query = debouncedSearchText,
-                    pageSize = 50
-                )
-            ).content.toList()
-        }
-    }
+    val questions = useClient(listOf(debouncedSearchText)) {
+        findQuestions(
+            DefaultSearchCriteria(
+                page = 1,
+                sort = "title",
+                query = debouncedSearchText,
+                pageSize = 100
+            )
+        ).content.toList()
+    } ?: listOf()
 
     labAutocompleteField(props.label, questions) {
         attrs {

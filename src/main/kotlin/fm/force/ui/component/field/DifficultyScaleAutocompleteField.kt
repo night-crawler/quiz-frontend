@@ -1,17 +1,13 @@
 package fm.force.ui.component.field
 
 import com.ccfraser.muirwik.components.mTextField
-import fm.force.quiz.common.dto.DifficultyScaleFullDTO
-import fm.force.ui.ReduxStore
 import fm.force.ui.client.DefaultSearchCriteria
-import fm.force.ui.effect.useDebounce
+import fm.force.ui.hook.useClient
+import fm.force.ui.hook.useDebounce
 import kotlinext.js.Object
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.promise
 import mui.lab.labAutocompleteField
 import react.dom.span
 import react.functionalComponent
-import react.useEffect
 import react.useState
 import redux.form.WrappedFieldProps
 
@@ -21,21 +17,18 @@ interface DifficultyScalesAutocompleteFieldProps : WrappedFieldProps {
 
 val DifficultyScalesAutocompleteField = functionalComponent<DifficultyScalesAutocompleteFieldProps> { props ->
     val (searchText, setSearchText) = useState("")
-    val (DifficultyScales, setDifficultyScales) = useState(listOf<DifficultyScaleFullDTO>())
     val debouncedSearchText = useDebounce(searchText, 500)
 
-    useEffect(listOf(debouncedSearchText)) {
-        GlobalScope.promise {
-            ReduxStore.DEFAULT.client.findDifficultyScales(
-                DefaultSearchCriteria(
-                    query = debouncedSearchText,
-                    pageSize = 100
-                )
-            ).content.toList().apply(setDifficultyScales)
-        }
-    }
+    val difficultyScales = useClient(listOf(debouncedSearchText)) {
+        findDifficultyScales(
+            DefaultSearchCriteria(
+                query = debouncedSearchText,
+                pageSize = 100
+            )
+        ).content.toList()
+    } ?: listOf()
 
-    labAutocompleteField(props.label, DifficultyScales) {
+    labAutocompleteField(props.label, difficultyScales) {
         attrs {
             freeSolo = true
             value = if (props.input.value == "") null else props.input.value

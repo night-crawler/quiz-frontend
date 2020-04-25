@@ -5,17 +5,12 @@ import com.ccfraser.muirwik.components.button.MButtonVariant
 import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.form.mFormControl
-import com.ccfraser.muirwik.components.spacingUnits
 import fm.force.quiz.common.dto.ErrorMessage
 import fm.force.ui.client.dto.LoginRequestDTO
 import fm.force.ui.component.field.WrappedTextField
 import fm.force.ui.reducer.action.LoginThunk
 import fm.force.ui.util.jsApply
 import kotlinext.js.js
-import kotlinx.css.Display
-import kotlinx.css.display
-import kotlinx.css.marginLeft
-import kotlinx.css.marginRight
 import kotlinx.html.InputType
 import kotlinx.html.onSubmit
 import react.RBuilder
@@ -28,20 +23,11 @@ import redux.form.ConfigProps
 import redux.form.InjectedFormProps
 import redux.form.field
 import redux.form.reduxForm
-import styled.StyleSheet
 import styled.styledForm
 
 interface LoginFormProps : InjectedFormProps<LoginRequestDTO, RProps, Any>
 
 class LoginForm(props: LoginFormProps) : RComponent<LoginFormProps, RState>(props) {
-    object ComponentStyles : StyleSheet("SampleStyles", isStatic = true) {
-        val textField by css {
-            marginLeft = 1.spacingUnits
-            marginRight = 1.spacingUnits
-            display = Display.block
-        }
-    }
-
     override fun RBuilder.render() {
         styledForm {
             attrs {
