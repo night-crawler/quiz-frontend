@@ -7,8 +7,8 @@ import fm.force.quiz.common.dto.FieldError
 import fm.force.ui.component.field.QuestionAutocompleteField
 import fm.force.ui.component.field.arrayFieldMoveButtons
 import fm.force.ui.component.field.fieldErrors
-import fm.force.ui.component.quiz.dto.QuestionWrapperDTO
-import fm.force.ui.component.quiz.dto.of
+import fm.force.ui.dto.QuestionWrapperDTO
+import fm.force.ui.dto.of
 import fm.force.ui.util.jsApply
 import kotlinx.css.marginTop
 import kotlinx.css.paddingLeft
@@ -44,7 +44,7 @@ class QuizQuestionWrapperField(props: WrappedFieldArrayProps<QuestionWrapperDTO>
                     field(
                         QuestionWrapperDTO::question,
                         QuestionAutocompleteField,
-                        jsApply { label = "Question" },
+                        jsApply { label = "Question #${index + 1}" },
                         prefix = member
                     )
 

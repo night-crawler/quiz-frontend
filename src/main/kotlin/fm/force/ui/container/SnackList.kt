@@ -1,7 +1,7 @@
 package fm.force.ui.container
 
-import fm.force.ui.component.SnackList
-import fm.force.ui.component.SnackListProps
+import fm.force.ui.component.main.SnackList
+import fm.force.ui.component.main.SnackListProps
 import fm.force.ui.reducer.State
 import fm.force.ui.reducer.action.CloseSnack
 import fm.force.ui.reducer.action.Snack

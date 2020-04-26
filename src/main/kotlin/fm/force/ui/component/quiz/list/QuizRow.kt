@@ -11,9 +11,9 @@ import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.menu.mMenuItemWithIcon
 import date.fns.formatDistance
 import fm.force.quiz.common.dto.QuizFullDTO
-import fm.force.ui.component.confirmDeleteDialog
-import fm.force.ui.component.iconMenu
-import fm.force.ui.component.routeLink
+import fm.force.ui.component.main.confirmDeleteDialog
+import fm.force.ui.component.main.iconMenu
+import fm.force.ui.component.main.routeLink
 import fm.force.ui.util.IconName
 import fm.force.ui.util.treeIterator
 import kotlin.js.Date
@@ -63,14 +63,14 @@ class QuizRow(props: QuizRowProps) : RComponent<QuizRowProps, RState>(props) {
                 mList(dense = true) {
                     quiz.quizQuestions.forEach { quizQuestion ->
                         mListItem {
-                            +quizQuestion.question.title
+                            + "#${quizQuestion.seq + 1} ${quizQuestion.question.title}"
                         }
                     }
                 }
                 mTypography(gutterBottom = true) {
                     +"Difficulty Scale: ${quiz.difficultyScale?.name ?: "-"}"
                 }
-                routeLink("/sessions/${quiz.id}/preview") {
+                routeLink("/quizzes/${quiz.id}/preview") {
                     mIconButton(
                         color = MColor.primary,
                         iconName = IconName.DIRECTIONS_RUN.iconMame,
@@ -99,6 +99,9 @@ class QuizRow(props: QuizRowProps) : RComponent<QuizRowProps, RState>(props) {
 
     private fun StyledElementBuilder<MCardHeaderProps>.renderAction(quiz: QuizFullDTO) =
         iconMenu(IconName.MORE_VERT.iconMame, shouldClose = ::shouldCloseMenu) {
+            routeLink("/quizzes/${quiz.id}/edit") {
+                mMenuItemWithIcon(IconName.EDIT.iconMame, "Edit", onClick = it.onClick)
+            }
             confirmDeleteDialog(
                 dialogRef = { dialogRef = findDOMNode(it) },
                 title = RBuilder().mDialogTitle("Delete quiz ${quiz.title}?"),
@@ -113,9 +116,6 @@ class QuizRow(props: QuizRowProps) : RComponent<QuizRowProps, RState>(props) {
                         setIsOpen(true)
                     }
                 )
-            }
-            routeLink("/quizzes/${quiz.id}/edit") {
-                mMenuItemWithIcon(IconName.EDIT.iconMame, "Edit", onClick = it.onClick)
             }
         }
 

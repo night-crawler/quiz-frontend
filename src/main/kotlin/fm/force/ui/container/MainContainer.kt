@@ -1,7 +1,7 @@
 package fm.force.ui.container
 
-import fm.force.ui.component.MainContainer
-import fm.force.ui.component.MainContainerProps
+import fm.force.ui.component.main.MainContainer
+import fm.force.ui.component.main.MainContainerProps
 import fm.force.ui.reducer.State
 import react.RClass
 import react.RProps

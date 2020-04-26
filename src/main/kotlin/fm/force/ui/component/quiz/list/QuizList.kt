@@ -8,10 +8,10 @@ import fm.force.ui.client.DefaultSearchCriteria
 import fm.force.ui.client.dto.PageWrapper
 import fm.force.ui.client.fromQueryString
 import fm.force.ui.client.toQueryString
-import fm.force.ui.component.helmet
-import fm.force.ui.component.loadingCard
-import fm.force.ui.component.noElements
-import fm.force.ui.component.textSearchBox
+import fm.force.ui.component.main.helmet
+import fm.force.ui.component.main.loadingCard
+import fm.force.ui.component.main.noElements
+import fm.force.ui.component.main.textSearchBox
 import fm.force.ui.hook.UseState
 import fm.force.ui.hook.useClient
 import fm.force.ui.hook.useDispatch

@@ -8,13 +8,13 @@ import com.ccfraser.muirwik.components.form.mFormControl
 import fm.force.quiz.common.dto.DifficultyScaleFullDTO
 import fm.force.quiz.common.dto.FieldError
 import fm.force.ui.component.difficultyscale.create.DifficultyScaleRangeArrayField
-import fm.force.ui.component.difficultyscale.create.action.CreateDifficultyScaleThunk
-import fm.force.ui.component.difficultyscale.dto.DifficultyScaleEditDTO
-import fm.force.ui.component.difficultyscale.dto.of
-import fm.force.ui.component.difficultyscale.edit.action.EditDifficultyScaleThunk
+import fm.force.ui.reducer.action.difficultyscale.CreateDifficultyScaleThunk
+import fm.force.ui.dto.DifficultyScaleEditDTO
+import fm.force.ui.dto.of
+import fm.force.ui.reducer.action.difficultyscale.EditDifficultyScaleThunk
 import fm.force.ui.component.field.WrappedTextField
 import fm.force.ui.component.field.fieldErrors
-import fm.force.ui.component.helmet
+import fm.force.ui.component.main.helmet
 import fm.force.ui.util.jsApply
 import kotlinx.html.InputType
 import kotlinx.html.onSubmit
@@ -84,7 +84,11 @@ val reduxCreateDifficultyScaleForm = reduxForm(
     jsApply<ConfigProps<DifficultyScaleEditDTO, EditDifficultyScaleFormProps, Any>> {
         form = "createDifficultyScale"
         onSubmit = { difficultyScaleEditDTO, dispatch, _ ->
-            dispatch(CreateDifficultyScaleThunk(difficultyScaleEditDTO))
+            dispatch(
+                CreateDifficultyScaleThunk(
+                    difficultyScaleEditDTO
+                )
+            )
         }
     }
 )(DifficultyScaleForm)
@@ -93,7 +97,11 @@ val reduxEditDifficultyScaleForm = reduxForm(
     jsApply<ConfigProps<DifficultyScaleEditDTO, EditDifficultyScaleFormProps, Any>> {
         form = "editDifficultyScale"
         onSubmit = { difficultyScaleEditDTO, dispatch, _ ->
-            dispatch(EditDifficultyScaleThunk(difficultyScaleEditDTO))
+            dispatch(
+                EditDifficultyScaleThunk(
+                    difficultyScaleEditDTO
+                )
+            )
         }
     }
 )(DifficultyScaleForm)

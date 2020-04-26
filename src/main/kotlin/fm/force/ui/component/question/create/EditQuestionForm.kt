@@ -1,7 +1,7 @@
 package fm.force.ui.component.question.create
 
-import fm.force.ui.component.loadingCard
-import fm.force.ui.component.question.dto.toEditDTO
+import fm.force.ui.component.main.loadingCard
+import fm.force.ui.dto.toEditDTO
 import fm.force.ui.hook.useClient
 import fm.force.ui.util.RouterContext
 import react.RBuilder

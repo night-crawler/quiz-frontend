@@ -5,8 +5,8 @@ import com.ccfraser.muirwik.components.card.mCard
 import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.form.mFormControl
 import fm.force.quiz.common.dto.FieldError
-import fm.force.ui.component.difficultyscale.dto.DifficultyScaleRangeEditDTO
-import fm.force.ui.component.difficultyscale.dto.of
+import fm.force.ui.dto.DifficultyScaleRangeEditDTO
+import fm.force.ui.dto.of
 import fm.force.ui.component.field.WrappedTextField
 import fm.force.ui.component.field.arrayFieldMoveButtons
 import fm.force.ui.component.field.fieldErrors

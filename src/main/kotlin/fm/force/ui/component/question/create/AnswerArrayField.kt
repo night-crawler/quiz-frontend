@@ -9,8 +9,8 @@ import fm.force.ui.component.field.WrappedCheckboxField
 import fm.force.ui.component.field.WrappedMultilineField
 import fm.force.ui.component.field.arrayFieldMoveButtons
 import fm.force.ui.component.field.fieldErrors
-import fm.force.ui.component.question.dto.AnswerEditDTO
-import fm.force.ui.component.question.dto.of
+import fm.force.ui.dto.AnswerEditDTO
+import fm.force.ui.dto.of
 import fm.force.ui.util.jsApply
 import kotlinx.css.marginTop
 import kotlinx.css.paddingLeft

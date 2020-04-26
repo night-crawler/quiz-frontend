@@ -12,9 +12,9 @@ import com.ccfraser.muirwik.components.menu.mMenuItemWithIcon
 import com.ccfraser.muirwik.components.table.*
 import date.fns.formatDistance
 import fm.force.quiz.common.dto.DifficultyScaleFullDTO
-import fm.force.ui.component.confirmDeleteDialog
-import fm.force.ui.component.iconMenu
-import fm.force.ui.component.routeLink
+import fm.force.ui.component.main.confirmDeleteDialog
+import fm.force.ui.component.main.iconMenu
+import fm.force.ui.component.main.routeLink
 import fm.force.ui.util.IconName
 import fm.force.ui.util.treeIterator
 import kotlin.js.Date

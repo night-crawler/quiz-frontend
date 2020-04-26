@@ -1,7 +1,7 @@
 package fm.force.ui.container
 
-import fm.force.ui.component.Drawer
-import fm.force.ui.component.DrawerProps
+import fm.force.ui.component.main.Drawer
+import fm.force.ui.component.main.DrawerProps
 import fm.force.ui.reducer.State
 import fm.force.ui.reducer.action.DrawerOpenToggle
 import react.RClass

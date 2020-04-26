@@ -209,6 +209,12 @@ open class QuizClient(
         buildResponse = { request, response -> buildResponse(request, response) }
     )
 
+    suspend fun startSession(quizId: Long) = fetchAdapter.fetch<QuizSessionFullDTO>(
+        HttpMethod.POST, prepareUri("quizzes/$quizId/startSession"), null,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
     suspend fun findTopics(text: String = ""): PageWrapper<TopicFullDTO> {
         val params = mapOf("query" to text, "sort" to "title")
         return fetchAdapter.fetch<PageDTO>(

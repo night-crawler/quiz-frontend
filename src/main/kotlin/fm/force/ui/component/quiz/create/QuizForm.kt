@@ -8,11 +8,11 @@ import com.ccfraser.muirwik.components.form.mFormControl
 import fm.force.quiz.common.dto.FieldError
 import fm.force.quiz.common.dto.QuizFullDTO
 import fm.force.ui.component.field.*
-import fm.force.ui.component.helmet
-import fm.force.ui.component.quiz.action.CreateQuizThunk
-import fm.force.ui.component.quiz.action.EditQuizThunk
-import fm.force.ui.component.quiz.dto.QuizEditDTO
-import fm.force.ui.component.quiz.dto.of
+import fm.force.ui.component.main.helmet
+import fm.force.ui.reducer.action.quiz.CreateQuizThunk
+import fm.force.ui.reducer.action.quiz.EditQuizThunk
+import fm.force.ui.dto.QuizEditDTO
+import fm.force.ui.dto.of
 import fm.force.ui.util.jsApply
 import kotlinx.html.onSubmit
 import react.RBuilder

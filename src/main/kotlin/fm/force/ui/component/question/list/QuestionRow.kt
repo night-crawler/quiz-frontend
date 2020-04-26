@@ -8,9 +8,9 @@ import com.ccfraser.muirwik.components.dialog.mDialogTitle
 import com.ccfraser.muirwik.components.menu.mMenuItemWithIcon
 import date.fns.formatDistance
 import fm.force.quiz.common.dto.QuestionFullDTO
-import fm.force.ui.component.confirmDeleteDialog
-import fm.force.ui.component.iconMenu
-import fm.force.ui.component.routeLink
+import fm.force.ui.component.main.confirmDeleteDialog
+import fm.force.ui.component.main.iconMenu
+import fm.force.ui.component.main.routeLink
 import fm.force.ui.extension.guessLanguage
 import fm.force.ui.util.IconName
 import fm.force.ui.util.treeIterator

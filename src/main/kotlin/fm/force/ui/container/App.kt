@@ -1,7 +1,7 @@
 package fm.force.ui.container
 
-import fm.force.ui.component.App
-import fm.force.ui.component.AppProps
+import fm.force.ui.component.main.App
+import fm.force.ui.component.main.AppProps
 import fm.force.ui.reducer.State
 import fm.force.ui.reducer.action.Bootstrap
 import fm.force.ui.reducer.action.SetThemeType
