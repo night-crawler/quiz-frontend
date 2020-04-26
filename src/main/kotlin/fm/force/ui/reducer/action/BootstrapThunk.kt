@@ -13,7 +13,7 @@ import redux.WrapperAction
 
 class BootstrapSuccess(val userProfile: UserFullDTO) : RAction
 
-class Bootstrap : Thunk<State, RAction, WrapperAction, QuizClient> {
+class BootstrapThunk : Thunk<State, RAction, WrapperAction, QuizClient> {
     @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
     override suspend fun run(
         originalAction: RAction,

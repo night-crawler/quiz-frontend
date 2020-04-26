@@ -58,7 +58,7 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
                 }
             }
             mCardContent {
-                val mode = question.guessLanguage().first.codeMirrorModeName
+                val mode = question.tags.guessLanguage().first
 
                 mTypography("Text", color = MTypographyColor.textSecondary)
                 readOnlyQuestionCode(question.text, mode)

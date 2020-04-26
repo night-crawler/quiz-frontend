@@ -24,6 +24,8 @@ import kotlinx.css.*
 import org.w3c.dom.events.Event
 import react.*
 import react.dom.title
+import react.router.connected.push
+import redux.RAction
 import styled.css
 
 
@@ -53,8 +55,9 @@ val QuizPreview = functionalComponent<RProps> {
 
     fun handleStartSession(e: Event) {
         GlobalScope.launch {
-            val session = ReduxStore.DEFAULT.client.startSession(quiz.id)
-            console.log(session)
+            ReduxStore.DEFAULT.client.startSession(quiz.id).let {
+                dispatch(push(("/sessions/${it.id}/test")).unsafeCast<RAction>())
+            }
         }
     }
 

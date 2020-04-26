@@ -20,3 +20,12 @@ fun AppPreferences.Companion.of() = AppPreferences(
     activeViewDisplayName = "",
     responsiveDrawerOpen = false
 )
+
+fun QuizSessionState.Companion.of() = QuizSessionState(
+    seq = 0,
+    questions = listOf(),
+    difficultyScale = null,
+    session = null,
+    answerMap = mapOf(),
+    quiz = null
+)

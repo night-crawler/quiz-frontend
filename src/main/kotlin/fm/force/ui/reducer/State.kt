@@ -21,7 +21,9 @@ data class State(
     val router: RouterState<CustomLocationState> = RouterState(
         createLocation(state = CustomLocationState()), "POP"
     ),
-    val form: dynamic = jsObject { }
+    val form: dynamic = jsObject { },
+
+    val quizSessionState: QuizSessionState =  QuizSessionState.of()
 )
 
 fun combinedReducers(history: History<*>) = customCombineReducers(
@@ -30,6 +32,7 @@ fun combinedReducers(history: History<*>) = customCombineReducers(
         State::snacks to ::snackReducer,
         State::appPreferences to ::appPreferencesReducer,
         State::router to connectRouter(history),
-        State::form to formReducer
+        State::form to formReducer,
+        State::quizSessionState to ::quizSessionStateReducer
     )
 )

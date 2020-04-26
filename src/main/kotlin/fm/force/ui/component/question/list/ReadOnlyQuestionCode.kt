@@ -2,6 +2,7 @@ package fm.force.ui.component.question.list
 
 import CodeMirror.EditorConfiguration
 import com.ccfraser.muirwik.components.themeContext
+import fm.force.ui.extension.CodeLanguage
 import fm.force.ui.extension.codeMirrorTheme
 import fm.force.ui.util.jsApply
 import kotlinx.css.LinearDimension
@@ -17,7 +18,8 @@ import styled.css
 
 interface ReadOnlyQuestionCodeProps : RProps {
     var text: String
-    var mode: String
+    var codeLanguage: CodeLanguage
+    var lineWrapping: Boolean
 }
 
 class ReadOnlyQuestionCode(props: ReadOnlyQuestionCodeProps) : RComponent<ReadOnlyQuestionCodeProps, RState>(props) {
@@ -34,8 +36,9 @@ class ReadOnlyQuestionCode(props: ReadOnlyQuestionCodeProps) : RComponent<ReadOn
                     lineNumbers = true
                     // we need this to make codemirror component fit the size of the text
                     viewportMargin = Double.POSITIVE_INFINITY
-                    mode = props.mode
+                    mode = props.codeLanguage.codeMirrorModeName
                     this.theme = theme.codeMirrorTheme
+                    lineWrapping = props.lineWrapping
                 }
             builder.css {
                 // we need this to make codemirror component fit the size of the text
@@ -52,9 +55,14 @@ class ReadOnlyQuestionCode(props: ReadOnlyQuestionCodeProps) : RComponent<ReadOn
     }
 }
 
-fun RBuilder.readOnlyQuestionCode(text: String, mode: String) = child(ReadOnlyQuestionCode::class) {
+fun RBuilder.readOnlyQuestionCode(
+    text: String,
+    codeLanguage: CodeLanguage,
+    lineWrapping: Boolean = false
+) = child(ReadOnlyQuestionCode::class) {
     attrs {
         this.text = text
-        this.mode = mode
+        this.codeLanguage = codeLanguage
+        this.lineWrapping = lineWrapping
     }
 }

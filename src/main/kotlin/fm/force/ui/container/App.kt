@@ -3,7 +3,7 @@ package fm.force.ui.container
 import fm.force.ui.component.main.App
 import fm.force.ui.component.main.AppProps
 import fm.force.ui.reducer.State
-import fm.force.ui.reducer.action.Bootstrap
+import fm.force.ui.reducer.action.BootstrapThunk
 import fm.force.ui.reducer.action.SetThemeType
 import react.RClass
 import react.RProps
@@ -31,7 +31,7 @@ private val mapStateToProps: AppStateProps.(State, ConnectedAppProps) -> Unit = 
 private val mapDispatchToProps: AppDispatchProps.((RAction) -> WrapperAction, ConnectedAppProps) -> Unit =
     { dispatch, props ->
         onSetThemeType = { themeColor -> dispatch(SetThemeType(themeColor)) }
-        onBootstrap = { dispatch(Bootstrap()) }
+        onBootstrap = { dispatch(BootstrapThunk()) }
     }
 
 val app: RClass<ConnectedAppProps> =
