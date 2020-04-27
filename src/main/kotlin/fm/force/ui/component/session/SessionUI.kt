@@ -19,12 +19,14 @@ import fm.force.ui.component.question.list.readOnlyQuestionCode
 import fm.force.ui.extension.CodeLanguage
 import fm.force.ui.util.IconName
 import fm.force.ui.util.RouterContext
+import fm.force.ui.util.jsApply
 import kotlinext.js.Object
 import kotlinx.css.em
 import kotlinx.css.fontSize
 import kotlinx.css.pct
 import kotlinx.css.width
 import react.*
+import react.use.useKey
 import styled.css
 
 interface SessionUIProps : RProps {
@@ -38,6 +40,7 @@ interface SessionUIProps : RProps {
     var doAnswer: (session: QuizSessionFullDTO, question: QuizSessionQuestionRestrictedDTO, answerIds: Set<Long>) -> Unit
     var session: QuizSessionFullDTO?
     var quiz: QuizRestrictedDTO?
+    var isSubmitted: Boolean
 }
 
 interface MatchProps : RProps {
@@ -54,6 +57,35 @@ val SessionUI = functionalComponent<SessionUIProps> { props ->
         props.bootstrap(sessionId)
     }
 
+    val handlePrevQuestion = { _: Any ->
+        if (props.seq > 0) props.setSeq(props.seq - 1)
+    }
+
+    val handleNextQuestion = { _: Any ->
+        if (props.seq < props.totalQuestions - 1) props.setSeq(props.seq + 1)
+    }
+
+    val handleDoAnswer = { _: Any ->
+        val session = props.session
+        val currentQuestion = props.currentQuestion
+        if (session != null && currentQuestion != null && !props.isSubmitted && props.checkedAnswers.isNotEmpty())
+            props.doAnswer(session, currentQuestion, props.checkedAnswers)
+    }
+
+    useKey("ArrowLeft", handlePrevQuestion, jsApply {}, arrayOf(props))
+    useKey("ArrowRight", handleNextQuestion, jsApply {}, arrayOf(props))
+    useKey("Enter", handleDoAnswer, jsApply {}, arrayOf(props))
+
+    (1..10).forEach { num ->
+        val bindKey = "${num % 10}"
+        useKey(bindKey, { _->
+            if (!props.isSubmitted)
+                props.currentQuestion?.answers?.getOrNull(num - 1)?.let {
+                    props.toggleAnswer(props.currentQuestion!!, it)
+                }
+        }, jsApply {}, arrayOf(props))
+    }
+
     val currentQuestion = props.currentQuestion
 
     if (currentQuestion == null) {
@@ -64,11 +96,34 @@ val SessionUI = functionalComponent<SessionUIProps> { props ->
     child(QuestionDisplay::class) {
         Object.assign(attrs, props)
         key = "quiz-session-question:${currentQuestion.id}"
+        attrs {
+            quizTitle = props.quiz?.title ?: ""
+            question = currentQuestion
+            onNextQuestion = handleNextQuestion
+            onPrevQuestion = handlePrevQuestion
+            progress = props.seq.toDouble() / (props.totalQuestions - 1) * 100
+            checkedAnswers = props.checkedAnswers
+            onDoAnswerClick = handleDoAnswer
+            isSubmitted = props.isSubmitted
+        }
     }
 
 }
 
-class QuestionDisplay(props: SessionUIProps) : RComponent<SessionUIProps, RState>(props) {
+interface QuestionDisplayProps : RProps {
+    var quizTitle: String
+    var question: QuizSessionQuestionRestrictedDTO
+    var checkedAnswers: Set<Long>
+    var progress: Double
+    var isSubmitted: Boolean
+
+    var onDoAnswerClick: (Any) -> Unit
+    var onNextQuestion: (Any) -> Unit
+    var onPrevQuestion: (Any) -> Unit
+    var toggleAnswer: (question: QuizSessionQuestionRestrictedDTO, answer: QuizSessionQuestionAnswerRestrictedDTO) -> Unit
+}
+
+class QuestionDisplay(props: QuestionDisplayProps) : RComponent<QuestionDisplayProps, RState>(props) {
     private var showHelp = false
 
     private val breakpoints = MGridBreakpoints(MGridSize.cells6)
@@ -76,28 +131,52 @@ class QuestionDisplay(props: SessionUIProps) : RComponent<SessionUIProps, RState
         .down(Breakpoint.sm, MGridSize.cells12)
 
     override fun RBuilder.render() {
-        props.quiz?.title?.let {
-            mTypography(text = it, variant = MTypographyVariant.h6, align = MTypographyAlign.left)
+        mTypography(text = props.quizTitle, variant = MTypographyVariant.h6, align = MTypographyAlign.left)
+
+        renderTopControls()
+
+        readOnlyQuestionCode(props.question.text, CodeLanguage.GENERAL)
+
+        if (showHelp) {
+            readOnlyQuestionCode(props.question.help, CodeLanguage.GENERAL, lineWrapping = true)
+        } else {
+            mButton("Show help", onClick = { setState { showHelp = true } }) {
+                css { width = 100.pct }
+            }
         }
 
+        renderAnswerOptions()
+
+        if (!props.isSubmitted)
+            mButton(
+                caption = "Answer",
+                color = MColor.primary,
+                variant = MButtonVariant.outlined,
+                size = MButtonSize.large,
+                onClick = props.onDoAnswerClick
+            ) {
+                css { width = 100.pct }
+            }
+    }
+
+    private fun RBuilder.renderTopControls() {
         mGridContainer(MGridSpacing.spacing0) {
             mGridItem(xs = MGridSize.cells1) {
                 mIconButton(
                     iconName = IconName.ARROW_LEFT.iconMame,
-                    disabled = props.seq == 0,
-                    onClick = { props.setSeq(props.seq - 1) }
+                    onClick = props.onNextQuestion
                 )
             }
             mGridItem(xs = MGridSize.cells10) {
                 mTypography(
-                    text = props.currentQuestion!!.title,
+                    text = props.question.title,
                     variant = MTypographyVariant.h6,
                     align = MTypographyAlign.center
                 ) {
                     css { fontSize = 1.25.em }
                 }
                 mLinearProgress(
-                    value = props.seq.toDouble() / (props.totalQuestions - 1) * 100,
+                    value = props.progress,
                     variant = MLinearProgressVariant.determinate
                 )
             }
@@ -105,56 +184,33 @@ class QuestionDisplay(props: SessionUIProps) : RComponent<SessionUIProps, RState
                 mIconButton(
                     iconName = IconName.ARROW_RIGHT.iconMame,
                     color = MColor.primary,
-                    disabled = props.seq == props.totalQuestions - 1,
-                    onClick = { props.setSeq(props.seq + 1) }
+                    onClick = props.onNextQuestion
                 )
             }
         }
+    }
 
-        readOnlyQuestionCode(props.currentQuestion!!.text, CodeLanguage.GENERAL)
-
-        if (showHelp) {
-            readOnlyQuestionCode(props.currentQuestion!!.help, CodeLanguage.GENERAL, lineWrapping = true)
-        } else {
-            mButton("Show help", onClick = { setState { showHelp = true } }) {
-                css { width = 100.pct }
-            }
-        }
-
+    private fun RBuilder.renderAnswerOptions() {
         mList {
             mGridContainer(MGridSpacing.spacing0) {
-                props.currentQuestion!!.answers.forEach { answer ->
+                props.question.answers.sortedBy { it.id }.forEachIndexed { index, answer ->
                     val isChecked = answer.id in props.checkedAnswers
+
+                    val numberPrefix = if (index <= 10) {
+                        "${((index + 1) % 10)}. "
+                    } else ""
 
                     mGridItem(breakpoints) {
                         mListItem(button = true, selected = isChecked, onClick = {
-                            props.toggleAnswer(props.currentQuestion!!, answer)
+                            props.toggleAnswer(props.question, answer)
                         }) {
-                            mListItemText(answer.text)
+                            mListItemText("$numberPrefix${answer.text}")
                             mListItemSecondaryAction {
                                 mCheckbox(isChecked, onChange = { _, _ ->
-                                    props.toggleAnswer(props.currentQuestion!!, answer)
+                                    props.toggleAnswer(props.question, answer)
                                 })
                             }
                         }
-                    }
-                }
-            }
-        }
-
-        mButton(
-            caption = "Answer",
-            color = MColor.primary,
-            variant = MButtonVariant.outlined,
-            size = MButtonSize.large
-        ) {
-            css { width = 100.pct }
-            attrs {
-                onClick = {
-                    val currentQuestion = props.currentQuestion
-                    val session = props.session
-                    if (session != null && currentQuestion != null && props.checkedAnswers.isNotEmpty()) {
-                        props.doAnswer(session, currentQuestion, props.checkedAnswers)
                     }
                 }
             }

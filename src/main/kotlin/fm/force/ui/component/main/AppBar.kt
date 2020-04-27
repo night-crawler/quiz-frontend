@@ -67,7 +67,7 @@ class AppBar(props: AppBarProps) : RComponent<AppBarProps, RState>(props) {
                     }
                     mToolbarTitle("${props.appTitle} - ${props.activeViewDisplayName}")
                     mIconButton(
-                        iconName = IconName.LIGHTBULB_OUTLINE.iconMame,
+                        iconName = IconName.BRIGHTNESS_3.iconMame,
                         onClick = { props.onThemeTypeChange(nextThemeType.value) }
                     )
 

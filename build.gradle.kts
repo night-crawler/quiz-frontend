@@ -127,6 +127,7 @@ kotlin {
                 implementation(npm("react-codemirror2", "7.1.0"))
                 implementation(npm("style-loader"))
                 implementation(npm("css-loader"))
+                implementation(npm("react-use", "14.2.0"))
             }
         }
 

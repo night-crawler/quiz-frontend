@@ -15,8 +15,8 @@ data class QuizSessionAnswerRestrictedDTO(
     val id: Long,
     @ContextualSerialization
     val session: Long,
-    val question: QuizSessionQuestionRestrictedDTO,
-    val answers: List<QuizSessionQuestionAnswerRestrictedDTO>
+    val question: Long,
+    val answers: Set<Long>
 ) : DTORestrictedSerializationMarker
 
 @Serializable
@@ -33,5 +33,8 @@ data class QuizSessionAnswerPatchDTO(
 @Serializable
 data class QuizSessionAnswerSearchDTO(
     @ContextualSerialization
-    val id: Long? = null
+    val id: Long? = null,
+
+    @ContextualSerialization
+    val quizSession: Long? = null
 ) : DTOSearchMarker

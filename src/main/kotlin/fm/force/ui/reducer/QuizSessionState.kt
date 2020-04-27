@@ -11,7 +11,8 @@ data class QuizSessionState(
     val difficultyScale: DifficultyScaleFullDTO?,
     val session: QuizSessionFullDTO?,
     val quiz: QuizRestrictedDTO?,
-    val answerMap: Map<Long, Set<Long>>
+    val answerMap: Map<Long, Set<Long>>,
+    val submittedQuestions: Set<Long>
 ) {
     companion object
 }

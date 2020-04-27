@@ -27,6 +27,7 @@ private interface SessionUIStateProps : RProps {
     var checkedAnswers: Set<Long>
     var session: QuizSessionFullDTO?
     var quiz: QuizRestrictedDTO?
+    var isSubmitted: Boolean
 }
 
 private interface SessionUIDispatchProps : RProps {
@@ -42,6 +43,8 @@ private val mapStateToProps: SessionUIStateProps.(State, SessionUIConnectedProps
     seq = state.quizSessionState.seq
     session = state.quizSessionState.session
     quiz = state.quizSessionState.quiz
+
+    isSubmitted = currentQuestion?.id in state.quizSessionState.submittedQuestions
 
     checkedAnswers = currentQuestion?.let {
         state.quizSessionState.answerMap[it.id]

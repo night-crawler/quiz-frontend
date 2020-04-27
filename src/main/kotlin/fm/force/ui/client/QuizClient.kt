@@ -173,6 +173,13 @@ open class QuizClient(
             buildResponse = { request, response -> buildResponse(request, response) }
         ).toTypedPage()
 
+    suspend fun findSessionAnswers(sessionId: Long, criteria: DefaultSearchCriteria): PageWrapper<QuizSessionAnswerRestrictedDTO> =
+        fetchAdapter.fetch<PageDTO>(
+            HttpMethod.GET, prepareUri("quizSessions/$sessionId/answers", params = criteria.toMap()), null,
+            headers = jsonHeaders,
+            buildResponse = { request, response -> buildResponse(request, response) }
+        ).toTypedPage()
+
     suspend fun getQuestion(id: Long) = fetchAdapter.fetch<QuestionFullDTO>(
         HttpMethod.GET, prepareUri("questions/$id"), null,
         headers = jsonHeaders,

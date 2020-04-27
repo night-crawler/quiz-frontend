@@ -103,6 +103,7 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
     private fun StyledElementBuilder<MListProps>.renderLink(path: String, name: String, iconName: IconName) {
         routeLink(path) { pathInfo ->
             mListItem(
+                button = true,
                 selected = pathInfo.isActive,
                 onClick = {
                     props.onResponsiveDrawerOpenToggle(false)

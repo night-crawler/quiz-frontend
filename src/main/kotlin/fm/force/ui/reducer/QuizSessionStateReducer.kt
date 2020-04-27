@@ -6,6 +6,10 @@ import redux.RAction
 fun quizSessionStateReducer(state: QuizSessionState = QuizSessionState.of(), action: RAction): QuizSessionState = when (action) {
     is SessionSequenceSet -> state.copy(seq = action.seq)
     is SessionQuestionsLoaded -> state.copy(questions = action.questions)
+    is SessionAnswersLoaded -> state.copy(
+        answerMap = state.answerMap + action.answers.map { it.question to it.answers },
+        submittedQuestions = state.submittedQuestions + action.answers.map { it.question }.toSet()
+    )
     is SessionDifficultyScaleLoaded -> state.copy(difficultyScale = action.difficultyScale)
     is SessionLoaded -> state.copy(session = action.session)
     is SessionQuizLoaded -> state.copy(quiz = action.quiz)
