@@ -5,7 +5,6 @@ import fm.force.quiz.common.dto.QuizSessionFullDTO
 import fm.force.quiz.common.dto.QuizSessionQuestionRestrictedDTO
 import fm.force.ui.client.QuizClient
 import fm.force.ui.reducer.State
-import fm.force.ui.reducer.action.Noop
 import fm.force.ui.util.Thunk
 import redux.RAction
 import redux.WrapperAction

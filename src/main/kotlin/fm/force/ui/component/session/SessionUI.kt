@@ -1,10 +1,7 @@
 package fm.force.ui.component.session
 
 import com.ccfraser.muirwik.components.*
-import com.ccfraser.muirwik.components.button.MButtonSize
-import com.ccfraser.muirwik.components.button.MButtonVariant
-import com.ccfraser.muirwik.components.button.mButton
-import com.ccfraser.muirwik.components.button.mIconButton
+import com.ccfraser.muirwik.components.button.*
 import com.ccfraser.muirwik.components.list.mList
 import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.list.mListItemSecondaryAction
@@ -21,10 +18,7 @@ import fm.force.ui.util.IconName
 import fm.force.ui.util.RouterContext
 import fm.force.ui.util.jsApply
 import kotlinext.js.Object
-import kotlinx.css.em
-import kotlinx.css.fontSize
-import kotlinx.css.pct
-import kotlinx.css.width
+import kotlinx.css.*
 import react.*
 import react.use.useKey
 import styled.css
@@ -32,15 +26,18 @@ import styled.css
 interface SessionUIProps : RProps {
     var currentQuestion: QuizSessionQuestionRestrictedDTO?
     var totalQuestions: Int
-    var bootstrap: (sessionId: Long) -> Unit
-    var setSeq: (seq: Int) -> Unit
     var seq: Int
-    var toggleAnswer: (question: QuizSessionQuestionRestrictedDTO, answer: QuizSessionQuestionAnswerRestrictedDTO) -> Unit
     var checkedAnswers: Set<Long>
-    var doAnswer: (session: QuizSessionFullDTO, question: QuizSessionQuestionRestrictedDTO, answerIds: Set<Long>) -> Unit
     var session: QuizSessionFullDTO?
     var quiz: QuizRestrictedDTO?
     var isSubmitted: Boolean
+
+    var toggleAnswer: (question: QuizSessionQuestionRestrictedDTO, answer: QuizSessionQuestionAnswerRestrictedDTO) -> Unit
+    var doAnswer: (session: QuizSessionFullDTO, question: QuizSessionQuestionRestrictedDTO, answerIds: Set<Long>) -> Unit
+    var bootstrap: (sessionId: Long) -> Unit
+    var setSeq: (seq: Int) -> Unit
+    var goFirstUnanswered: (Any) -> Unit
+    var goLastUnanswered: (Any) -> Unit
 }
 
 interface MatchProps : RProps {
@@ -78,7 +75,7 @@ val SessionUI = functionalComponent<SessionUIProps> { props ->
 
     (1..10).forEach { num ->
         val bindKey = "${num % 10}"
-        useKey(bindKey, { _->
+        useKey(bindKey, { _ ->
             if (!props.isSubmitted)
                 props.currentQuestion?.answers?.getOrNull(num - 1)?.let {
                     props.toggleAnswer(props.currentQuestion!!, it)
@@ -105,6 +102,8 @@ val SessionUI = functionalComponent<SessionUIProps> { props ->
             checkedAnswers = props.checkedAnswers
             onDoAnswerClick = handleDoAnswer
             isSubmitted = props.isSubmitted
+            goFirstUnanswered = props.goFirstUnanswered
+            goLastUnanswered = props.goLastUnanswered
         }
     }
 
@@ -117,6 +116,8 @@ interface QuestionDisplayProps : RProps {
     var progress: Double
     var isSubmitted: Boolean
 
+    var goFirstUnanswered: (Any) -> Unit
+    var goLastUnanswered: (Any) -> Unit
     var onDoAnswerClick: (Any) -> Unit
     var onNextQuestion: (Any) -> Unit
     var onPrevQuestion: (Any) -> Unit
@@ -160,32 +161,58 @@ class QuestionDisplay(props: QuestionDisplayProps) : RComponent<QuestionDisplayP
     }
 
     private fun RBuilder.renderTopControls() {
-        mGridContainer(MGridSpacing.spacing0) {
-            mGridItem(xs = MGridSize.cells1) {
-                mIconButton(
-                    iconName = IconName.ARROW_LEFT.iconMame,
-                    onClick = props.onNextQuestion
-                )
+        mTypography(
+            text = props.question.title,
+            variant = MTypographyVariant.h6,
+            align = MTypographyAlign.center
+        ) {
+            css { fontSize = 1.25.em }
+        }
+        mLinearProgress(
+            value = props.progress,
+            variant = MLinearProgressVariant.determinate
+        )
+
+        mButtonGroup(variant = MButtonGroupVariant.contained, size = MButtonSize.large, fullWidth = true) {
+            mButton(
+                caption = "",
+                color = MColor.primary,
+                variant = MButtonVariant.outlined,
+                onClick = props.onPrevQuestion
+            ) {
+                mIcon(IconName.ARROW_LEFT.iconMame, MIconColor.inherit)
             }
-            mGridItem(xs = MGridSize.cells10) {
-                mTypography(
-                    text = props.question.title,
-                    variant = MTypographyVariant.h6,
-                    align = MTypographyAlign.center
-                ) {
-                    css { fontSize = 1.25.em }
-                }
-                mLinearProgress(
-                    value = props.progress,
-                    variant = MLinearProgressVariant.determinate
-                )
+
+            mButton(
+                caption = "",
+                color = MColor.primary,
+                variant = MButtonVariant.outlined,
+                onClick = props.goFirstUnanswered
+            ) {
+                mIcon(IconName.FAST_REWIND.iconMame, MIconColor.inherit)
             }
-            mGridItem(xs = MGridSize.cells1) {
-                mIconButton(
-                    iconName = IconName.ARROW_RIGHT.iconMame,
-                    color = MColor.primary,
-                    onClick = props.onNextQuestion
-                )
+
+            mButton(
+                caption = "",
+                color = MColor.primary,
+                variant = MButtonVariant.outlined,
+                onClick = props.goLastUnanswered
+            ) {
+                mIcon(IconName.FAST_FORWARD.iconMame, MIconColor.inherit)
+            }
+
+            mButton(
+                caption = "",
+                color = MColor.primary,
+                variant = MButtonVariant.outlined,
+                onClick = props.onNextQuestion
+            ) {
+                mIcon(IconName.ARROW_RIGHT.iconMame, MIconColor.inherit)
+            }
+
+            css {
+                marginTop = 10.px
+                marginBottom = 10.px
             }
         }
     }

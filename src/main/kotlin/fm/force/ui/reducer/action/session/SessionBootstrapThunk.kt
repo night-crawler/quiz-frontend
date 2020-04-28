@@ -23,6 +23,9 @@ class SessionSequenceSet(val seq: Int) : RAction
 class SessionBootstrapStart : RAction
 class SessionBootstrapComplete : RAction
 
+class GoFirstUnanswered : RAction
+class GoLastUnanswered : RAction
+
 class SessionBootstrapThunk(private val sessionId: Long) : Thunk<State, RAction, WrapperAction, QuizClient> {
     override suspend fun run(
         originalAction: RAction,

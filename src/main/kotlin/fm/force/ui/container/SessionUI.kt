@@ -7,10 +7,7 @@ import fm.force.quiz.common.dto.QuizSessionQuestionRestrictedDTO
 import fm.force.ui.component.session.SessionUI
 import fm.force.ui.component.session.SessionUIProps
 import fm.force.ui.reducer.State
-import fm.force.ui.reducer.action.session.SessionAnswerToggled
-import fm.force.ui.reducer.action.session.SessionBootstrapThunk
-import fm.force.ui.reducer.action.session.SessionDoAnswerThunk
-import fm.force.ui.reducer.action.session.SessionSequenceSet
+import fm.force.ui.reducer.action.session.*
 import react.RClass
 import react.RProps
 import react.invoke
@@ -35,6 +32,8 @@ private interface SessionUIDispatchProps : RProps {
     var setSeq: (seq: Int) -> Unit
     var toggleAnswer: (question: QuizSessionQuestionRestrictedDTO, answer: QuizSessionQuestionAnswerRestrictedDTO) -> Unit
     var doAnswer: (session: QuizSessionFullDTO, question: QuizSessionQuestionRestrictedDTO, answerIds: Set<Long>) -> Unit
+    var goFirstUnanswered: (Any) -> Unit
+    var goLastUnanswered: (Any) -> Unit
 }
 
 private val mapStateToProps: SessionUIStateProps.(State, SessionUIConnectedProps) -> Unit = { state, _ ->
@@ -63,6 +62,8 @@ private val mapDispatchToProps: SessionUIDispatchProps.((RAction) -> WrapperActi
         doAnswer = { session, question, answerIds ->
             dispatch(SessionDoAnswerThunk(session, question, answerIds))
         }
+        goFirstUnanswered = { dispatch(GoFirstUnanswered()) }
+        goLastUnanswered = { dispatch(GoLastUnanswered()) }
     }
 
 val sessionUI: RClass<SessionUIConnectedProps> =
