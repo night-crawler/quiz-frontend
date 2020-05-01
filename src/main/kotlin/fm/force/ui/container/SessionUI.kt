@@ -22,6 +22,7 @@ private interface SessionUIStateProps : RProps {
     var totalQuestions: Int
     var seq: Int
     var checkedAnswers: Set<Long>
+    var correctAnswers: Set<Long>
     var session: QuizSessionFullDTO?
     var quiz: QuizRestrictedDTO?
     var isSubmitted: Boolean
@@ -48,11 +49,14 @@ private val mapStateToProps: SessionUIStateProps.(State, SessionUIConnectedProps
     checkedAnswers = currentQuestion?.let {
         state.quizSessionState.answerMap[it.id]
     } ?: setOf()
+    correctAnswers = currentQuestion?.let {
+        state.quizSessionState.correctAnswerMap[it.id]
+    } ?: setOf()
 }
 
 private val mapDispatchToProps: SessionUIDispatchProps.((RAction) -> WrapperAction, SessionUIConnectedProps) -> Unit =
     { dispatch, _ ->
-        bootstrap = { sessionId ->  dispatch(SessionBootstrapThunk(sessionId)) }
+        bootstrap = { sessionId -> dispatch(SessionBootstrapThunk(sessionId)) }
         setSeq = { seq ->
             dispatch(SessionSequenceSet(seq))
         }

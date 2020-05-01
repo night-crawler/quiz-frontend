@@ -8,10 +8,10 @@ import fm.force.quiz.common.dto.FieldError
 import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.component.field.*
 import fm.force.ui.component.main.helmet
-import fm.force.ui.reducer.action.question.CreateQuestionThunk
-import fm.force.ui.reducer.action.question.EditQuestionThunk
 import fm.force.ui.dto.QuestionEditDTO
 import fm.force.ui.dto.of
+import fm.force.ui.reducer.action.question.CreateQuestionThunk
+import fm.force.ui.reducer.action.question.EditQuestionThunk
 import fm.force.ui.util.jsApply
 import kotlinx.html.onSubmit
 import react.RBuilder

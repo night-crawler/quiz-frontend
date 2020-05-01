@@ -13,7 +13,6 @@ import mu.KotlinLogging
 import mui.lab.labAutocompleteMultipleField
 import react.dom.span
 import react.functionalComponent
-import react.useEffect
 import react.useState
 import redux.form.WrappedFieldProps
 import redux.form.getArrayValue

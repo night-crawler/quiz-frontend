@@ -33,7 +33,8 @@ class RouteLink(props: LocationComponentProps) : RPureComponent<LocationComponen
 }
 
 fun RBuilder.routeLink(path: String, cb: RBuilder.(PathInfo) -> Unit) = child(
-    RouteLink::class) {
+    RouteLink::class
+) {
     attrs {
         this.cb = cb
         this.path = path

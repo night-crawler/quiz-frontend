@@ -43,11 +43,13 @@ enum class ThemeType(val value: String) {
 class AppBar(props: AppBarProps) : RComponent<AppBarProps, RState>(props) {
     private val nextThemeType
         get() =
-            (ThemeType.values().toSet() - setOf(
-                ThemeType.of(
-                    props.themeType
+            (
+                ThemeType.values().toSet() - setOf(
+                    ThemeType.of(
+                        props.themeType
+                    )
                 )
-            )).first()
+                ).first()
 
     override fun RBuilder.render() {
         mCssBaseline()

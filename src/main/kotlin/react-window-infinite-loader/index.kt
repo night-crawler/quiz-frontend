@@ -11,11 +11,7 @@
 
 package react.window.infinite.loader
 
-import react.Component
-import react.RProps
-import react.RRef
-import react.RState
-import react.ReactElement
+import react.*
 import kotlin.js.Promise
 
 

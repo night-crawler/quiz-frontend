@@ -20,7 +20,8 @@ import fm.force.ui.hook.useDispatch
 import fm.force.ui.util.RouterContext
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.css.*
+import kotlinx.css.LinearDimension
+import kotlinx.css.width
 import org.w3c.dom.events.Event
 import react.*
 import react.dom.title
@@ -28,12 +29,10 @@ import react.router.connected.push
 import redux.RAction
 import styled.css
 
-
 interface QuizPreviewProps : RProps {
     var quizRestrictedDTO: QuizRestrictedDTO
     var onStartSession: (e: Event) -> Unit
 }
-
 
 val QuizPreview = functionalComponent<RProps> {
     val routerContext = useContext(RouterContext)

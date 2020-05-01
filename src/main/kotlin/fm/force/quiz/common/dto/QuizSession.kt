@@ -9,6 +9,8 @@ data class QuizSessionFullDTO(
     @ContextualSerialization
     val id: Long,
 
+    val quizTitle: String?,
+
     @ContextualSerialization
     val quiz: Long?,
 

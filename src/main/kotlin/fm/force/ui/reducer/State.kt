@@ -23,7 +23,7 @@ data class State(
     ),
     val form: dynamic = jsObject { },
 
-    val quizSessionState: QuizSessionState =  QuizSessionState.of()
+    val quizSessionState: QuizSessionState = QuizSessionState.of()
 )
 
 fun combinedReducers(history: History<*>) = customCombineReducers(

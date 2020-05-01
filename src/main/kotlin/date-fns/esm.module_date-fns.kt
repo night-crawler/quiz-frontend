@@ -13,13 +13,7 @@ package date.fns.esm
 import Duration
 import Interval
 import Locale
-import date.fns.`T$10`
-import date.fns.`T$11`
-import date.fns.`T$14`
-import date.fns.`T$15`
-import date.fns.`T$3`
-import date.fns.`T$5`
-import date.fns.`T$6`
+import date.fns.*
 import kotlin.js.Date
 
 @JsName("default")

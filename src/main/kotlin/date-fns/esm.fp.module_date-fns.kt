@@ -16,19 +16,8 @@ import CurriedFn3
 import CurriedFn4
 import Duration
 import Interval
-import date.fns.`T$11`
-import date.fns.`T$14`
-import date.fns.`T$3`
-import date.fns.`T$5`
-import date.fns.`T$6`
-import date.fns.fp.`T$16`
-import date.fns.fp.`T$17`
-import date.fns.fp.`T$18`
-import date.fns.fp.`T$19`
-import date.fns.fp.`T$20`
-import date.fns.fp.`T$21`
-import date.fns.fp.`T$22`
-import date.fns.fp.`T$23`
+import date.fns.*
+import date.fns.fp.*
 import kotlin.js.Date
 
 @JsName("default")

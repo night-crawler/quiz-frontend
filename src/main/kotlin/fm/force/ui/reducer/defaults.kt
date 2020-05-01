@@ -28,5 +28,6 @@ fun QuizSessionState.Companion.of() = QuizSessionState(
     session = null,
     answerMap = mapOf(),
     quiz = null,
-    submittedQuestions = setOf()
+    submittedQuestions = setOf(),
+    correctAnswerMap = mapOf()
 )

@@ -3,8 +3,8 @@ package fm.force.ui.component.difficultyscale.create
 import fm.force.ui.component.difficultyScale.create.EditDifficultyScaleFormProps
 import fm.force.ui.component.difficultyScale.create.MatchParams
 import fm.force.ui.component.difficultyScale.create.reduxEditDifficultyScaleForm
-import fm.force.ui.dto.toEditDTO
 import fm.force.ui.component.main.loadingCard
+import fm.force.ui.dto.toEditDTO
 import fm.force.ui.hook.useClient
 import fm.force.ui.util.RouterContext
 import react.RBuilder

@@ -6,19 +6,8 @@
     "EXTERNAL_DELEGATION"
 )
 
-import date.fns.`T$10`
-import date.fns.`T$11`
-import date.fns.`T$14`
-import date.fns.`T$15`
-import date.fns.`T$3`
-import date.fns.`T$5`
-import date.fns.`T$6`
-import date.fns.esm.`T$24`
-import date.fns.esm.`T$25`
-import date.fns.esm.`T$26`
-import date.fns.esm.`T$27`
-import date.fns.esm.`T$28`
-import date.fns.esm.`T$29`
+import date.fns.*
+import date.fns.esm.*
 import kotlin.js.Date
 
 external interface CurriedFn1<A, R> {

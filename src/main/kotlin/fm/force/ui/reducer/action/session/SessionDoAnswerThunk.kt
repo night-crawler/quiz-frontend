@@ -18,12 +18,16 @@ class SessionDoAnswerThunk(
         originalAction: RAction,
         dispatch: (RAction) -> WrapperAction,
         getState: () -> State,
-        @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE") client: QuizClient
+        @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
+        client: QuizClient
     ): WrapperAction {
-        val answer = client.doAnswer(sessionId = session.id, patchDTO = QuizSessionAnswerPatchDTO(
-            question = question.id,
-            answers = answers
-        ))
+        val answer = client.doAnswer(
+            sessionId = session.id,
+            patchDTO = QuizSessionAnswerPatchDTO(
+                question = question.id,
+                answers = answers
+            )
+        )
         return dispatch(SessionAnswersLoaded(listOf(answer)))
     }
 }

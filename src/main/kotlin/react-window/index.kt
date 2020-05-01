@@ -11,11 +11,7 @@
 
 package react.window
 
-import react.Component
-import react.RProps
-import react.RRef
-import react.RState
-import react.ReactElement
+import react.*
 
 external interface ListStyles {
     var position: String

@@ -4,12 +4,7 @@ package redux.form
 
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
-import react.Component
-import react.FunctionalComponent
-import react.RBuilder
-import react.RClass
-import react.RState
-import react.key
+import react.*
 
 fun <WP, C : Component<WP, RState>> RBuilder.field(
     property: KProperty<*>,

@@ -69,6 +69,14 @@ open class QuizClient(
         ).toTypedPage()
     }
 
+    suspend fun findSessions(searchCriteria: DefaultSearchCriteria): PageWrapper<QuizSessionFullDTO> {
+        return fetchAdapter.fetch<PageDTO>(
+            HttpMethod.GET, prepareUri("quizSessions", params = searchCriteria.toMap()), null,
+            headers = jsonHeaders,
+            buildResponse = { request, response -> buildResponse(request, response) }
+        ).toTypedPage()
+    }
+
     suspend fun deleteDifficultyScale(id: Long) = fetchAdapter.fetch(
         HttpMethod.DELETE, prepareUri("difficultyScales/$id"), null,
         headers = jsonHeaders,
@@ -130,8 +138,21 @@ open class QuizClient(
         buildResponse = { request, response -> buildResponse(request, response) }
     )
 
-    suspend fun doAnswer(sessionId: Long, patchDTO: QuizSessionAnswerPatchDTO) = fetchAdapter.fetch<QuizSessionAnswerRestrictedDTO>(
-        HttpMethod.POST, prepareUri("quizSessions/$sessionId/doAnswer"), patchDTO,
+    suspend fun doAnswer(sessionId: Long, patchDTO: QuizSessionAnswerPatchDTO) =
+        fetchAdapter.fetch<QuizSessionAnswerRestrictedDTO>(
+            HttpMethod.POST, prepareUri("quizSessions/$sessionId/doAnswer"), patchDTO,
+            headers = jsonHeaders,
+            buildResponse = { request, response -> buildResponse(request, response) }
+        )
+
+    suspend fun cancelSession(sessionId: Long) = fetchAdapter.fetch<QuizSessionFullDTO>(
+        HttpMethod.POST, prepareUri("quizSessions/$sessionId/cancel"), null,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
+    suspend fun completeSession(sessionId: Long) = fetchAdapter.fetch<QuizSessionFullDTO>(
+        HttpMethod.POST, prepareUri("quizSessions/$sessionId/complete"), null,
         headers = jsonHeaders,
         buildResponse = { request, response -> buildResponse(request, response) }
     )
@@ -166,14 +187,20 @@ open class QuizClient(
         buildResponse = { request, response -> buildResponse(request, response) }
     )
 
-    suspend fun findSessionQuestions(sessionId: Long, criteria: DefaultSearchCriteria): PageWrapper<QuizSessionQuestionRestrictedDTO> =
+    suspend fun findSessionQuestions(
+        sessionId: Long,
+        criteria: DefaultSearchCriteria
+    ): PageWrapper<QuizSessionQuestionRestrictedDTO> =
         fetchAdapter.fetch<PageDTO>(
             HttpMethod.GET, prepareUri("quizSessions/$sessionId/questions", params = criteria.toMap()), null,
             headers = jsonHeaders,
             buildResponse = { request, response -> buildResponse(request, response) }
         ).toTypedPage()
 
-    suspend fun findSessionAnswers(sessionId: Long, criteria: DefaultSearchCriteria): PageWrapper<QuizSessionAnswerRestrictedDTO> =
+    suspend fun findSessionAnswers(
+        sessionId: Long,
+        criteria: DefaultSearchCriteria
+    ): PageWrapper<QuizSessionAnswerRestrictedDTO> =
         fetchAdapter.fetch<PageDTO>(
             HttpMethod.GET, prepareUri("quizSessions/$sessionId/answers", params = criteria.toMap()), null,
             headers = jsonHeaders,

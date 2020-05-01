@@ -81,6 +81,7 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
                 renderQuestionRouteLinks()
                 renderQuizRouteLinks()
                 renderDifficultyScaleRouteLinks()
+                renderQuizSessionRouteLinks()
             }
         }
     }
@@ -93,6 +94,10 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
     private fun StyledElementBuilder<MListProps>.renderQuizRouteLinks() {
         renderLink("/quizzes", "Quizzes", IconName.LIST_ALT)
         renderLink("/quizzes/create", "Create Quiz", IconName.NEW_RELEASES)
+    }
+
+    private fun StyledElementBuilder<MListProps>.renderQuizSessionRouteLinks() {
+        renderLink("/sessions", "Sessions", IconName.LINE_STYLE)
     }
 
     private fun StyledElementBuilder<MListProps>.renderQuestionRouteLinks() {

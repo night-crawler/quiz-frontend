@@ -25,11 +25,13 @@ class CreateDifficultyScaleThunk(private val editDTO: DifficultyScaleEditDTO) : 
         client: QuizClient
     ): WrapperAction {
         return checkedRun(
-            start = { dispatch(
-                CreateDifficultyScaleStart(
-                    editDTO
+            start = {
+                dispatch(
+                    CreateDifficultyScaleStart(
+                        editDTO
+                    )
                 )
-            ) },
+            },
             error = defaultSubmitErrorHandler(dispatch)
         ) {
             editDTO.validate()

@@ -8,13 +8,13 @@ import com.ccfraser.muirwik.components.form.mFormControl
 import fm.force.quiz.common.dto.DifficultyScaleFullDTO
 import fm.force.quiz.common.dto.FieldError
 import fm.force.ui.component.difficultyscale.create.DifficultyScaleRangeArrayField
-import fm.force.ui.reducer.action.difficultyscale.CreateDifficultyScaleThunk
-import fm.force.ui.dto.DifficultyScaleEditDTO
-import fm.force.ui.dto.of
-import fm.force.ui.reducer.action.difficultyscale.EditDifficultyScaleThunk
 import fm.force.ui.component.field.WrappedTextField
 import fm.force.ui.component.field.fieldErrors
 import fm.force.ui.component.main.helmet
+import fm.force.ui.dto.DifficultyScaleEditDTO
+import fm.force.ui.dto.of
+import fm.force.ui.reducer.action.difficultyscale.CreateDifficultyScaleThunk
+import fm.force.ui.reducer.action.difficultyscale.EditDifficultyScaleThunk
 import fm.force.ui.util.jsApply
 import kotlinx.html.InputType
 import kotlinx.html.onSubmit

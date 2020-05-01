@@ -1,6 +1,5 @@
 package react.window
 
-import kotlin.browser.window
 import react.*
 import react.window.infinite.loader.OnItemsRendered
 

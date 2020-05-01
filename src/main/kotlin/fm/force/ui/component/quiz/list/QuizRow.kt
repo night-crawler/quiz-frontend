@@ -63,7 +63,7 @@ class QuizRow(props: QuizRowProps) : RComponent<QuizRowProps, RState>(props) {
                 mList(dense = true) {
                     quiz.quizQuestions.forEach { quizQuestion ->
                         mListItem {
-                            + "#${quizQuestion.seq + 1} ${quizQuestion.question.title}"
+                            +"#${quizQuestion.seq + 1} ${quizQuestion.question.title}"
                         }
                     }
                 }

@@ -31,7 +31,8 @@ class SessionBootstrapThunk(private val sessionId: Long) : Thunk<State, RAction,
         originalAction: RAction,
         dispatch: (RAction) -> WrapperAction,
         getState: () -> State,
-        @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE") client: QuizClient
+        @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
+        client: QuizClient
     ): WrapperAction {
         dispatch(SessionBootstrapStart())
 

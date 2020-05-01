@@ -6,6 +6,7 @@
     "CONFLICTING_OVERLOADS",
     "EXTERNAL_DELEGATION", "PackageDirectoryMismatch"
 )
+
 package react.codemirror
 
 import org.w3c.dom.HTMLElement

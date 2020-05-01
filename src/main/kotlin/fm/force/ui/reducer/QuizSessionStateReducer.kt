@@ -23,7 +23,8 @@ fun quizSessionStateReducer(state: QuizSessionState = QuizSessionState.of(), act
         is SessionQuestionsLoaded -> state.copy(questions = action.questions)
         is SessionAnswersLoaded -> state.copy(
             answerMap = state.answerMap + action.answers.map { it.question to it.answers },
-            submittedQuestions = state.submittedQuestions + action.answers.map { it.question }.toSet()
+            submittedQuestions = state.submittedQuestions + action.answers.map { it.question }.toSet(),
+            correctAnswerMap = state.correctAnswerMap + action.answers.map { it.question to it.correctAnswers }
         )
         is SessionDifficultyScaleLoaded -> state.copy(difficultyScale = action.difficultyScale)
         is SessionLoaded -> state.copy(session = action.session)
