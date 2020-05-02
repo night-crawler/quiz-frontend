@@ -28,6 +28,7 @@ class SessionDoAnswerThunk(
                 answers = answers
             )
         )
+        dispatch(SessionRemainingCountDecreased())
         return dispatch(SessionAnswersLoaded(listOf(answer)))
     }
 }

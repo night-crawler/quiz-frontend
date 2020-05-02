@@ -1,25 +1,27 @@
 package fm.force.ui.component.session
 
+import com.ccfraser.muirwik.components.button.mButton
 import fm.force.quiz.common.dto.QuizRestrictedDTO
 import fm.force.quiz.common.dto.QuizSessionFullDTO
 import fm.force.quiz.common.dto.QuizSessionQuestionAnswerRestrictedDTO
 import fm.force.quiz.common.dto.QuizSessionQuestionRestrictedDTO
 import fm.force.ui.component.main.loadingCard
-import fm.force.ui.util.RouterContext
+import fm.force.ui.component.main.routeLink
+import fm.force.ui.hook.useRouterMatchParamsId
 import fm.force.ui.util.jsApply
-import kotlinext.js.Object
-import react.RProps
-import react.functionalComponent
+import kotlinx.css.pct
+import kotlinx.css.width
+import react.*
 import react.use.useKey
-import react.useContext
-import react.useEffect
+import styled.css
 
 val SENTINEL = listOf<String>()
 
-interface SessionUIProps : RProps {
+interface QuizSessionComponentProps : RProps {
     var currentQuestion: QuizSessionQuestionRestrictedDTO?
     var totalQuestions: Int
     var seq: Int
+    var remainingCount: Long
     var checkedAnswers: Set<Long>
     var correctAnswers: Set<Long>
     var session: QuizSessionFullDTO?
@@ -34,17 +36,11 @@ interface SessionUIProps : RProps {
     var goLastUnanswered: (Any) -> Unit
 }
 
-interface MatchProps : RProps {
-    val id: String
-}
 
-val SessionUI = functionalComponent<SessionUIProps> { props ->
-    val routerContext = useContext(RouterContext)
-    val sessionId = routerContext.match.params.unsafeCast<MatchProps>().id.toLong()
+val QuizSessionComponent = functionalComponent<QuizSessionComponentProps> { props ->
+    val sessionId = useRouterMatchParamsId()
 
-    useEffect(SENTINEL) {
-        props.bootstrap(sessionId)
-    }
+    useEffect(SENTINEL) { props.bootstrap(sessionId) }
 
     val handlePrevQuestion = { _: Any ->
         if (props.seq > 0) props.setSeq(props.seq - 1)
@@ -90,7 +86,6 @@ val SessionUI = functionalComponent<SessionUIProps> { props ->
     }
 
     child(SessionQuestionPane::class) {
-        Object.assign(attrs, props)
         key = "quiz-session-question:${currentQuestion.id}"
         attrs {
             quizTitle = listOf(props.quiz?.title ?: "-", "(${props.totalQuestions})").joinToString(" ")
@@ -105,7 +100,31 @@ val SessionUI = functionalComponent<SessionUIProps> { props ->
             goFirstUnanswered = props.goFirstUnanswered
             goLastUnanswered = props.goLastUnanswered
             isLast = props.seq == props.totalQuestions - 1
-            shouldRenderAnswerButton = session.isAnswerable && !session.isExpired && !isSubmitted
+            isAnswerable = session.isAnswerable
+            remainingCount = props.remainingCount
+            toggleAnswer = props.toggleAnswer
         }
+    }
+
+    if (props.remainingCount == 0L)
+        reportButton(sessionId)
+}
+
+interface ReportButtonProps : RProps {
+    var sessionId: Long
+}
+
+// if we render css {} inside the SessionUI, it will complain about react hooks mismatch
+// so this is why we need a one-button component here
+val ReportButton = functionalComponent<ReportButtonProps> { props ->
+    routeLink("/sessions/${props.sessionId}/report") {
+        mButton("Open report", onClick = it.onClick) {
+            css { width = 100.pct }
+        }
+    }
+}
+fun RBuilder.reportButton(sessionId: Long) = child(ReportButton) {
+    attrs {
+        this.sessionId = sessionId
     }
 }

@@ -19,6 +19,8 @@ class SessionQuestionsLoaded(val questions: List<QuizSessionQuestionRestrictedDT
 class SessionAnswersLoaded(val answers: List<QuizSessionAnswerRestrictedDTO>) : RAction
 class SessionQuizLoaded(val quiz: QuizRestrictedDTO) : RAction
 class SessionSequenceSet(val seq: Int) : RAction
+class SessionRemainingCountSet(val count: Long) : RAction
+class SessionRemainingCountDecreased() : RAction
 
 class SessionBootstrapStart : RAction
 class SessionBootstrapComplete : RAction
@@ -45,10 +47,13 @@ class SessionBootstrapThunk(private val sessionId: Long) : Thunk<State, RAction,
             client.getDifficultyScale(it)
         }
 
+        val remainingCount = client.getRemainingSessionQuestionCount(sessionId)
+
         session.quiz?.let {
             dispatch(SessionQuizLoaded(client.getRestrictedQuiz(it)))
         }
 
+        dispatch(SessionRemainingCountSet(remainingCount))
         dispatch(SessionLoaded(session))
         dispatch(SessionQuestionsLoaded(questions.sortedBy { it.seq }))
         dispatch(SessionAnswersLoaded(answers))

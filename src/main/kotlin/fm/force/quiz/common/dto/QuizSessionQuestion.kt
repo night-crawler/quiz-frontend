@@ -17,6 +17,7 @@ data class QuizSessionQuestionRestrictedDTO(
     val title: String,
     val text: String,
     val help: String,
+    val difficulty: Int,
     val answers: List<QuizSessionQuestionAnswerRestrictedDTO>,
     val seq: Int
 ) : DTORestrictedSerializationMarker

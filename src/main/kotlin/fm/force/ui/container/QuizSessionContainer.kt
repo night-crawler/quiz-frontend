@@ -4,8 +4,8 @@ import fm.force.quiz.common.dto.QuizRestrictedDTO
 import fm.force.quiz.common.dto.QuizSessionFullDTO
 import fm.force.quiz.common.dto.QuizSessionQuestionAnswerRestrictedDTO
 import fm.force.quiz.common.dto.QuizSessionQuestionRestrictedDTO
-import fm.force.ui.component.session.SessionUI
-import fm.force.ui.component.session.SessionUIProps
+import fm.force.ui.component.session.QuizSessionComponent
+import fm.force.ui.component.session.QuizSessionComponentProps
 import fm.force.ui.reducer.State
 import fm.force.ui.reducer.action.session.*
 import react.RClass
@@ -15,9 +15,9 @@ import react.redux.rConnect
 import redux.RAction
 import redux.WrapperAction
 
-interface SessionUIConnectedProps : RProps
+interface QuizSessionContainerConnectedProps : RProps
 
-private interface SessionUIStateProps : RProps {
+private interface QuizSessionContainerStateProps : RProps {
     var currentQuestion: QuizSessionQuestionRestrictedDTO?
     var totalQuestions: Int
     var seq: Int
@@ -26,9 +26,10 @@ private interface SessionUIStateProps : RProps {
     var session: QuizSessionFullDTO?
     var quiz: QuizRestrictedDTO?
     var isSubmitted: Boolean
+    var remainingCount: Long
 }
 
-private interface SessionUIDispatchProps : RProps {
+private interface QuizSessionContainerDispatchProps : RProps {
     var bootstrap: (sessionId: Long) -> Unit
     var setSeq: (seq: Int) -> Unit
     var toggleAnswer: (question: QuizSessionQuestionRestrictedDTO, answer: QuizSessionQuestionAnswerRestrictedDTO) -> Unit
@@ -37,12 +38,13 @@ private interface SessionUIDispatchProps : RProps {
     var goLastUnanswered: (Any) -> Unit
 }
 
-private val mapStateToProps: SessionUIStateProps.(State, SessionUIConnectedProps) -> Unit = { state, _ ->
+private val mapStateToProps: QuizSessionContainerStateProps.(State, QuizSessionContainerConnectedProps) -> Unit = { state, _ ->
     currentQuestion = state.quizSessionState.questions.getOrNull(state.quizSessionState.seq)
     totalQuestions = state.quizSessionState.questions.size
     seq = state.quizSessionState.seq
     session = state.quizSessionState.session
     quiz = state.quizSessionState.quiz
+    remainingCount = state.quizSessionState.remainingCount
 
     isSubmitted = currentQuestion?.id in state.quizSessionState.submittedQuestions
 
@@ -54,7 +56,7 @@ private val mapStateToProps: SessionUIStateProps.(State, SessionUIConnectedProps
     } ?: setOf()
 }
 
-private val mapDispatchToProps: SessionUIDispatchProps.((RAction) -> WrapperAction, SessionUIConnectedProps) -> Unit =
+private val mapDispatchToProps: QuizSessionContainerDispatchProps.((RAction) -> WrapperAction, QuizSessionContainerConnectedProps) -> Unit =
     { dispatch, _ ->
         bootstrap = { sessionId -> dispatch(SessionBootstrapThunk(sessionId)) }
         setSeq = { seq ->
@@ -70,8 +72,8 @@ private val mapDispatchToProps: SessionUIDispatchProps.((RAction) -> WrapperActi
         goLastUnanswered = { dispatch(GoLastUnanswered()) }
     }
 
-val sessionUI: RClass<SessionUIConnectedProps> =
-    rConnect<State, RAction, WrapperAction, SessionUIConnectedProps, SessionUIStateProps, SessionUIDispatchProps, SessionUIProps>(
+val sessionUI: RClass<QuizSessionContainerConnectedProps> =
+    rConnect<State, RAction, WrapperAction, QuizSessionContainerConnectedProps, QuizSessionContainerStateProps, QuizSessionContainerDispatchProps, QuizSessionComponentProps>(
         mapStateToProps,
         mapDispatchToProps
-    )(SessionUI.unsafeCast<RClass<SessionUIProps>>())
+    )(QuizSessionComponent.unsafeCast<RClass<QuizSessionComponentProps>>())

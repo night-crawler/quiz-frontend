@@ -17,7 +17,8 @@ data class QuizSessionAnswerRestrictedDTO(
     val session: Long,
     val question: Long,
     val answers: Set<Long>,
-    val correctAnswers: Set<Long>
+    val correctAnswers: Set<Long>,
+    val isCorrect: Boolean
 ) : DTORestrictedSerializationMarker
 
 @Serializable

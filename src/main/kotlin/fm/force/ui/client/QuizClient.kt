@@ -157,6 +157,19 @@ open class QuizClient(
         buildResponse = { request, response -> buildResponse(request, response) }
     )
 
+    suspend fun getRemainingSessionQuestionIds(sessionId: Long) = fetchAdapter.fetch<RemainingSessionQuestions>(
+        HttpMethod.GET, prepareUri("quizSessions/$sessionId/remaining"), null,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    ).quizSessionQuestionIds
+
+    suspend fun getRemainingSessionQuestionCount(sessionId: Long) =
+        fetchAdapter.fetch<RemainingSessionQuestionCount>(
+        HttpMethod.GET, prepareUri("quizSessions/$sessionId/remainingCount"), null,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    ).count
+
     suspend fun patchAnswer(id: Long, patchDTO: AnswerPatchDTO) = fetchAdapter.fetch<AnswerFullDTO>(
         HttpMethod.PATCH, prepareUri("answers/$id"), patchDTO,
         headers = jsonHeaders,
@@ -233,6 +246,12 @@ open class QuizClient(
 
     suspend fun startSession(quizId: Long) = fetchAdapter.fetch<QuizSessionFullDTO>(
         HttpMethod.POST, prepareUri("quizzes/$quizId/startSession"), null,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
+    suspend fun getSessionScores(sessionId: Long) = fetchAdapter.fetch<QuizSessionScoresDTO>(
+        HttpMethod.GET, prepareUri("quizSessions/$sessionId/report"), null,
         headers = jsonHeaders,
         buildResponse = { request, response -> buildResponse(request, response) }
     )

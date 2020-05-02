@@ -29,6 +29,8 @@ fun quizSessionStateReducer(state: QuizSessionState = QuizSessionState.of(), act
         is SessionDifficultyScaleLoaded -> state.copy(difficultyScale = action.difficultyScale)
         is SessionLoaded -> state.copy(session = action.session)
         is SessionQuizLoaded -> state.copy(quiz = action.quiz)
+        is SessionRemainingCountSet -> state.copy(remainingCount = action.count)
+        is SessionRemainingCountDecreased -> state.copy(remainingCount = state.remainingCount - 1)
         is SessionAnswerToggled -> run {
             val checkedAnswers = state.answerMap[action.question.id] ?: setOf()
             if (action.answer.id in checkedAnswers) {

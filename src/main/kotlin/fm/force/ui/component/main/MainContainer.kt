@@ -13,6 +13,7 @@ import fm.force.ui.component.quiz.create.editQuizForm
 import fm.force.ui.component.quiz.list.quizList
 import fm.force.ui.component.quiz.quizPreview
 import fm.force.ui.component.session.sessionList
+import fm.force.ui.component.session.sessionScores
 import fm.force.ui.container.sessionUI
 import fm.force.ui.reducer.action.ChangeAppViewName
 import kotlin.browser.window
@@ -67,6 +68,11 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
         route("/sessions", exact = true) {
             deferredDispatch(ChangeAppViewName("Sessions"))
             sessionList()
+        }
+
+        route("/sessions/:id/report", exact = true) {
+            deferredDispatch(ChangeAppViewName("Session scores"))
+            sessionScores()
         }
 
         route("/sessions/:id/test", exact = true) {

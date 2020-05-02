@@ -9,6 +9,7 @@ import com.ccfraser.muirwik.components.list.mListItemText
 import com.ccfraser.muirwik.components.styles.Breakpoint
 import fm.force.quiz.common.dto.QuizSessionQuestionAnswerRestrictedDTO
 import fm.force.quiz.common.dto.QuizSessionQuestionRestrictedDTO
+import fm.force.ui.component.main.routeLink
 import fm.force.ui.component.question.list.readOnlyQuestionCode
 import fm.force.ui.extension.CodeLanguage
 import fm.force.ui.util.IconName
@@ -26,8 +27,8 @@ interface SessionQuestionPaneProps : RProps {
     var progress: Double
     var isSubmitted: Boolean
     var isLast: Boolean
-    var shouldRenderAnswerButton: Boolean
-
+    var isAnswerable: Boolean
+    var remainingCount: Long
     var goFirstUnanswered: (Any) -> Unit
     var goLastUnanswered: (Any) -> Unit
     var onDoAnswerClick: (Any) -> Unit
@@ -56,6 +57,10 @@ class SessionQuestionPane(props: SessionQuestionPaneProps) : RComponent<SessionQ
         renderHelpBlock()
         renderAnswerOptions()
         renderBottomButtons()
+
+        mTypography(align = MTypographyAlign.center) {
+            +"Remaining ${props.remainingCount}"
+        }
     }
 
     private fun RBuilder.renderHelpBlock() {
@@ -72,7 +77,7 @@ class SessionQuestionPane(props: SessionQuestionPaneProps) : RComponent<SessionQ
     }
 
     private fun RBuilder.renderBottomButtons() {
-        if (props.shouldRenderAnswerButton) {
+        if (props.isAnswerable && !props.isSubmitted) {
             mButton(
                 caption = "Answer",
                 color = MColor.primary,
@@ -84,13 +89,13 @@ class SessionQuestionPane(props: SessionQuestionPaneProps) : RComponent<SessionQ
             }
         }
 
-        if (!props.isLast && !props.shouldRenderAnswerButton) {
+        if (!props.isLast && props.isSubmitted && props.isAnswerable) {
             mButton(
                 caption = "Next",
                 color = MColor.primary,
                 variant = MButtonVariant.outlined,
                 size = MButtonSize.large,
-                onClick = props.goLastUnanswered
+                onClick = props.goFirstUnanswered
             ) {
                 css { width = 100.pct }
             }

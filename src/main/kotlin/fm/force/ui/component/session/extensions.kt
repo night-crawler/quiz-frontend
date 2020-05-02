@@ -5,4 +5,4 @@ import fm.force.ui.client.compareTo
 import kotlin.js.Date
 
 val QuizSessionFullDTO.isExpired get() = validTill < Date()
-val QuizSessionFullDTO.isAnswerable get() = !isCancelled && !isCompleted
+val QuizSessionFullDTO.isAnswerable get() = !isCancelled && !isCompleted && !isExpired
