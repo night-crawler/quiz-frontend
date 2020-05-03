@@ -35,6 +35,8 @@ val CodeMirrorField = functionalComponent<WrappedCodeMirrorFieldProps> { props -
         val cmOptions = jsApply<EditorConfiguration> {
             this.asDynamic().matchBrackets = true
             this.theme = theme.codeMirrorTheme
+            mode = "markdown"
+            extraKeys = js("""{"Enter": "newlineAndIndentContinueMarkdownList"}""")
             lineNumbers = true
         }
         mFormControl {

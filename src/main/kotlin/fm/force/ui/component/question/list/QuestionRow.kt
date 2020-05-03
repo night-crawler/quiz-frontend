@@ -6,15 +6,12 @@ import com.ccfraser.muirwik.components.dialog.mDialogContent
 import com.ccfraser.muirwik.components.dialog.mDialogContentText
 import com.ccfraser.muirwik.components.dialog.mDialogTitle
 import com.ccfraser.muirwik.components.menu.mMenuItemWithIcon
-import date.fns.formatDistance
 import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.component.main.confirmDeleteDialog
 import fm.force.ui.component.main.iconMenu
 import fm.force.ui.component.main.routeLink
-import fm.force.ui.extension.guessLanguage
-import fm.force.ui.util.IconName
-import fm.force.ui.util.treeIterator
-import kotlin.js.Date
+import fm.force.ui.component.question.markdownWithCode
+import fm.force.ui.util.*
 import kotlinx.css.marginBottom
 import kotlinx.css.px
 import org.w3c.dom.Node
@@ -48,24 +45,17 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
             css {
                 marginBottom = 5.px
             }
-            mCardHeader(
-                title = question.title,
-                subHeader = "Created " + formatDistance(question.createdAt, Date()) + " ago"
-            ) {
+            mCardHeader(title = question.title, subHeader = ago(question.createdAt)) {
                 attrs {
                     avatar = mAvatar(addAsChild = false) { +question.title.slice(0..1) }
                     action = renderAction(question)
                 }
             }
             mCardContent {
-                val mode = question.tags.guessLanguage().first
-
                 mTypography("Text", color = MTypographyColor.textSecondary)
-                readOnlyQuestionCode(question.text, mode)
-
+                markdownWithCode(question.text)
                 mTypography("Help", color = MTypographyColor.textSecondary)
-                readOnlyQuestionCode(question.help, mode)
-
+                markdownWithCode(question.help)
                 renderQuestionAnswers(question)
             }
             mCardActions {

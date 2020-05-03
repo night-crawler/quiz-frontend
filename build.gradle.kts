@@ -128,6 +128,12 @@ kotlin {
                 implementation(npm("style-loader"))
                 implementation(npm("css-loader"))
                 implementation(npm("react-use", "14.2.0"))
+
+                implementation(npm("react-syntax-highlighter", "12.2.1"))
+                implementation(npm("markdown-it", "10.0.0"))
+                implementation(npm("prismjs", "1.20.0"))
+                implementation(npm("prism-themes", "1.4.0"))
+                implementation(npm("sanitize-html", "1.23.0"))
             }
         }
 

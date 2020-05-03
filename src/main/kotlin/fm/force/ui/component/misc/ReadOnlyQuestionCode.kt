@@ -1,4 +1,4 @@
-package fm.force.ui.component.question.list
+package fm.force.ui.component.misc
 
 import CodeMirror.EditorConfiguration
 import com.ccfraser.muirwik.components.themeContext

@@ -12,6 +12,20 @@ import react.redux.provider
 val reduxStore = ReduxStore.DEFAULT
 
 fun main() {
+    require("prismjs/components/prism-kotlin.js")
+    require("prismjs/components/prism-java.js")
+    require("prismjs/components/prism-javascript.js")
+    require("prismjs/components/prism-json.js")
+//    require("prismjs/components/prism-cpp.js")
+    require("prismjs/components/prism-dart.js")
+    require("prismjs/components/prism-go.js")
+    require("prismjs/components/prism-python.js")
+    require("prismjs/components/prism-bash.js")
+    require("prismjs/components/prism-yaml.js")
+
+    require("prism-themes/themes/prism-darcula.css")
+//    require("prismjs/themes/prism.css")
+
     require("codemirror/lib/codemirror.css")
     require("codemirror/theme/darcula.css")
     require("codemirror/theme/idea.css")
@@ -21,10 +35,7 @@ fun main() {
 
     require("codemirror/addon/edit/matchbrackets.js")
 
-    require("codemirror/mode/yaml/yaml.js")
-    require("codemirror/mode/javascript/javascript.js")
-    require("codemirror/mode/clike/clike.js")
-    require("codemirror/mode/xml/xml.js")
+    require("codemirror/mode/markdown/markdown.js")
 
     KotlinLoggingConfiguration.LOG_LEVEL = KotlinLoggingLevel.DEBUG
 

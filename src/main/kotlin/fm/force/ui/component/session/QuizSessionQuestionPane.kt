@@ -9,7 +9,7 @@ import com.ccfraser.muirwik.components.list.mListItemText
 import com.ccfraser.muirwik.components.styles.Breakpoint
 import fm.force.quiz.common.dto.QuizSessionQuestionAnswerRestrictedDTO
 import fm.force.quiz.common.dto.QuizSessionQuestionRestrictedDTO
-import fm.force.ui.component.question.list.readOnlyQuestionCode
+import fm.force.ui.component.misc.readOnlyQuestionCode
 import fm.force.ui.extension.CodeLanguage
 import fm.force.ui.util.IconName
 import kotlinx.css.*
