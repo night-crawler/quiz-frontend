@@ -10,6 +10,7 @@ import com.ccfraser.muirwik.components.styles.Breakpoint
 import fm.force.quiz.common.dto.QuizSessionQuestionAnswerRestrictedDTO
 import fm.force.quiz.common.dto.QuizSessionQuestionRestrictedDTO
 import fm.force.ui.component.misc.readOnlyQuestionCode
+import fm.force.ui.component.question.markdownWithCode
 import fm.force.ui.extension.CodeLanguage
 import fm.force.ui.util.IconName
 import kotlinx.css.*
@@ -52,7 +53,7 @@ class QuizSessionQuestionPane(props: QuizSessionQuestionPaneProps) : RComponent<
     override fun RBuilder.render() {
         mTypography(text = props.quizTitle, variant = MTypographyVariant.h6, align = MTypographyAlign.left)
         renderTopControls()
-        readOnlyQuestionCode(props.question.text, CodeLanguage.GENERAL)
+        markdownWithCode(props.question.text)
         renderHelpBlock()
         renderAnswerOptions()
         renderBottomButtons()
@@ -64,10 +65,7 @@ class QuizSessionQuestionPane(props: QuizSessionQuestionPaneProps) : RComponent<
 
     private fun RBuilder.renderHelpBlock() {
         if (showHelp || props.isSubmitted) {
-            readOnlyQuestionCode(
-                props.question.help,
-                CodeLanguage.GENERAL, lineWrapping = true
-            )
+            markdownWithCode(props.question.help)
         } else {
             mButton("Show help", onClick = { setState { showHelp = true } }) {
                 css { width = 100.pct }

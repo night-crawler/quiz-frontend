@@ -23,8 +23,8 @@ fun main() {
     require("prismjs/components/prism-bash.js")
     require("prismjs/components/prism-yaml.js")
 
-    require("prism-themes/themes/prism-darcula.css")
-//    require("prismjs/themes/prism.css")
+    require("../../../../../src/main/resources/darcula.css")
+    require("../../../../../src/main/resources/prism.css")
 
     require("codemirror/lib/codemirror.css")
     require("codemirror/theme/darcula.css")

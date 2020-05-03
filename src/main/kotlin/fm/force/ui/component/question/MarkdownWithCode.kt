@@ -1,5 +1,6 @@
 package fm.force.ui.component.question
 
+import com.ccfraser.muirwik.components.themeContext
 import fm.force.ui.util.escapeHtml
 import fm.force.ui.util.jsApply
 import markdown.it.MarkdownIt
@@ -13,6 +14,7 @@ import react.RState
 import react.dom.InnerHTML
 import sanitize.html.IOptions
 import sanitize.html.sanitize
+import styled.css
 import styled.styledDiv
 
 
@@ -46,13 +48,15 @@ interface MarkdownWithCodeProps : RProps {
 
 class MarkdownWithCode(props: MarkdownWithCodeProps) : RComponent<MarkdownWithCodeProps, RState>(props) {
     override fun RBuilder.render() {
+        themeContext.Consumer { theme ->
         val highlightedCode = markdownRenderer.render(props.code)
         styledDiv {
             attrs["dangerouslySetInnerHTML"] = InnerHTML(
                 sanitize(highlightedCode, sanitizeOptions)
             )
+            css { classes.add(theme.palette.type) }
         }
-    }
+    }}
 }
 
 fun RBuilder.markdownWithCode(code: String) = child(MarkdownWithCode::class) {
