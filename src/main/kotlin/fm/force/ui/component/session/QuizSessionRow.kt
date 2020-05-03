@@ -21,14 +21,15 @@ import react.RState
 import styled.StyledElementBuilder
 import styled.css
 
-interface SessionRowProps : RProps {
+interface QuizSessionRowProps : RProps {
     var session: QuizSessionFullDTO
     var onComplete: (Any) -> Unit
     var onContinue: (Any) -> Unit
     var onCancel: (Any) -> Unit
+    var onShowReport: (Any) -> Unit
 }
 
-class SessionRow(props: SessionRowProps) : RComponent<SessionRowProps, RState>(props) {
+class QuizSessionRow(props: QuizSessionRowProps) : RComponent<QuizSessionRowProps, RState>(props) {
     override fun RBuilder.render() {
         val session = props.session
         val subHeader = listOfNotNull(
@@ -76,7 +77,18 @@ class SessionRow(props: SessionRowProps) : RComponent<SessionRowProps, RState>(p
                 }
             }
 
-            if (!props.session.isCancelled && !props.session.isCompleted) {
+            if (props.session.isCompleted) {
+                mButton(
+                    caption = "Show report",
+                    color = MColor.primary,
+                    variant = MButtonVariant.outlined,
+                    onClick = props.onShowReport
+                ) {
+                    attrs { endIcon = RBuilder().mIcon(IconName.REPORT.iconMame, MIconColor.inherit) }
+                }
+            }
+
+            if (props.session.isAnswerable) {
                 mButton(
                     caption = "Cancel",
                     color = MColor.primary,

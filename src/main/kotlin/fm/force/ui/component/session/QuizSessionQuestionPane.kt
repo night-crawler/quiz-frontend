@@ -9,7 +9,6 @@ import com.ccfraser.muirwik.components.list.mListItemText
 import com.ccfraser.muirwik.components.styles.Breakpoint
 import fm.force.quiz.common.dto.QuizSessionQuestionAnswerRestrictedDTO
 import fm.force.quiz.common.dto.QuizSessionQuestionRestrictedDTO
-import fm.force.ui.component.main.routeLink
 import fm.force.ui.component.question.list.readOnlyQuestionCode
 import fm.force.ui.extension.CodeLanguage
 import fm.force.ui.util.IconName
@@ -19,7 +18,7 @@ import react.dom.div
 import styled.StyledElementBuilder
 import styled.css
 
-interface SessionQuestionPaneProps : RProps {
+interface QuizSessionQuestionPaneProps : RProps {
     var quizTitle: String
     var question: QuizSessionQuestionRestrictedDTO
     var checkedAnswers: Set<Long>
@@ -37,7 +36,7 @@ interface SessionQuestionPaneProps : RProps {
     var toggleAnswer: (question: QuizSessionQuestionRestrictedDTO, answer: QuizSessionQuestionAnswerRestrictedDTO) -> Unit
 }
 
-class SessionQuestionPane(props: SessionQuestionPaneProps) : RComponent<SessionQuestionPaneProps, RState>(props) {
+class QuizSessionQuestionPane(props: QuizSessionQuestionPaneProps) : RComponent<QuizSessionQuestionPaneProps, RState>(props) {
     private var showHelp = false
 
     private val breakpoints = MGridBreakpoints(MGridSize.cells6)

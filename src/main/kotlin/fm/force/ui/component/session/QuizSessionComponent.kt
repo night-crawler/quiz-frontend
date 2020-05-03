@@ -85,7 +85,7 @@ val QuizSessionComponent = functionalComponent<QuizSessionComponentProps> { prop
         return@functionalComponent
     }
 
-    child(SessionQuestionPane::class) {
+    child(QuizSessionQuestionPane::class) {
         key = "quiz-session-question:${currentQuestion.id}"
         attrs {
             quizTitle = listOf(props.quiz?.title ?: "-", "(${props.totalQuestions})").joinToString(" ")

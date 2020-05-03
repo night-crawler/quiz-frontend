@@ -23,7 +23,7 @@ import react.dom.title
 import react.router.connected.push
 import redux.RAction
 
-val SessionList = functionalComponent<RProps> { props ->
+val QuizSessionList = functionalComponent<RProps> { props ->
     val (sessionPage, setSessionPage) = useState<PageWrapper<QuizSessionFullDTO>?>(null)
     val routerContext = useContext(RouterContext)
     val dispatch = useDispatch()
@@ -56,11 +56,12 @@ val SessionList = functionalComponent<RProps> { props ->
     }
 
     sessionPage.content.forEach { session ->
-        child(SessionRow::class) {
+        child(QuizSessionRow::class) {
             attrs {
                 key = "session:${session.id}"
                 this.session = session
-                onContinue = { dispatch(push("/sessions/${session.id}/test")) }
+                onContinue = { dispatch(push("/sessions/${session.id}/test").unsafeCast<RAction>()) }
+                onShowReport = { dispatch(push("/sessions/${session.id}/report").unsafeCast<RAction>()) }
                 onCancel = {
                     GlobalScope.promise {
                         ReduxStore.DEFAULT.client.cancelSession(session.id)
@@ -89,4 +90,4 @@ val SessionList = functionalComponent<RProps> { props ->
     )
 }
 
-fun RBuilder.sessionList() = child(SessionList) { }
+fun RBuilder.quizSessionList() = child(QuizSessionList) { }

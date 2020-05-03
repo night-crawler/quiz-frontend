@@ -12,7 +12,7 @@ import fm.force.ui.component.quiz.create.createQuizForm
 import fm.force.ui.component.quiz.create.editQuizForm
 import fm.force.ui.component.quiz.list.quizList
 import fm.force.ui.component.quiz.quizPreview
-import fm.force.ui.component.session.sessionList
+import fm.force.ui.component.session.quizSessionList
 import fm.force.ui.component.session.sessionScores
 import fm.force.ui.container.sessionUI
 import fm.force.ui.reducer.action.ChangeAppViewName
@@ -67,7 +67,7 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
     private fun RBuilder.renderQuizSessionRoutes() {
         route("/sessions", exact = true) {
             deferredDispatch(ChangeAppViewName("Sessions"))
-            sessionList()
+            quizSessionList()
         }
 
         route("/sessions/:id/report", exact = true) {
