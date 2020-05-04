@@ -5,7 +5,9 @@ import fm.force.ui.client.dto.JwtResponseTokensDTO
 import fm.force.ui.client.dto.LoginRequestDTO
 import fm.force.ui.component.main.defaultSubmitErrorHandler
 import fm.force.ui.reducer.State
+import fm.force.ui.reducer.action.BootstrapThunk
 import fm.force.ui.reducer.action.ThunkForm
+import react.router.connected.push
 import redux.RAction
 import redux.WrapperAction
 
@@ -29,6 +31,8 @@ class LoginThunk(private val loginRequestDTO: LoginRequestDTO) : ThunkForm() {
         ) {
             val jwtResponseTokensDTO = client.login(loginRequestDTO)
             dispatch(LoginSuccess(jwtResponseTokensDto = jwtResponseTokensDTO))
+            dispatch(BootstrapThunk())
+            dispatch(push("/"))
         }
     }
 }
