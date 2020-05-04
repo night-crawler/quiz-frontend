@@ -6,11 +6,7 @@ jdk:
 services:
   - docker
 
-env:
-  global:
-
 script:
-  - ./gradlew docker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - ./gradlew dockerPush
 

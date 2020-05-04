@@ -1,6 +1,7 @@
 package fm.force.ui
 
 import fm.force.ui.client.QuizClient
+import fm.force.ui.constant.API_HOST
 import fm.force.ui.reducer.CustomLocationState
 import fm.force.ui.reducer.State
 import fm.force.ui.reducer.combinedReducers
@@ -19,7 +20,7 @@ class ReduxStore(
     val client: QuizClient
 ) {
     companion object {
-        val DEFAULT by lazy { of(State(), createBrowserHistory(), client = QuizClient(port = 8181)) }
+        val DEFAULT by lazy { of(State(), createBrowserHistory(), client = QuizClient(API_HOST)) }
         fun of(
             state: State,
             history: History<CustomLocationState>,

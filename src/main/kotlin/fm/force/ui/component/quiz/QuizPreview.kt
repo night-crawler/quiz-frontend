@@ -52,6 +52,7 @@ val QuizPreview = functionalComponent<RProps> {
         return@functionalComponent
     }
 
+    @Suppress("UNUSED_PARAMETER")
     fun handleStartSession(e: Event) {
         GlobalScope.launch {
             ReduxStore.DEFAULT.client.startSession(quiz.id).let {

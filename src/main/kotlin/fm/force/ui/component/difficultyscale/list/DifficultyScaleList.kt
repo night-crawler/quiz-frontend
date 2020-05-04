@@ -23,7 +23,7 @@ import react.dom.title
 import react.router.connected.push
 import redux.RAction
 
-val DifficultyScaleList = functionalComponent<RProps> { props ->
+val DifficultyScaleList = functionalComponent<RProps> {
     val (difficultyScalePage, setDifficultyScalePage) = useState<PageWrapper<DifficultyScaleFullDTO>?>(null)
     val routerContext = useContext(RouterContext)
     val dispatch = useDispatch()

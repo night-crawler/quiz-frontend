@@ -10,12 +10,9 @@ import kotlinx.serialization.serializer
 import org.w3c.fetch.Response
 
 open class QuizClient(
-    scheme: String = "http",
-    host: String = "localhost",
-    port: Int? = null,
+    private val baseUri: String = "http://localhost",
     private val fetchAdapter: FetchAdapter = AuthAwareFetchAdapter(WindowFetchAdapter())
 ) {
-    private val baseUri = "$scheme://$host" + (port?.let { ":$port" } ?: "")
     private val jsonHeaders = mapOf(
         "Content-Type" to "application/json",
         "Accept" to "application/json"
@@ -31,6 +28,7 @@ open class QuizClient(
         )
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private suspend inline fun <reified ResponseType : Any> Json.buildResponse(
         request: Request,
         response: Response
