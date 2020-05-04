@@ -43,7 +43,7 @@ class HelpPage(props: RProps) : RComponent<RProps, RState>(props) {
                 }
             }
             mCardContent {
-                mTypography(variant = MTypographyVariant.h6) { +"1. Intended use: Questions" }
+                mTypography(variant = MTypographyVariant.h6) { +"1. Intended usage: Questions" }
                 mList {
                     mListItem {
                         +"Create a Question. Use Add Answer button to add new answers. "
