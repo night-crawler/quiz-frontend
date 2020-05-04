@@ -1,9 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack
 
 plugins {
     id("org.jetbrains.kotlin.js") version "1.3.70"
 //    id("org.jetbrains.kotlin.multiplatform") version "1.3.70"
+    id("com.palantir.docker") version "0.25.0"
     kotlin("plugin.serialization") version "1.3.70"
     id("org.jlleitschuh.gradle.ktlint") version "9.1.1"
     id("com.dorongold.task-tree") version "1.5"
@@ -156,6 +158,14 @@ tasks.withType<Kotlin2JsCompile>().all {
     kotlinOptions.freeCompilerArgs += "-Xuse-experimental=kotlin.Experimental"
     kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+}
+
+docker {
+    name = "ncrawler/${project.name}:$version"
+    files("$buildDir/distributions")
+    pull (false)
+    noCache (false)
+    dependsOn(tasks["browserProductionWebpack"])
 }
 
 ktlint {
