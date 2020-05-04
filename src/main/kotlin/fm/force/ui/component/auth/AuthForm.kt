@@ -1,26 +1,24 @@
-package fm.force.ui.component.login
+package fm.force.ui.component.auth
 
 import com.ccfraser.muirwik.components.MColor
 import com.ccfraser.muirwik.components.button.MButtonVariant
 import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.form.mFormControl
-import fm.force.quiz.common.dto.ErrorMessage
 import fm.force.quiz.common.dto.FieldError
 import fm.force.ui.client.dto.LoginRequestDTO
+import fm.force.ui.client.dto.RegisterRequestDTO
 import fm.force.ui.component.field.WrappedTextField
 import fm.force.ui.component.field.fieldErrors
-import fm.force.ui.reducer.action.LoginThunk
+import fm.force.ui.reducer.action.auth.LoginThunk
+import fm.force.ui.reducer.action.auth.RegisterThunk
 import fm.force.ui.util.jsApply
-import kotlinext.js.js
 import kotlinx.html.InputType
 import kotlinx.html.onSubmit
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
-import react.dom.li
-import react.dom.ul
 import redux.form.ConfigProps
 import redux.form.InjectedFormProps
 import redux.form.field
@@ -29,7 +27,7 @@ import styled.styledForm
 
 interface LoginFormProps : InjectedFormProps<LoginRequestDTO, RProps, Any>
 
-class LoginForm(props: LoginFormProps) : RComponent<LoginFormProps, RState>(props) {
+class AuthForm(props: LoginFormProps) : RComponent<LoginFormProps, RState>(props) {
     override fun RBuilder.render() {
         styledForm {
             attrs {
@@ -56,7 +54,7 @@ class LoginForm(props: LoginFormProps) : RComponent<LoginFormProps, RState>(prop
                     }
                 )
                 mButton(
-                    "Login",
+                    "Submit",
                     color = MColor.primary,
                     variant = MButtonVariant.contained,
                     disabled = /*props.pristine ||*/ props.submitting
@@ -79,6 +77,20 @@ val reduxLoginForm = reduxForm(
             dispatch(LoginThunk(loginRequest))
         }
     }
-)(LoginForm::class.js)
+)(AuthForm::class.js)
+
+
+val reduxRegisterForm = reduxForm(
+    jsApply<ConfigProps<RegisterRequestDTO, InjectedFormProps<RegisterRequestDTO, RProps, Any>, Any>> {
+        initialValues = RegisterRequestDTO("", "")
+        form = "registerForm"
+        onSubmit = { loginRequest, dispatch, _ ->
+            // jwtResponseTokensDTO is unchecked, it's just a JavaScript plain object
+            dispatch(RegisterThunk(loginRequest))
+        }
+    }
+)(AuthForm::class.js)
 
 fun RBuilder.loginForm() = reduxLoginForm {}
+
+fun RBuilder.registerForm() = reduxRegisterForm {}

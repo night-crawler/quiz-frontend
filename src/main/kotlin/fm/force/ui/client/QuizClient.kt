@@ -285,8 +285,20 @@ open class QuizClient(
         buildResponse = { request, response -> buildResponse(request, response) }
     )
 
-    suspend fun login(jwtResponseTokensDTO: LoginRequestDTO) = fetchAdapter.fetch<JwtResponseTokensDTO>(
-        HttpMethod.POST, prepareUri("auth/login"), jwtResponseTokensDTO,
+    suspend fun login(loginRequestDTO: LoginRequestDTO) = fetchAdapter.fetch<JwtResponseTokensDTO>(
+        HttpMethod.POST, prepareUri("auth/login"), loginRequestDTO,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
+    suspend fun activate(userId: Long, activationCode: String) = fetchAdapter.fetch(
+        HttpMethod.POST, prepareUri("auth/activate/$userId/code/$activationCode"), null,
+        headers = jsonHeaders,
+        buildResponse = { _, _ -> Unit }
+    )
+
+    suspend fun register(jwtResponseTokensDTO: RegisterRequestDTO) = fetchAdapter.fetch<RegisterResponseDTO>(
+        HttpMethod.POST, prepareUri("auth/register"), jwtResponseTokensDTO,
         headers = jsonHeaders,
         buildResponse = { request, response -> buildResponse(request, response) }
     )

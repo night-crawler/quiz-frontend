@@ -9,6 +9,18 @@ data class LoginRequestDTO(
 )
 
 @Serializable
+data class RegisterRequestDTO(
+    val email: String,
+    val password: String
+)
+
+@Serializable
+data class RegisterResponseDTO(
+    val id: Long,
+    val username: String
+)
+
+@Serializable
 data class JwtResponseTokensDTO(
     val accessToken: String,
     val refreshToken: String

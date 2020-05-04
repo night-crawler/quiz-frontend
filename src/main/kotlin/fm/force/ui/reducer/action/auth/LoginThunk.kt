@@ -1,11 +1,11 @@
-package fm.force.ui.reducer.action
+package fm.force.ui.reducer.action.auth
 
 import fm.force.ui.client.QuizClient
 import fm.force.ui.client.dto.JwtResponseTokensDTO
 import fm.force.ui.client.dto.LoginRequestDTO
 import fm.force.ui.component.main.defaultSubmitErrorHandler
 import fm.force.ui.reducer.State
-import fm.force.ui.util.IconName
+import fm.force.ui.reducer.action.ThunkForm
 import redux.RAction
 import redux.WrapperAction
 

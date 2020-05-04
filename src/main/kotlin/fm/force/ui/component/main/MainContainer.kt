@@ -4,7 +4,8 @@ import com.ccfraser.muirwik.components.button.mButton
 import fm.force.ui.component.difficultyScale.create.createDifficultyScaleForm
 import fm.force.ui.component.difficultyscale.create.editDifficultyScaleForm
 import fm.force.ui.component.difficultyscale.list.difficultyScaleList
-import fm.force.ui.component.login.loginForm
+import fm.force.ui.component.auth.loginForm
+import fm.force.ui.component.auth.registerForm
 import fm.force.ui.component.question.create.createQuestionForm
 import fm.force.ui.component.question.create.editQuestionForm
 import fm.force.ui.component.question.list.questionList
@@ -43,10 +44,7 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
 
     override fun RBuilder.render() {
         switch {
-            route("/login") {
-                deferredDispatch(ChangeAppViewName("Login"))
-                loginForm()
-            }
+            renderAuthRoutes()
 
             renderQuestionRoutes()
             renderQuizRoutes()
@@ -61,6 +59,18 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
                 deferredDispatch(ChangeAppViewName("Not Found"))
                 notFound()
             }
+        }
+    }
+
+    private fun RBuilder.renderAuthRoutes() {
+        route("/login", exact = true) {
+            deferredDispatch(ChangeAppViewName("Login"))
+            loginForm()
+        }
+
+        route("/register", exact = true) {
+            deferredDispatch(ChangeAppViewName("Register"))
+            registerForm()
         }
     }
 

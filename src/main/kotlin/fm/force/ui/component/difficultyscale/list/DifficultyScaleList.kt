@@ -35,7 +35,7 @@ val DifficultyScaleList = functionalComponent<RProps> {
     }
 
     useEffect(listOf(searchCriteria.hashCode())) {
-        dispatch(push("/difficulty-scales?${searchCriteria.toQueryString()}").unsafeCast<RAction>())
+        dispatch(push("/difficulty-scales?${searchCriteria.toQueryString()}"))
     }
 
     helmet { title("All Difficulty Scales") }

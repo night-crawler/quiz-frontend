@@ -35,7 +35,7 @@ val QuizList = functionalComponent<RProps> { props ->
     }
 
     useEffect(listOf(searchCriteria.hashCode())) {
-        dispatch(push("/quizzes?${searchCriteria.toQueryString()}").unsafeCast<RAction>())
+        dispatch(push("/quizzes?${searchCriteria.toQueryString()}"))
     }
 
     helmet { title("All quizzes") }

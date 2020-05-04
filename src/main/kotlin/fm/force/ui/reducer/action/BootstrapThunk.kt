@@ -24,7 +24,7 @@ class BootstrapThunk : Thunk<State, RAction, WrapperAction, QuizClient> {
         return try {
             dispatch(BootstrapSuccess(client.currentProfile()))
         } catch (exc: UnauthorizedError) {
-            dispatch(push("/login").unsafeCast<RAction>())
+            dispatch(push("/login"))
         } catch (exc: FetchClientNetworkError) {
             dispatch(
                 ShowSnack(

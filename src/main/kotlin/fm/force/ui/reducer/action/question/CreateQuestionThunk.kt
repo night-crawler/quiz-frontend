@@ -39,7 +39,7 @@ class CreateQuestionThunk(private val editDTO: QuestionEditDTO) : ThunkForm() {
             val question = client.createQuestion(questionDTO)
             dispatch(CreateQuestionSuccess(question))
             // wonderful refresh
-            dispatch(replace("/").unsafeCast<RAction>())
+            dispatch(replace("/"))
             dispatch(replace("/questions/create").unsafeCast<RAction>())
         }
     }

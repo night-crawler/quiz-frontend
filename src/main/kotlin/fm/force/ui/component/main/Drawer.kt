@@ -24,6 +24,7 @@ import styled.css
 
 interface DrawerProps : RProps {
     var responsiveDrawerOpen: Boolean
+    var isLoggedIn: Boolean
 
     var onResponsiveDrawerOpenToggle: (isOpen: Boolean) -> Unit
 }
@@ -78,12 +79,21 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
                     wordBreak = WordBreak.keepAll
                 }
 
-                renderQuestionRouteLinks()
-                renderQuizRouteLinks()
-                renderDifficultyScaleRouteLinks()
-                renderQuizSessionRouteLinks()
+                if (props.isLoggedIn) {
+                    renderQuestionRouteLinks()
+                    renderQuizRouteLinks()
+                    renderDifficultyScaleRouteLinks()
+                    renderQuizSessionRouteLinks()
+                } else {
+                    renderAuthRouteLinks()
+                }
             }
         }
+    }
+
+    private fun RBuilder.renderAuthRouteLinks() {
+        renderLink("/login", "Login", IconName.FINGERPRINT_OUTLINE)
+        renderLink("/register", "Register", IconName.PLUS_ONE)
     }
 
     private fun StyledElementBuilder<MListProps>.renderDifficultyScaleRouteLinks() {
@@ -105,7 +115,7 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
         renderLink("/questions/create", "Create Question", IconName.PLAYLIST_ADD)
     }
 
-    private fun StyledElementBuilder<MListProps>.renderLink(path: String, name: String, iconName: IconName) {
+    private fun RBuilder.renderLink(path: String, name: String, iconName: IconName) {
         routeLink(path) { pathInfo ->
             mListItem(
                 button = true,

@@ -76,6 +76,14 @@ class AppBar(props: AppBarProps) : RComponent<AppBarProps, RState>(props) {
                                     onClick = it.onClick
                                 )
                             }
+                            routeLink("/register") {
+                                mMenuItemWithIcon(
+                                    iconName = IconName.PLUS_ONE.iconMame,
+                                    primaryText = "Register",
+                                    selected = it.isActive,
+                                    onClick = it.onClick
+                                )
+                            }
                         }
                     }
                 }

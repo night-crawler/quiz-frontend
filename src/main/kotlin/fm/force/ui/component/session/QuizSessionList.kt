@@ -35,7 +35,7 @@ val QuizSessionList = functionalComponent<RProps> { props ->
     }
 
     useEffect(listOf(searchCriteria.hashCode())) {
-        dispatch(push("/sessions?${searchCriteria.toQueryString()}").unsafeCast<RAction>())
+        dispatch(push("/sessions?${searchCriteria.toQueryString()}"))
     }
 
     helmet { title("All sessions") }
@@ -60,8 +60,8 @@ val QuizSessionList = functionalComponent<RProps> { props ->
             attrs {
                 key = "session:${session.id}"
                 this.session = session
-                onContinue = { dispatch(push("/sessions/${session.id}/test").unsafeCast<RAction>()) }
-                onShowReport = { dispatch(push("/sessions/${session.id}/report").unsafeCast<RAction>()) }
+                onContinue = { dispatch(push("/sessions/${session.id}/test")) }
+                onShowReport = { dispatch(push("/sessions/${session.id}/report")) }
                 onCancel = {
                     GlobalScope.promise {
                         ReduxStore.DEFAULT.client.cancelSession(session.id)

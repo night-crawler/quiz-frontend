@@ -5,7 +5,7 @@ import fm.force.ui.component.main.AppBar
 import fm.force.ui.component.main.AppBarProps
 import fm.force.ui.reducer.State
 import fm.force.ui.reducer.action.DrawerOpenToggle
-import fm.force.ui.reducer.action.LogoutThunk
+import fm.force.ui.reducer.action.auth.LogoutThunk
 import fm.force.ui.reducer.action.SetThemeType
 import react.RClass
 import react.RProps

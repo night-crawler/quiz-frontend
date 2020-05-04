@@ -56,7 +56,7 @@ val QuizPreview = functionalComponent<RProps> {
     fun handleStartSession(e: Event) {
         GlobalScope.launch {
             ReduxStore.DEFAULT.client.startSession(quiz.id).let {
-                dispatch(push(("/sessions/${it.id}/test")).unsafeCast<RAction>())
+                dispatch(push(("/sessions/${it.id}/test")))
             }
         }
     }

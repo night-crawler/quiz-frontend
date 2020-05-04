@@ -39,14 +39,14 @@ external interface CallHistoryMethodAction {
 external fun push(
     path: Path,
     state: LocationState = definedExternally
-): dynamic /* LocationChangeAction | CallHistoryMethodAction */
+): LocationChangeAction<*> /* LocationChangeAction | CallHistoryMethodAction */
 
 external fun <S> push(location: LocationDescriptorObject<S>): dynamic /* LocationChangeAction | CallHistoryMethodAction */
 
 external fun replace(
     path: Path,
     state: LocationState = definedExternally
-): dynamic /* LocationChangeAction | CallHistoryMethodAction */
+): LocationChangeAction<*> /* LocationChangeAction | CallHistoryMethodAction */
 
 external fun <S> replace(location: LocationDescriptorObject<S>): dynamic /* LocationChangeAction | CallHistoryMethodAction */
 

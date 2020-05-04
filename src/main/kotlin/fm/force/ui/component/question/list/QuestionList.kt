@@ -35,7 +35,7 @@ val QuestionList = functionalComponent<RProps> {
     }
 
     useEffect(listOf(searchCriteria.hashCode())) {
-        dispatch(push("/questions?${searchCriteria.toQueryString()}").unsafeCast<RAction>())
+        dispatch(push("/questions?${searchCriteria.toQueryString()}"))
     }
 
     helmet { title("All questions") }

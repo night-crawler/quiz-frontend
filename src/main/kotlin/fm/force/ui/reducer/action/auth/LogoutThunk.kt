@@ -1,8 +1,9 @@
-package fm.force.ui.reducer.action
+package fm.force.ui.reducer.action.auth
 
 import fm.force.ui.client.QuizClient
 import fm.force.ui.component.main.defaultSubmitErrorHandler
 import fm.force.ui.reducer.State
+import fm.force.ui.reducer.action.ThunkForm
 import react.router.connected.push
 import redux.RAction
 import redux.WrapperAction
@@ -25,7 +26,7 @@ class LogoutThunk : ThunkForm() {
         ) {
             client.logout()
             dispatch(LogoutSuccess())
-            dispatch(push("/login").unsafeCast<RAction>())
+            dispatch(push("/login"))
         }
     }
 }

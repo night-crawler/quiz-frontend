@@ -32,7 +32,7 @@ class EditQuizThunk(private val editDTO: QuizEditDTO) : ThunkForm() {
 
             val quiz = client.patchQuiz(editDTO.id!!, editDTO.toPatchDTO())
             dispatch(EditQuizSuccess(quiz))
-            dispatch(replace("/quizzes/${quiz.id}/edit").unsafeCast<RAction>())
+            dispatch(replace("/quizzes/${quiz.id}/edit"))
         }
     }
 }

@@ -34,7 +34,7 @@ class CreateQuizThunk(private val editDTO: QuizEditDTO) : ThunkForm() {
             editDTO.validate()
             val quiz = client.createQuiz(editDTO.toPatchDTO())
             dispatch(CreateQuizSuccess(quiz))
-            dispatch(replace("/quizzes/${quiz.id}/edit").unsafeCast<RAction>())
+            dispatch(replace("/quizzes/${quiz.id}/edit"))
         }
     }
 }

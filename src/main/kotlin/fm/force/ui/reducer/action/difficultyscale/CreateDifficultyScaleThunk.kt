@@ -43,7 +43,7 @@ class CreateDifficultyScaleThunk(private val editDTO: DifficultyScaleEditDTO) : 
                     difficultyScale
                 )
             )
-            dispatch(replace("/difficulty-scales/${difficultyScale.id}/edit").unsafeCast<RAction>())
+            dispatch(replace("/difficulty-scales/${difficultyScale.id}/edit"))
         }
     }
 }

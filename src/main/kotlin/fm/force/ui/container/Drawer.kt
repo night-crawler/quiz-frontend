@@ -16,6 +16,7 @@ interface DrawerConnectedProps : RProps
 
 private interface DrawerStateProps : RProps {
     var responsiveDrawerOpen: Boolean
+    var isLoggedIn: Boolean
 }
 
 private interface DrawerDispatchProps : RProps {
@@ -24,16 +25,13 @@ private interface DrawerDispatchProps : RProps {
 
 private val mapStateToProps: DrawerStateProps.(State, DrawerConnectedProps) -> Unit = { state, _ ->
     responsiveDrawerOpen = state.appPreferences.responsiveDrawerOpen
+    isLoggedIn = state.currentUser.id != -1L
 }
 
 private val mapDispatchToProps: DrawerDispatchProps.((RAction) -> WrapperAction, DrawerConnectedProps) -> Unit =
     { dispatch, _ ->
         onResponsiveDrawerOpenToggle = { isOpen ->
-            dispatch(
-                DrawerOpenToggle(
-                    isOpen
-                )
-            )
+            dispatch(DrawerOpenToggle(isOpen))
         }
     }
 
