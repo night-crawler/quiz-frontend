@@ -6,6 +6,7 @@ import com.ccfraser.muirwik.components.form.mFormControl
 import com.ccfraser.muirwik.components.mTypography
 import com.ccfraser.muirwik.components.themeContext
 import fm.force.quiz.common.dto.FieldError
+import fm.force.ui.extension.CodeLanguage
 import fm.force.ui.extension.codeMirrorTheme
 import fm.force.ui.hook.UseState
 import fm.force.ui.hook.useDebounce
@@ -35,7 +36,7 @@ val CodeMirrorField = functionalComponent<WrappedCodeMirrorFieldProps> { props -
         val cmOptions = jsApply<EditorConfiguration> {
             this.asDynamic().matchBrackets = true
             this.theme = theme.codeMirrorTheme
-            mode = "markdown"
+            mode = CodeLanguage.MARKDOWN.codeMirrorModeName
             extraKeys = js("""{"Enter": "newlineAndIndentContinueMarkdownList"}""")
             lineNumbers = true
         }
