@@ -286,9 +286,14 @@ open class QuizClient(
     )
 
     suspend fun login(jwtResponseTokensDTO: LoginRequestDTO) = fetchAdapter.fetch<JwtResponseTokensDTO>(
-        HttpMethod.POST, prepareUri("auth/login"),
-        jwtResponseTokensDTO,
+        HttpMethod.POST, prepareUri("auth/login"), jwtResponseTokensDTO,
         headers = jsonHeaders,
         buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
+    suspend fun logout() = fetchAdapter.fetch(
+        HttpMethod.POST, prepareUri("auth/logout"),  null,
+        headers = jsonHeaders,
+        buildResponse = { _, _  -> Unit }
     )
 }

@@ -1,16 +1,8 @@
 package fm.force.ui.component.main
 
-import com.ccfraser.muirwik.components.MAppBarPosition
-import com.ccfraser.muirwik.components.MColor
-import com.ccfraser.muirwik.components.MHiddenImplementation
+import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.button.mIconButton
-import com.ccfraser.muirwik.components.mAppBar
-import com.ccfraser.muirwik.components.mCssBaseline
-import com.ccfraser.muirwik.components.mHidden
-import com.ccfraser.muirwik.components.mToolbar
-import com.ccfraser.muirwik.components.mToolbarTitle
 import com.ccfraser.muirwik.components.menu.mMenuItemWithIcon
-import com.ccfraser.muirwik.components.themeContext
 import fm.force.ui.client.dto.UserFullDTO
 import fm.force.ui.util.IconName
 import kotlinx.css.zIndex
@@ -26,30 +18,16 @@ interface AppBarProps : RProps {
     var activeViewDisplayName: String
     var themeType: String
 
+    var logout: (Any) -> Unit
     var onThemeTypeChange: (themeType: String) -> Unit
     var onResponsiveDrawerOpenToggle: (isOpen: Boolean) -> Unit
 }
 
-enum class ThemeType(val value: String) {
-    DARK("dark"),
-    LIGHT("light");
-
-    companion object {
-        private val map = values().associateBy(ThemeType::value)
-        fun of(value: String) = map[value] ?: error("No value `$value` in ThemeType")
-    }
-}
 
 class AppBar(props: AppBarProps) : RComponent<AppBarProps, RState>(props) {
     private val nextThemeType
         get() =
-            (
-                ThemeType.values().toSet() - setOf(
-                    ThemeType.of(
-                        props.themeType
-                    )
-                )
-                ).first()
+            (ThemeType.values().toSet() - setOf(ThemeType.of(props.themeType))).first()
 
     override fun RBuilder.render() {
         mCssBaseline()
@@ -84,12 +62,11 @@ class AppBar(props: AppBarProps) : RComponent<AppBarProps, RState>(props) {
                             )
                         }
                         if (props.currentUser.isActive) {
-                            routeLink("/logout") {
-                                mMenuItemWithIcon(
-                                    iconName = IconName.ROWING_OUTLINE.iconMame,
-                                    primaryText = "Log out"
-                                )
-                            }
+                            mMenuItemWithIcon(
+                                iconName = IconName.ROWING_OUTLINE.iconMame,
+                                primaryText = "Log out",
+                                onClick = props.logout
+                            )
                         } else {
                             routeLink("/login") {
                                 mMenuItemWithIcon(

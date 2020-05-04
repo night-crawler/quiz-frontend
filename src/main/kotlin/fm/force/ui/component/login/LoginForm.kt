@@ -6,8 +6,10 @@ import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.form.MFormControlVariant
 import com.ccfraser.muirwik.components.form.mFormControl
 import fm.force.quiz.common.dto.ErrorMessage
+import fm.force.quiz.common.dto.FieldError
 import fm.force.ui.client.dto.LoginRequestDTO
 import fm.force.ui.component.field.WrappedTextField
+import fm.force.ui.component.field.fieldErrors
 import fm.force.ui.reducer.action.LoginThunk
 import fm.force.ui.util.jsApply
 import kotlinext.js.js
@@ -62,13 +64,7 @@ class LoginForm(props: LoginFormProps) : RComponent<LoginFormProps, RState>(prop
                     attrs.asDynamic().type = "submit"
                 }
 
-                if (props.error != undefined) {
-                    ul {
-                        props.error.unsafeCast<List<ErrorMessage>>().map { errorMessage ->
-                            li { +errorMessage.message }
-                        }
-                    }
-                }
+                props.error?.let { fieldErrors(it.unsafeCast<List<FieldError>>()) }
             }
         }
     }
@@ -76,7 +72,7 @@ class LoginForm(props: LoginFormProps) : RComponent<LoginFormProps, RState>(prop
 
 val reduxLoginForm = reduxForm(
     jsApply<ConfigProps<LoginRequestDTO, InjectedFormProps<LoginRequestDTO, RProps, Any>, Any>> {
-        initialValues = js { email = "admin@force.fm"; password = "sample123" }
+        initialValues = LoginRequestDTO("", "")
         form = "loginForm"
         onSubmit = { loginRequest, dispatch, _ ->
             // jwtResponseTokensDTO is unchecked, it's just a JavaScript plain object

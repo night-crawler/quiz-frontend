@@ -16,7 +16,7 @@ fun defaultSubmitErrorHandler(dispatch: (RAction) -> WrapperAction): suspend (
         dispatch(
             ShowSnack(
                 Snack(
-                    title = "Submission error",
+                    title = "Form submission error",
                     text = original.message ?: original.responseText,
                     iconName = IconName.ERROR,
                     timeout = null

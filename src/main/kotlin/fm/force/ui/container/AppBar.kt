@@ -5,6 +5,7 @@ import fm.force.ui.component.main.AppBar
 import fm.force.ui.component.main.AppBarProps
 import fm.force.ui.reducer.State
 import fm.force.ui.reducer.action.DrawerOpenToggle
+import fm.force.ui.reducer.action.LogoutThunk
 import fm.force.ui.reducer.action.SetThemeType
 import react.RClass
 import react.RProps
@@ -26,6 +27,7 @@ private interface AppBarStateProps : RProps {
 private interface AppBarDispatchProps : RProps {
     var onThemeTypeChange: (themeType: String) -> Unit
     var onResponsiveDrawerOpenToggle: (isOpen: Boolean) -> Unit
+    var logout: () -> Unit
 }
 
 private val mapStateToProps: AppBarStateProps.(State, AppBarConnectedProps) -> Unit = { state, _ ->
@@ -39,12 +41,9 @@ private val mapDispatchToProps: AppBarDispatchProps.((RAction) -> WrapperAction,
     { dispatch, _ ->
         onThemeTypeChange = { themeColor -> dispatch(SetThemeType(themeColor)) }
         onResponsiveDrawerOpenToggle = { isOpen ->
-            dispatch(
-                DrawerOpenToggle(
-                    isOpen
-                )
-            )
+            dispatch(DrawerOpenToggle(isOpen))
         }
+        logout = { dispatch(LogoutThunk()) }
     }
 
 val appBar: RClass<AppBarConnectedProps> =

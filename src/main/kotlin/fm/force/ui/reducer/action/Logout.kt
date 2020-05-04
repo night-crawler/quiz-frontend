@@ -1,21 +1,17 @@
 package fm.force.ui.reducer.action
 
 import fm.force.ui.client.QuizClient
-import fm.force.ui.client.dto.JwtResponseTokensDTO
-import fm.force.ui.client.dto.LoginRequestDTO
 import fm.force.ui.component.main.defaultSubmitErrorHandler
 import fm.force.ui.reducer.State
-import fm.force.ui.util.IconName
+import react.router.connected.push
 import redux.RAction
 import redux.WrapperAction
 
-class LoginStart : RAction
+class LogoutStart : RAction
 
-class LoginSuccess(val jwtResponseTokensDto: JwtResponseTokensDTO) : RAction
+class LogoutSuccess : RAction
 
-class LoginError(val responseText: String) : RAction
-
-class LoginThunk(private val loginRequestDTO: LoginRequestDTO) : ThunkForm() {
+class LogoutThunk : ThunkForm() {
     override suspend fun run(
         originalAction: RAction,
         dispatch: (RAction) -> WrapperAction,
@@ -24,11 +20,12 @@ class LoginThunk(private val loginRequestDTO: LoginRequestDTO) : ThunkForm() {
         client: QuizClient
     ): WrapperAction {
         return checkedRun(
-            start = { dispatch(LoginStart()) },
+            start = { dispatch(LogoutStart()) },
             error = defaultSubmitErrorHandler(dispatch)
         ) {
-            val jwtResponseTokensDTO = client.login(loginRequestDTO)
-            dispatch(LoginSuccess(jwtResponseTokensDto = jwtResponseTokensDTO))
+            client.logout()
+            dispatch(LogoutSuccess())
+            dispatch(push("/login").unsafeCast<RAction>())
         }
     }
 }
