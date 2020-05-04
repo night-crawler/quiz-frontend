@@ -1,6 +1,5 @@
 package fm.force.ui.component.main
 
-import com.ccfraser.muirwik.components.button.mButton
 import fm.force.ui.component.difficultyScale.create.createDifficultyScaleForm
 import fm.force.ui.component.difficultyscale.create.editDifficultyScaleForm
 import fm.force.ui.component.difficultyscale.list.difficultyScaleList
@@ -53,7 +52,7 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
 
             route("/", exact = true) {
                 deferredDispatch(ChangeAppViewName("Home"))
-                mButton("/")
+                helpPage()
             }
             route("*") {
                 deferredDispatch(ChangeAppViewName("Not Found"))
