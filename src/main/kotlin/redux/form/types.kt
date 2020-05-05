@@ -48,5 +48,3 @@ typealias FormOrFieldsBooleanSelector<State> = (formName: String, getFormState: 
     state: State,
     fields: String
 ) -> Boolean
-
-open class SubmissionError(val errors: dynamic) : Exception()

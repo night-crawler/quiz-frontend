@@ -8,3 +8,7 @@
 )
 
 package redux.form
+
+open external class SubmissionError(errors: dynamic = definedExternally) : Throwable {
+    open var errors: dynamic get() = definedExternally
+}

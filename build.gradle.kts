@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack
 
 plugins {
     id("org.jetbrains.kotlin.js") version "1.3.70"
@@ -33,6 +32,8 @@ repositories {
 
 kotlin {
     target {
+//        produceExecutable()
+
         browser {
             @UseExperimental(org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalDceDsl::class)
             dceTask {
@@ -110,7 +111,7 @@ kotlin {
                 // react-router-dom 4.3.1-pre.91 is broken: it does not update the view
                 implementation(npm("react-router-dom", "5.1.2"))
                 implementation(npm("react-helmet", "5.2.1"))
-                implementation(npm("redux-form", "8.2.6"))
+                implementation(npm("redux-form", "8.3.5"))
 
                 // ktor needs it
                 implementation(npm("abort-controller"))
