@@ -308,4 +308,10 @@ open class QuizClient(
         headers = jsonHeaders,
         buildResponse = { _, _  -> Unit }
     )
+
+    suspend fun importQuiz(importDTO: QuizImportDTO) = fetchAdapter.fetch<QuizFullDTO>(
+        HttpMethod.POST, prepareUri("quizzes/import"), importDTO,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
 }

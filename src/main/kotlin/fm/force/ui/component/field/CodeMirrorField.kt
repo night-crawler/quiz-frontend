@@ -13,31 +13,53 @@ import fm.force.ui.hook.useDebounce
 import fm.force.ui.util.jsApply
 import kotlinx.css.Color
 import kotlinx.css.color
+import react.*
 import react.codemirror.Controlled
 import react.codemirror.IUnControlledCodeMirror
-import react.functionalComponent
-import react.useEffect
 import redux.form.WrappedFieldProps
 import styled.css
 
 interface WrappedCodeMirrorFieldProps : WrappedFieldProps, IUnControlledCodeMirror {
     var label: String
+    var mode: CodeLanguage
 }
 
 val CodeMirrorField = functionalComponent<WrappedCodeMirrorFieldProps> { props ->
-    var state by UseState(props.input.value.toString())
+    codeMirrorFieldComponent(
+        props.label,
+        props.mode,
+        props.input.value.toString()
+    ) { value ->
+        props.input.onChange(value)
+    }
+
+    props.meta.error?.let { fieldErrors(it.unsafeCast<List<FieldError>>()) }
+
+}
+
+interface CodeMirrorFieldComponentProps : RProps {
+    var label: String
+    var value: String
+    var codeLanguage: CodeLanguage
+    var onChange: (String) -> Unit
+}
+
+val qwe = functionalComponent<CodeMirrorFieldComponentProps> {props ->
+    var state by UseState(props.value)
     val debouncedText = useDebounce(state, 500)
 
     useEffect(listOf(debouncedText)) {
-        props.input.onChange(debouncedText)
+        props.onChange(debouncedText)
     }
 
     themeContext.Consumer { theme ->
         val cmOptions = jsApply<EditorConfiguration> {
             this.asDynamic().matchBrackets = true
             this.theme = theme.codeMirrorTheme
-            mode = CodeLanguage.MARKDOWN.codeMirrorModeName
-            extraKeys = js("""{"Enter": "newlineAndIndentContinueMarkdownList"}""")
+            mode = props.codeLanguage.codeMirrorModeName
+            if (props.codeLanguage == CodeLanguage.MARKDOWN) {
+                extraKeys = js("""{"Enter": "newlineAndIndentContinueMarkdownList"}""")
+            }
             lineNumbers = true
         }
         mFormControl {
@@ -54,7 +76,19 @@ val CodeMirrorField = functionalComponent<WrappedCodeMirrorFieldProps> { props -
                     options = cmOptions
                 }
             }
-            props.meta.error?.let { fieldErrors(it.unsafeCast<List<FieldError>>()) }
         }
+    }
+}
+
+fun RBuilder.codeMirrorFieldComponent(
+    label: String, mode: CodeLanguage,
+    value: String,
+    onChange: (String) -> Unit
+) = child(qwe) {
+    attrs {
+        this.label = label
+        this.codeLanguage = mode
+        this.value = value
+        this.onChange = onChange
     }
 }

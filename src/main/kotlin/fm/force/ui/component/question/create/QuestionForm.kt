@@ -10,6 +10,7 @@ import fm.force.ui.component.field.*
 import fm.force.ui.component.main.helmet
 import fm.force.ui.dto.QuestionEditDTO
 import fm.force.ui.dto.of
+import fm.force.ui.extension.CodeLanguage
 import fm.force.ui.reducer.action.question.CreateQuestionThunk
 import fm.force.ui.reducer.action.question.EditQuestionThunk
 import fm.force.ui.util.jsApply
@@ -52,6 +53,7 @@ private val QuestionForm = functionalComponent<EditQuestionFormProps> { props ->
                 CodeMirrorField,
                 jsApply {
                     label = "Question text"
+                    mode = CodeLanguage.MARKDOWN
                 }
             )
             field(
@@ -59,6 +61,7 @@ private val QuestionForm = functionalComponent<EditQuestionFormProps> { props ->
                 CodeMirrorField,
                 jsApply {
                     label = "Question help"
+                    mode = CodeLanguage.MARKDOWN
                 }
             )
             field(

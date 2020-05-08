@@ -5,6 +5,7 @@ import fm.force.ui.component.difficultyscale.create.editDifficultyScaleForm
 import fm.force.ui.component.difficultyscale.list.difficultyScaleList
 import fm.force.ui.component.auth.loginForm
 import fm.force.ui.component.auth.registerForm
+import fm.force.ui.component.import.importQuizForm
 import fm.force.ui.component.question.create.createQuestionForm
 import fm.force.ui.component.question.create.editQuestionForm
 import fm.force.ui.component.question.list.questionList
@@ -49,6 +50,7 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
             renderQuizRoutes()
             renderDifficultyScaleRoutes()
             renderQuizSessionRoutes()
+            renderMisc()
 
             route("/", exact = true) {
                 deferredDispatch(ChangeAppViewName("Home"))
@@ -58,6 +60,13 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
                 deferredDispatch(ChangeAppViewName("Not Found"))
                 notFound()
             }
+        }
+    }
+
+    private fun RBuilder.renderMisc() {
+        route("/import", exact = true) {
+            deferredDispatch(ChangeAppViewName("Import Quiz"))
+            importQuizForm()
         }
     }
 

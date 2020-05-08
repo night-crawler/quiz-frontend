@@ -84,11 +84,16 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
                     renderQuizRouteLinks()
                     renderDifficultyScaleRouteLinks()
                     renderQuizSessionRouteLinks()
+                    renderMiscRouteLinks()
                 } else {
                     renderAuthRouteLinks()
                 }
             }
         }
+    }
+
+    private fun RBuilder.renderMiscRouteLinks() {
+        renderLink("/import", "Import", IconName.IMPORT_CONTACTS)
     }
 
     private fun RBuilder.renderAuthRouteLinks() {
