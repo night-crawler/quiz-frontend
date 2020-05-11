@@ -15,5 +15,5 @@ val API_HOST = when(isProduction) {
 }
 
 const val DEFAULT_TITLE_TEMPLATE = "Quiz | %s"
-const val DEFAULT_PAGE_SIZE = 20
+const val DEFAULT_PAGE_SIZE = 25
 

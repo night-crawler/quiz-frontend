@@ -45,7 +45,7 @@ open class QuizClient(
             )
         )
 
-    suspend fun findQuestions(criteria: DefaultSearchCriteria): PageWrapper<QuestionFullDTO> =
+    suspend fun findQuestions(criteria: QuestionSearchCriteria): PageWrapper<QuestionFullDTO> =
         fetchAdapter.fetch<PageDTO>(
             HttpMethod.GET, prepareUri("questions", params = criteria.toMap()), null,
             headers = jsonHeaders,
@@ -263,8 +263,8 @@ open class QuizClient(
         ).toTypedPage()
     }
 
-    suspend fun findTags(text: String = ""): PageWrapper<TagFullDTO> {
-        val params = mapOf("query" to text, "sort" to "name")
+    suspend fun findTags(text: String = "", slugs: Collection<String> = listOf()): PageWrapper<TagFullDTO> {
+        val params = mapOf("query" to text, "sort" to "name", "slugs" to slugs)
         return fetchAdapter.fetch<PageDTO>(
             HttpMethod.GET, prepareUri("tags", params = params), null,
             headers = jsonHeaders,

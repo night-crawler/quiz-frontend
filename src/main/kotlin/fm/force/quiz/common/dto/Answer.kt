@@ -16,7 +16,23 @@ data class AnswerFullDTO(
 
     @ContextualSerialization
     val updatedAt: InstantAlias
-) : DTOFullSerializationMarker
+) : DTOFullSerializationMarker {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is AnswerFullDTO) return false
+
+        if (id != other.id) return false
+        if (text != other.text) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + text.hashCode()
+        return result
+    }
+}
 
 @Serializable
 data class AnswerRestrictedDTO(

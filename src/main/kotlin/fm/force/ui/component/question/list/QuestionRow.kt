@@ -12,8 +12,7 @@ import fm.force.ui.component.main.iconMenu
 import fm.force.ui.component.main.routeLink
 import fm.force.ui.component.question.markdownWithCode
 import fm.force.ui.util.*
-import kotlinx.css.marginBottom
-import kotlinx.css.px
+import kotlinx.css.*
 import org.w3c.dom.Node
 import org.w3c.dom.events.EventTarget
 import react.RBuilder
@@ -23,10 +22,13 @@ import react.RState
 import react.dom.findDOMNode
 import styled.StyledElementBuilder
 import styled.css
+import styled.styledDiv
 
 interface QuestionRowProps : RProps {
+    var isSelected: Boolean
     var question: QuestionFullDTO
     var onDelete: (question: QuestionFullDTO) -> Unit
+    var onSelectToggle: (question: QuestionFullDTO) -> Unit
 }
 
 class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState>(props) {
@@ -75,24 +77,36 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
     }
 
     private fun StyledElementBuilder<MCardHeaderProps>.renderAction(question: QuestionFullDTO) =
-        iconMenu(IconName.MORE_VERT.iconMame, shouldClose = ::shouldCloseMenu) {
-            routeLink("/questions/${question.id}/edit") {
-                mMenuItemWithIcon(IconName.EDIT.iconMame, "Edit", onClick = it.onClick)
+        styledDiv {
+            css {
+                width = 100.px
             }
-            confirmDeleteDialog(
-                dialogRef = { dialogRef = findDOMNode(it) },
-                title = RBuilder().mDialogTitle("Delete question ${question.title}?"),
-                content = RBuilder().mDialogContent {
-                    mDialogContentText("This action is permanent")
-                },
-                onConfirm = { handleConfirmDelete(question) }
-            ) { setIsOpen ->
-                mMenuItemWithIcon(
-                    IconName.REMOVE.iconMame, "Delete",
-                    onClick = {
-                        setIsOpen(true)
-                    }
-                )
+            mCheckbox(props.isSelected, onChange = { _, value -> props.onSelectToggle(question)}) {
+                css {
+                    float = Float.left
+                    marginTop = 3.px
+                }
+            }
+            iconMenu(IconName.MORE_VERT.iconMame, shouldClose = ::shouldCloseMenu) {
+                css { float = Float.left }
+                routeLink("/questions/${question.id}/edit") {
+                    mMenuItemWithIcon(IconName.EDIT.iconMame, "Edit", onClick = it.onClick)
+                }
+                confirmDeleteDialog(
+                    dialogRef = { dialogRef = findDOMNode(it) },
+                    title = RBuilder().mDialogTitle("Delete question ${question.title}?"),
+                    content = RBuilder().mDialogContent {
+                        mDialogContentText("This action is permanent")
+                    },
+                    onConfirm = { handleConfirmDelete(question) }
+                ) { setIsOpen ->
+                    mMenuItemWithIcon(
+                        IconName.REMOVE.iconMame, "Delete",
+                        onClick = {
+                            setIsOpen(true)
+                        }
+                    )
+                }
             }
         }
 

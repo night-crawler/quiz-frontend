@@ -2,6 +2,7 @@ package fm.force.ui.component.field
 
 import com.ccfraser.muirwik.components.mTextField
 import fm.force.ui.client.DefaultSearchCriteria
+import fm.force.ui.client.QuestionSearchCriteria
 import fm.force.ui.hook.UseState
 import fm.force.ui.hook.useClient
 import fm.force.ui.hook.useDebounce
@@ -24,7 +25,7 @@ val QuestionAutocompleteField = functionalComponent<QuestionsAutocompleteFieldPr
 
     val questions = useClient(listOf(debouncedSearchText)) {
         findQuestions(
-            DefaultSearchCriteria(
+            QuestionSearchCriteria(
                 page = 1,
                 sort = "title",
                 query = debouncedSearchText,

@@ -23,7 +23,37 @@ data class QuestionFullDTO(
 
     @ContextualSerialization
     val updatedAt: InstantAlias
-) : DTOFullSerializationMarker
+) : DTOFullSerializationMarker {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is QuestionFullDTO) return false
+
+        if (id != other.id) return false
+        if (title != other.title) return false
+        if (text != other.text) return false
+        if (help != other.help) return false
+        if (answers != other.answers) return false
+        if (correctAnswers != other.correctAnswers) return false
+        if (tags != other.tags) return false
+        if (topics != other.topics) return false
+        if (difficulty != other.difficulty) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + title.hashCode()
+        result = 31 * result + text.hashCode()
+        result = 31 * result + help.hashCode()
+        result = 31 * result + answers.hashCode()
+        result = 31 * result + correctAnswers.hashCode()
+        result = 31 * result + tags.hashCode()
+        result = 31 * result + topics.hashCode()
+        result = 31 * result + difficulty
+        return result
+    }
+}
 
 @Serializable
 data class QuestionRestrictedDTO(
