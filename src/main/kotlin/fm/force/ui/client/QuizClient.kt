@@ -254,8 +254,8 @@ open class QuizClient(
         buildResponse = { request, response -> buildResponse(request, response) }
     )
 
-    suspend fun findTopics(text: String = ""): PageWrapper<TopicFullDTO> {
-        val params = mapOf("query" to text, "sort" to "title")
+    suspend fun findTopics(text: String = "", slugs: Collection<String> = listOf()): PageWrapper<TopicFullDTO> {
+        val params = mapOf("query" to text, "sort" to "title", "slugs" to slugs)
         return fetchAdapter.fetch<PageDTO>(
             HttpMethod.GET, prepareUri("topics", params = params), null,
             headers = jsonHeaders,

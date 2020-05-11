@@ -7,7 +7,6 @@ import fm.force.ui.hook.useClient
 import fm.force.ui.hook.useDebounce
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
-import mu.KotlinLogging
 import mui.lab.labAutocompleteMultipleField
 import react.dom.span
 import react.functionalComponent
@@ -15,7 +14,6 @@ import react.useState
 import redux.form.WrappedFieldProps
 import redux.form.getArrayValue
 
-private val logger = KotlinLogging.logger("TagsAutocompleteField")
 
 interface TagsAutocompleteFieldProps : WrappedFieldProps {
     var label: String
@@ -39,7 +37,6 @@ val TagsAutocompleteField = functionalComponent<TagsAutocompleteFieldProps> { pr
             }
             getOptionLabel = { it.name }
             onChange = { _, value, reason, _ ->
-                logger.debug { "Triggered onChange: $value ($reason)" }
                 if (reason == "create-option") {
                     GlobalScope.promise {
                         val tag = ReduxStore.DEFAULT.client.getOrCreateTag(TagPatchDTO(searchText.trim()))

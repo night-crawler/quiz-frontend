@@ -9,15 +9,12 @@ import fm.force.ui.hook.useDebounce
 import kotlinext.js.Object
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.promise
-import mu.KotlinLogging
 import mui.lab.labAutocompleteMultipleField
 import react.dom.span
 import react.functionalComponent
 import react.useState
 import redux.form.WrappedFieldProps
 import redux.form.getArrayValue
-
-private val logger = KotlinLogging.logger("TopicsAutocompleteField")
 
 interface TopicsAutocompleteFieldProps : WrappedFieldProps {
     var label: String
@@ -41,7 +38,6 @@ val TopicsAutocompleteField = functionalComponent<TopicsAutocompleteFieldProps> 
             }
             getOptionLabel = { it.title }
             onChange = { _, value, reason, _ ->
-                logger.debug { "Triggered onChange: $value ($reason)" }
                 if (reason == "create-option") {
                     GlobalScope.promise {
                         val topic = ReduxStore.DEFAULT.client
