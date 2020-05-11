@@ -8,13 +8,14 @@ import fm.force.ui.component.auth.registerForm
 import fm.force.ui.component.import.importQuizForm
 import fm.force.ui.component.question.create.createQuestionForm
 import fm.force.ui.component.question.create.editQuestionForm
-import fm.force.ui.component.question.list.questionList
 import fm.force.ui.component.quiz.create.createQuizForm
 import fm.force.ui.component.quiz.create.editQuizForm
 import fm.force.ui.component.quiz.list.quizList
 import fm.force.ui.component.quiz.quizPreview
 import fm.force.ui.component.session.quizSessionList
 import fm.force.ui.component.session.sessionScores
+import fm.force.ui.container.questionList
+import fm.force.ui.container.quizComposer
 import fm.force.ui.container.sessionUI
 import fm.force.ui.reducer.action.ChangeAppViewName
 import kotlin.browser.window
@@ -117,7 +118,7 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
     private fun RBuilder.renderQuestionRoutes() {
         route("/questions", exact = true) {
             deferredDispatch(ChangeAppViewName("Questions"))
-            questionList()
+            questionList {}
         }
         route("/questions/create", exact = true) {
             deferredDispatch(ChangeAppViewName("Create Question"))
@@ -141,6 +142,10 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
         route("/quizzes/:id/edit", exact = true) {
             deferredDispatch(ChangeAppViewName("Edit Quiz"))
             editQuizForm()
+        }
+        route("/quizzes/:id/compose", exact = true) {
+            deferredDispatch(ChangeAppViewName("Compose Quiz"))
+            quizComposer {}
         }
         route("/quizzes/:id/preview") {
             deferredDispatch(ChangeAppViewName("Start Quiz Session"))

@@ -1,5 +1,8 @@
 package fm.force.ui.component.question.list
 
+import com.ccfraser.muirwik.components.button.mButton
+import com.ccfraser.muirwik.components.button.mButtonGroup
+import com.ccfraser.muirwik.components.mTypography
 import com.ccfraser.muirwik.components.table.mTablePagination
 import com.ccfraser.muirwik.components.targetValue
 import fm.force.quiz.common.dto.QuestionFullDTO
@@ -19,7 +22,15 @@ import react.*
 import react.dom.title
 import react.router.connected.push
 
-val QuestionList = functionalComponent<RProps> {
+interface QuestionListProps : RProps {
+    var selectedQuestionsCount: Int
+    var onUnselectedAll: (Any) -> Unit
+    var onSelectedQuestionsSentToComposer: (Any) -> Unit
+    var onOpenComposer: (Any) -> Unit
+    var onSelectAllOnPage: (questions: Collection<QuestionFullDTO>) -> Unit
+}
+
+val QuestionList = functionalComponent<QuestionListProps> { props ->
     val (questionPage, setQuestionPage) = useState<PageWrapper<QuestionFullDTO>?>(null)
     val dispatch = useDispatch()
 
@@ -71,6 +82,12 @@ val QuestionList = functionalComponent<RProps> {
             }
         }
     }
+    mButtonGroup(fullWidth = true) {
+        mButton("Select all", onClick = { props.onSelectAllOnPage(questionPage.content) })
+        mButton("Unselect all", onClick = props.onUnselectedAll)
+        mButton("Send to composer", onClick = props.onSelectedQuestionsSentToComposer)
+        mButton("Open composer", onClick = props.onOpenComposer)
+    }
     mTablePagination(
         rowsPerPage = questionPage.pageSize,
         page = searchCriteria!!.page - 1,
@@ -82,6 +99,7 @@ val QuestionList = functionalComponent<RProps> {
             searchCriteria = searchCriteria!!.copy(pageSize = event.targetValue.toString().toInt(), page = 1)
         }
     )
+    mTypography {
+        +"Total selected: ${props.selectedQuestionsCount}"
+    }
 }
-
-fun RBuilder.questionList() = child(QuestionList) { }

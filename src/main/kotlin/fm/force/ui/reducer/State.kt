@@ -3,6 +3,7 @@ package fm.force.ui.reducer
 import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.client.dto.UserFullDTO
 import fm.force.ui.reducer.action.Snack
+import fm.force.ui.reducer.action.quizcomposer.of
 import fm.force.ui.util.createLocation
 import fm.force.ui.util.customCombineReducers
 import history.History
@@ -25,7 +26,8 @@ data class State(
     val form: dynamic = jsObject { },
 
     val quizSessionState: QuizSessionState = QuizSessionState.of(),
-    val selectedQuestions: Set<QuestionFullDTO> = setOf()
+    val selectedQuestions: Set<QuestionFullDTO> = setOf(),
+    val quizComposer: QuizComposer = QuizComposer.of()
 )
 
 fun combinedReducers(history: History<*>) = customCombineReducers(
@@ -36,6 +38,7 @@ fun combinedReducers(history: History<*>) = customCombineReducers(
         State::router to connectRouter(history),
         State::form to formReducer,
         State::quizSessionState to ::quizSessionStateReducer,
-        State::selectedQuestions to ::selectedQuestionsReducer
+        State::selectedQuestions to ::selectedQuestionsReducer,
+        State::quizComposer to ::quizComposerReducer
     )
 )

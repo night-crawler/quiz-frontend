@@ -102,6 +102,9 @@ class QuizRow(props: QuizRowProps) : RComponent<QuizRowProps, RState>(props) {
             routeLink("/quizzes/${quiz.id}/edit") {
                 mMenuItemWithIcon(IconName.EDIT.iconMame, "Edit", onClick = it.onClick)
             }
+            routeLink("/quizzes/${quiz.id}/compose") {
+                mMenuItemWithIcon(IconName.COMPARE.iconMame, "Compose", onClick = it.onClick)
+            }
             confirmDeleteDialog(
                 dialogRef = { dialogRef = findDOMNode(it) },
                 title = RBuilder().mDialogTitle("Delete quiz ${quiz.title}?"),
