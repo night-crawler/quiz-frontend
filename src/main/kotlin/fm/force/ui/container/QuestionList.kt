@@ -5,7 +5,7 @@ import fm.force.ui.component.question.list.QuestionListProps
 import fm.force.ui.reducer.SelectedQuestionsAllUnselected
 import fm.force.ui.reducer.SelectedQuestionsSelectedAllOnPage
 import fm.force.ui.reducer.SelectedQuestionsSentToComposer
-import fm.force.ui.reducer.State
+import fm.force.ui.reducer.state.QuizState
 import react.RClass
 import react.RProps
 import react.invoke
@@ -17,14 +17,14 @@ import redux.WrapperAction
 interface QuestionListConnectedProps : RProps
 
 private interface QuestionListStateProps : RProps {
-    var state: State
+    var state: QuizState
 }
 
 private interface QuestionListDispatchProps : RProps {
     var dispatch: (RAction) -> WrapperAction
 }
 
-private val mapStateToProps: QuestionListStateProps.(State, QuestionListConnectedProps) -> Unit =
+private val mapStateToProps: QuestionListStateProps.(QuizState, QuestionListConnectedProps) -> Unit =
     { state, _ ->
         this.state = state
     }
@@ -35,7 +35,7 @@ private val mapDispatchToProps: QuestionListDispatchProps.((RAction) -> WrapperA
     }
 
 val questionList: RClass<QuestionListConnectedProps> =
-    rConnect<State, RAction, WrapperAction, QuestionListConnectedProps, QuestionListStateProps, QuestionListDispatchProps, QuestionListProps>(
+    rConnect<QuizState, RAction, WrapperAction, QuestionListConnectedProps, QuestionListStateProps, QuestionListDispatchProps, QuestionListProps>(
         mapStateToProps,
         mapDispatchToProps,
         { stateProps, dispatchProps, _ ->
@@ -51,7 +51,7 @@ val questionList: RClass<QuestionListConnectedProps> =
                 }
             }
             onOpenComposer = {
-                dispatchProps.dispatch(push("/quizzes/${stateProps.state.quizComposer.id}/compose"))
+                dispatchProps.dispatch(push("/quizzes/${stateProps.state.quizComposerDTO.id}/compose"))
             }
         }
     )(QuestionList.unsafeCast<RClass<QuestionListProps>>())

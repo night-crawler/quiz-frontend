@@ -15,7 +15,7 @@ import fm.force.quiz.common.dto.DifficultyScaleFullDTO
 import fm.force.ui.component.main.confirmDeleteDialog
 import fm.force.ui.component.main.iconMenu
 import fm.force.ui.component.main.routeLink
-import fm.force.ui.util.IconName
+import fm.force.ui.util.Icon
 import fm.force.ui.util.treeIterator
 import kotlin.js.Date
 import kotlinx.css.marginBottom
@@ -84,7 +84,7 @@ class DifficultyScaleRow(props: DifficultyScaleRowProps) : RComponent<Difficulty
     }
 
     private fun StyledElementBuilder<MCardHeaderProps>.renderAction(difficultyScale: DifficultyScaleFullDTO) =
-        iconMenu(IconName.MORE_VERT.iconMame, shouldClose = ::shouldCloseMenu) {
+        iconMenu(Icon.MORE_VERT.iconMame, shouldClose = ::shouldCloseMenu) {
             confirmDeleteDialog(
                 dialogRef = { dialogRef = findDOMNode(it) },
                 title = RBuilder().mDialogTitle("Delete difficultyScale ${difficultyScale.name}?"),
@@ -94,14 +94,14 @@ class DifficultyScaleRow(props: DifficultyScaleRowProps) : RComponent<Difficulty
                 onConfirm = { handleConfirmDelete(difficultyScale) }
             ) { setIsOpen ->
                 mMenuItemWithIcon(
-                    IconName.REMOVE.iconMame, "Delete",
+                    Icon.REMOVE.iconMame, "Delete",
                     onClick = {
                         setIsOpen(true)
                     }
                 )
             }
             routeLink("/difficulty-scales/${difficultyScale.id}/edit") {
-                mMenuItemWithIcon(IconName.EDIT.iconMame, "Edit", onClick = it.onClick)
+                mMenuItemWithIcon(Icon.EDIT.iconMame, "Edit", onClick = it.onClick)
             }
         }
 

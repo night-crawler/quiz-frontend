@@ -3,9 +3,9 @@ package fm.force.ui.container
 import fm.force.quiz.common.dto.QuestionFullDTO
 import fm.force.ui.component.question.list.QuestionRow
 import fm.force.ui.component.question.list.QuestionRowProps
-import fm.force.ui.reducer.SelectedQuestionsSelectToggled
 import fm.force.ui.reducer.SelectedQuestionsQuestionUnset
-import fm.force.ui.reducer.State
+import fm.force.ui.reducer.SelectedQuestionsSelectToggled
+import fm.force.ui.reducer.state.QuizState
 import react.RClass
 import react.RProps
 import react.invoke
@@ -26,10 +26,11 @@ private interface QuestionRowDispatchProps : RProps {
     var onSelectToggle: (question: QuestionFullDTO) -> Unit
 }
 
-private val mapStateToProps: QuestionRowStateProps.(State, QuestionRowConnectedProps) -> Unit = { state, connectedProps ->
-    isSelected = connectedProps.question in state.selectedQuestions
-    question = connectedProps.question
-}
+private val mapStateToProps: QuestionRowStateProps.(QuizState, QuestionRowConnectedProps) -> Unit =
+    { state, connectedProps ->
+        isSelected = connectedProps.question in state.selectedQuestions
+        question = connectedProps.question
+    }
 
 private val mapDispatchToProps: QuestionRowDispatchProps.((RAction) -> WrapperAction, QuestionRowConnectedProps) -> Unit =
     { dispatch, connectedProps ->
@@ -41,7 +42,7 @@ private val mapDispatchToProps: QuestionRowDispatchProps.((RAction) -> WrapperAc
     }
 
 val questionRow: RClass<QuestionRowConnectedProps> =
-    rConnect<State, RAction, WrapperAction, QuestionRowConnectedProps, QuestionRowStateProps, QuestionRowDispatchProps, QuestionRowProps>(
+    rConnect<QuizState, RAction, WrapperAction, QuestionRowConnectedProps, QuestionRowStateProps, QuestionRowDispatchProps, QuestionRowProps>(
         mapStateToProps,
         mapDispatchToProps
     )(QuestionRow::class.rClass)

@@ -8,15 +8,14 @@
 @file:JsModule("prismjs")
 
 package prismjs
+import kotlin.js.RegExp
 import org.w3c.dom.Element
 import org.w3c.dom.ParentNode
-import kotlin.js.RegExp
 
 external var languages: LanguageMapProtocol /* LanguageMapProtocol & LanguageMap */
 
-//external var plugins: Record<String, Any>
+// external var plugins: Record<String, Any>
 external var plugins: dynamic
-
 
 external fun highlightAll(async: Boolean = definedExternally, callback: HighlightCallback = definedExternally)
 
@@ -43,7 +42,7 @@ external fun tokenize(
     grammar: GrammarRest /* GrammarRest & Record<String, GrammarValue> */
 ): Array<dynamic /* String | Token */>
 
-//external interface Environment : Record<String, Any> {
+// external interface Environment : Record<String, Any> {
 //
 external interface Environment {
     var selector: String?
@@ -166,7 +165,7 @@ external interface LanguageMapProtocol {
     ): GrammarRest /* GrammarRest & Record<String, GrammarValue> */
 }
 
-external open class Token {
+open external class Token {
     constructor(type: String, content: String, alias: String, matchedStr: String, greedy: Boolean)
     constructor(type: String, content: String, alias: Array<String>, matchedStr: String, greedy: Boolean)
     constructor(type: String, content: Token, alias: String, matchedStr: String, greedy: Boolean)

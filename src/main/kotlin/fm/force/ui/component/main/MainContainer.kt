@@ -1,10 +1,10 @@
 package fm.force.ui.component.main
 
+import fm.force.ui.component.auth.loginForm
+import fm.force.ui.component.auth.registerForm
 import fm.force.ui.component.difficultyScale.create.createDifficultyScaleForm
 import fm.force.ui.component.difficultyscale.create.editDifficultyScaleForm
 import fm.force.ui.component.difficultyscale.list.difficultyScaleList
-import fm.force.ui.component.auth.loginForm
-import fm.force.ui.component.auth.registerForm
 import fm.force.ui.component.import.importQuizForm
 import fm.force.ui.component.question.create.createQuestionForm
 import fm.force.ui.component.question.create.editQuestionForm

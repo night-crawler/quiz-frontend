@@ -11,7 +11,9 @@ import fm.force.ui.component.main.confirmDeleteDialog
 import fm.force.ui.component.main.iconMenu
 import fm.force.ui.component.main.routeLink
 import fm.force.ui.component.question.markdownWithCode
-import fm.force.ui.util.*
+import fm.force.ui.util.Icon
+import fm.force.ui.util.ago
+import fm.force.ui.util.treeIterator
 import kotlinx.css.*
 import org.w3c.dom.Node
 import org.w3c.dom.events.EventTarget
@@ -81,16 +83,16 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
             css {
                 width = 100.px
             }
-            mCheckbox(props.isSelected, onChange = { _, value -> props.onSelectToggle(question)}) {
+            mCheckbox(props.isSelected, onChange = { _, value -> props.onSelectToggle(question) }) {
                 css {
                     float = Float.left
                     marginTop = 3.px
                 }
             }
-            iconMenu(IconName.MORE_VERT.iconMame, shouldClose = ::shouldCloseMenu) {
+            iconMenu(Icon.MORE_VERT.iconMame, shouldClose = ::shouldCloseMenu) {
                 css { float = Float.left }
                 routeLink("/questions/${question.id}/edit") {
-                    mMenuItemWithIcon(IconName.EDIT.iconMame, "Edit", onClick = it.onClick)
+                    mMenuItemWithIcon(Icon.EDIT.iconMame, "Edit", onClick = it.onClick)
                 }
                 confirmDeleteDialog(
                     dialogRef = { dialogRef = findDOMNode(it) },
@@ -101,7 +103,7 @@ class QuestionRow(props: QuestionRowProps) : RComponent<QuestionRowProps, RState
                     onConfirm = { handleConfirmDelete(question) }
                 ) { setIsOpen ->
                     mMenuItemWithIcon(
-                        IconName.REMOVE.iconMame, "Delete",
+                        Icon.REMOVE.iconMame, "Delete",
                         onClick = {
                             setIsOpen(true)
                         }

@@ -2,7 +2,7 @@ package fm.force.ui.container
 
 import fm.force.ui.component.main.MainContainer
 import fm.force.ui.component.main.MainContainerProps
-import fm.force.ui.reducer.State
+import fm.force.ui.reducer.state.QuizState
 import react.RClass
 import react.RProps
 import react.invoke
@@ -21,7 +21,7 @@ private interface MainContainerDispatchProps : RProps {
     var dispatch: (RAction) -> WrapperAction
 }
 
-private val mapStateToProps: MainContainerStateProps.(State, MainContainerConnectedProps) -> Unit = { state, _ ->
+private val mapStateToProps: MainContainerStateProps.(QuizState, MainContainerConnectedProps) -> Unit = { state, _ ->
     locationPathname = state.router.location.pathname
 }
 
@@ -31,7 +31,7 @@ private val mapDispatchToProps: MainContainerDispatchProps.((RAction) -> Wrapper
     }
 
 val mainContainer: RClass<MainContainerConnectedProps> =
-    rConnect<State, RAction, WrapperAction, MainContainerConnectedProps, MainContainerStateProps, MainContainerDispatchProps, MainContainerProps>(
+    rConnect<QuizState, RAction, WrapperAction, MainContainerConnectedProps, MainContainerStateProps, MainContainerDispatchProps, MainContainerProps>(
         mapStateToProps,
         mapDispatchToProps
     )(MainContainer::class.rClass)

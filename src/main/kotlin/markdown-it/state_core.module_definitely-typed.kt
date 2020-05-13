@@ -15,7 +15,6 @@ open external class StateCore(src: String, md: MarkdownIt, env: Any) {
     open var md: Any
     open var src: String
     open var tokens: Array<Token>
-
 }
 
 @Suppress("NOTHING_TO_INLINE")

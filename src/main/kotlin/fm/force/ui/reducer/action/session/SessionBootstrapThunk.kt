@@ -1,42 +1,23 @@
 package fm.force.ui.reducer.action.session
 
-import fm.force.quiz.common.dto.*
+import fm.force.quiz.common.dto.QuizSessionAnswerRestrictedDTO
+import fm.force.quiz.common.dto.QuizSessionQuestionRestrictedDTO
 import fm.force.ui.client.DefaultSearchCriteria
 import fm.force.ui.client.QuizClient
-import fm.force.ui.reducer.State
+import fm.force.ui.reducer.state.QuizState
 import fm.force.ui.util.Thunk
 import redux.RAction
 import redux.WrapperAction
 
-class SessionAnswerToggled(
-    val question: QuizSessionQuestionRestrictedDTO,
-    val answer: QuizSessionQuestionAnswerRestrictedDTO
-) : RAction
-
-class SessionDifficultyScaleLoaded(val difficultyScale: DifficultyScaleFullDTO?) : RAction
-class SessionLoaded(val session: QuizSessionFullDTO) : RAction
-class SessionQuestionsLoaded(val questions: List<QuizSessionQuestionRestrictedDTO>) : RAction
-class SessionAnswersLoaded(val answers: List<QuizSessionAnswerRestrictedDTO>) : RAction
-class SessionQuizLoaded(val quiz: QuizRestrictedDTO) : RAction
-class SessionSequenceSet(val seq: Int) : RAction
-class SessionRemainingCountSet(val count: Long) : RAction
-class SessionRemainingCountDecreased() : RAction
-
-class SessionBootstrapStart : RAction
-class SessionBootstrapComplete : RAction
-
-class GoFirstUnanswered : RAction
-class GoLastUnanswered : RAction
-
-class SessionBootstrapThunk(private val sessionId: Long) : Thunk<State, RAction, WrapperAction, QuizClient> {
+class SessionBootstrapThunk(private val sessionId: Long) : Thunk<QuizState, RAction, WrapperAction, QuizClient> {
     override suspend fun run(
         originalAction: RAction,
         dispatch: (RAction) -> WrapperAction,
-        getState: () -> State,
+        getState: () -> QuizState,
         @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
         client: QuizClient
     ): WrapperAction {
-        dispatch(SessionBootstrapStart())
+        dispatch(SessionBootstrapStarted())
 
         val session = client.getSession(sessionId)
 
@@ -57,10 +38,10 @@ class SessionBootstrapThunk(private val sessionId: Long) : Thunk<State, RAction,
         dispatch(SessionLoaded(session))
         dispatch(SessionQuestionsLoaded(questions.sortedBy { it.seq }))
         dispatch(SessionAnswersLoaded(answers))
-        dispatch(SessionSequenceSet(0))
+        dispatch(SessionSetSequence(0))
         dispatch(SessionDifficultyScaleLoaded(difficultyScale))
 
-        return dispatch(SessionBootstrapComplete())
+        return dispatch(SessionBootstrapCompleted())
     }
 
     private suspend fun retrieveQuizQuestions(client: QuizClient): MutableList<QuizSessionQuestionRestrictedDTO> {

@@ -9,10 +9,8 @@ import com.ccfraser.muirwik.components.list.mListItemText
 import com.ccfraser.muirwik.components.styles.Breakpoint
 import fm.force.quiz.common.dto.QuizSessionQuestionAnswerRestrictedDTO
 import fm.force.quiz.common.dto.QuizSessionQuestionRestrictedDTO
-import fm.force.ui.component.misc.readOnlyQuestionCode
 import fm.force.ui.component.question.markdownWithCode
-import fm.force.ui.extension.CodeLanguage
-import fm.force.ui.util.IconName
+import fm.force.ui.util.Icon
 import kotlinx.css.*
 import react.*
 import react.dom.div
@@ -37,7 +35,8 @@ interface QuizSessionQuestionPaneProps : RProps {
     var toggleAnswer: (question: QuizSessionQuestionRestrictedDTO, answer: QuizSessionQuestionAnswerRestrictedDTO) -> Unit
 }
 
-class QuizSessionQuestionPane(props: QuizSessionQuestionPaneProps) : RComponent<QuizSessionQuestionPaneProps, RState>(props) {
+class QuizSessionQuestionPane(props: QuizSessionQuestionPaneProps) :
+    RComponent<QuizSessionQuestionPaneProps, RState>(props) {
     private var showHelp = false
 
     private val breakpoints = MGridBreakpoints(MGridSize.cells6)
@@ -120,7 +119,7 @@ class QuizSessionQuestionPane(props: QuizSessionQuestionPaneProps) : RComponent<
                 onClick = props.onPrevQuestion
             ) {
                 mIcon(
-                    IconName.ARROW_LEFT.iconMame,
+                    Icon.ARROW_LEFT.iconMame,
                     MIconColor.inherit
                 )
             }
@@ -132,7 +131,7 @@ class QuizSessionQuestionPane(props: QuizSessionQuestionPaneProps) : RComponent<
                 onClick = props.goFirstUnanswered
             ) {
                 mIcon(
-                    IconName.FAST_REWIND.iconMame,
+                    Icon.FAST_REWIND.iconMame,
                     MIconColor.inherit
                 )
             }
@@ -144,7 +143,7 @@ class QuizSessionQuestionPane(props: QuizSessionQuestionPaneProps) : RComponent<
                 onClick = props.goLastUnanswered
             ) {
                 mIcon(
-                    IconName.FAST_FORWARD.iconMame,
+                    Icon.FAST_FORWARD.iconMame,
                     MIconColor.inherit
                 )
             }
@@ -156,7 +155,7 @@ class QuizSessionQuestionPane(props: QuizSessionQuestionPaneProps) : RComponent<
                 onClick = props.onNextQuestion
             ) {
                 mIcon(
-                    IconName.ARROW_RIGHT.iconMame,
+                    Icon.ARROW_RIGHT.iconMame,
                     MIconColor.inherit
                 )
             }

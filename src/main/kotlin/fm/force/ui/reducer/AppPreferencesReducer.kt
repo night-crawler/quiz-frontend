@@ -3,6 +3,8 @@ package fm.force.ui.reducer
 import fm.force.ui.reducer.action.ChangeAppViewName
 import fm.force.ui.reducer.action.DrawerOpenToggle
 import fm.force.ui.reducer.action.SetThemeType
+import fm.force.ui.reducer.state.AppPreferences
+import fm.force.ui.reducer.state.of
 import redux.RAction
 
 fun appPreferencesReducer(state: AppPreferences = AppPreferences.of(), action: RAction): AppPreferences =

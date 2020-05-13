@@ -2,7 +2,6 @@
 
 package markdown.it
 
-
 @JsModule("definitely-typed")
 open external class ParserInline {
     open fun parse(src: String, md: MarkdownIt, env: Any, outTokens: Array<Token>)

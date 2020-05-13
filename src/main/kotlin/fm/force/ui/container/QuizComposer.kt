@@ -2,9 +2,8 @@ package fm.force.ui.container
 
 import fm.force.ui.component.QuizComposer
 import fm.force.ui.component.QuizComposerProps
-import fm.force.ui.reducer.*
-import fm.force.ui.reducer.action.quizcomposer.QuizComposerBootstrap
-import fm.force.ui.reducer.action.quizcomposer.QuizComposerSaveTriggered
+import fm.force.ui.reducer.action.quizcomposer.*
+import fm.force.ui.reducer.state.QuizState
 import react.RClass
 import react.RProps
 import react.invoke
@@ -15,14 +14,14 @@ import redux.WrapperAction
 interface QuizComposerConnectedProps : RProps
 
 private interface QuizComposerStateProps : RProps {
-    var state: State
+    var state: QuizState
 }
 
 private interface QuizComposerDispatchProps : RProps {
     var dispatch: (RAction) -> WrapperAction
 }
 
-private val mapStateToProps: QuizComposerStateProps.(State, QuizComposerConnectedProps) -> Unit = { state, _ ->
+private val mapStateToProps: QuizComposerStateProps.(QuizState, QuizComposerConnectedProps) -> Unit = { state, _ ->
     this.state = state
 }
 
@@ -32,28 +31,56 @@ private val mapDispatchToProps: QuizComposerDispatchProps.((RAction) -> WrapperA
     }
 
 val quizComposer: RClass<QuizComposerConnectedProps> =
-    rConnect<State, RAction, WrapperAction, QuizComposerConnectedProps, QuizComposerStateProps, QuizComposerDispatchProps, QuizComposerProps>(
+    rConnect<QuizState, RAction, WrapperAction, QuizComposerConnectedProps, QuizComposerStateProps, QuizComposerDispatchProps, QuizComposerProps>(
         mapStateToProps,
         mapDispatchToProps,
         { stateProps, dispatchProps, _ ->
             val state = stateProps.state
             val dispatch = dispatchProps.dispatch
 
-            questions = state.quizComposer.questions
-            title = state.quizComposer.title
-            topics = state.quizComposer.topics
-            tags = state.quizComposer.tags
-            difficultyScale = state.quizComposer.difficultyScale
+            questions = state.quizComposerDTO.questions
+            title = state.quizComposerDTO.title
+            topics = state.quizComposerDTO.topics
+            tags = state.quizComposerDTO.tags
+            difficultyScale = state.quizComposerDTO.difficultyScale
 
-            bootstrap = { dispatch(QuizComposerBootstrap(it)) }
-            onTagsChanged = { dispatch(QuizComposerTagsChanged(it)) }
-            onTopicsChanged = { dispatch(QuizComposerTopicsChanged(it)) }
-            onTitleChanged = { dispatch(QuizComposerTitleChanged(it)) }
-            onDifficultyScaleChanged = { dispatch(QuizComposerDifficultyScaleChanged(it)) }
-            onSave = { dispatch(
-                QuizComposerSaveTriggered(
-                    state.quizComposer
+            bootstrap = { dispatch(QuizComposerBootstrapThunk(it)) }
+            onTagsChanged = { dispatch(QuizComposerSetTags(it)) }
+            onTopicsChanged = {
+                dispatch(
+                    QuizComposerSetTopics(
+                        it
+                    )
                 )
-            ) }
+            }
+            onTitleChanged = {
+                dispatch(
+                    QuizComposerSetTitle(
+                        it
+                    )
+                )
+            }
+            onDifficultyScaleChanged = {
+                dispatch(
+                    QuizComposerSetDifficultyScale(
+                        it
+                    )
+                )
+            }
+            onDeleteQuestion = {
+                dispatch(
+                    QuizComposerDeleteQuestion(
+                        it
+                    )
+                )
+            }
+            onClear = { dispatch(QuizComposerClearQuestions()) }
+            onSave = {
+                dispatch(
+                    QuizComposerSaveThunk(
+                        state.quizComposerDTO
+                    )
+                )
+            }
         }
     )(QuizComposer.unsafeCast<RClass<QuizComposerProps>>())

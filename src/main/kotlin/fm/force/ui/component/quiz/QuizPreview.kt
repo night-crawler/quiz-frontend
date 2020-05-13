@@ -26,7 +26,6 @@ import org.w3c.dom.events.Event
 import react.*
 import react.dom.title
 import react.router.connected.push
-import redux.RAction
 import styled.css
 
 interface QuizPreviewProps : RProps {

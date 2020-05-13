@@ -2,8 +2,8 @@ package fm.force.ui.container
 
 import fm.force.ui.component.main.Drawer
 import fm.force.ui.component.main.DrawerProps
-import fm.force.ui.reducer.State
 import fm.force.ui.reducer.action.DrawerOpenToggle
+import fm.force.ui.reducer.state.QuizState
 import react.RClass
 import react.RProps
 import react.invoke
@@ -23,7 +23,7 @@ private interface DrawerDispatchProps : RProps {
     var onResponsiveDrawerOpenToggle: (isOpen: Boolean) -> Unit
 }
 
-private val mapStateToProps: DrawerStateProps.(State, DrawerConnectedProps) -> Unit = { state, _ ->
+private val mapStateToProps: DrawerStateProps.(QuizState, DrawerConnectedProps) -> Unit = { state, _ ->
     responsiveDrawerOpen = state.appPreferences.responsiveDrawerOpen
     isLoggedIn = state.currentUser.id != -1L
 }
@@ -36,7 +36,7 @@ private val mapDispatchToProps: DrawerDispatchProps.((RAction) -> WrapperAction,
     }
 
 val drawer: RClass<DrawerConnectedProps> =
-    rConnect<State, RAction, WrapperAction, DrawerConnectedProps, DrawerStateProps, DrawerDispatchProps, DrawerProps>(
+    rConnect<QuizState, RAction, WrapperAction, DrawerConnectedProps, DrawerStateProps, DrawerDispatchProps, DrawerProps>(
         mapStateToProps,
         mapDispatchToProps
     )(Drawer::class.rClass)

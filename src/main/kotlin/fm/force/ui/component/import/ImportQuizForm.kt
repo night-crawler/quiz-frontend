@@ -33,21 +33,24 @@ val ImportQuizForm = functionalComponent<RProps> {
                 text = it
             }
 
-            mButton("Import", onClick = {
-                GlobalScope.launch {
-                    QuizImportDTO(
-                        text = text,
-                        type = QuizImportType.YAML
-                    ).let {
-                        try {
-                            val quiz = ReduxStore.DEFAULT.client.importQuiz(it)
-                            dispatch(push("/quizzes/${quiz.id}/preview"))
-                        } catch (exc: FetchError) {
-                            error = SubmissionError.of(exc)
+            mButton(
+                "Import",
+                onClick = {
+                    GlobalScope.launch {
+                        QuizImportDTO(
+                            text = text,
+                            type = QuizImportType.YAML
+                        ).let {
+                            try {
+                                val quiz = ReduxStore.DEFAULT.client.importQuiz(it)
+                                dispatch(push("/quizzes/${quiz.id}/preview"))
+                            } catch (exc: FetchError) {
+                                error = SubmissionError.of(exc)
+                            }
                         }
                     }
                 }
-            })
+            )
         }
 
         renderSubmissionError(error)

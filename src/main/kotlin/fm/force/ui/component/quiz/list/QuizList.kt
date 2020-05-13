@@ -21,7 +21,6 @@ import kotlinx.coroutines.promise
 import react.*
 import react.dom.title
 import react.router.connected.push
-import redux.RAction
 
 val QuizList = functionalComponent<RProps> { props ->
     val (quizPage, setQuizPage) = useState<PageWrapper<QuizFullDTO>?>(null)

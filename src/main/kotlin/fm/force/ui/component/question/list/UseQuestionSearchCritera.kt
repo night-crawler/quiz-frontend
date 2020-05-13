@@ -11,6 +11,7 @@ abstract class ElementCache<T> {
     val cacheBySlug = mutableMapOf<String, T>()
     fun getBySlugs(slugs: Collection<String>): List<T> =
         slugs.map { cacheBySlug[it]!! }
+
     fun getUnknown(slugs: Collection<String>): Set<String> =
         slugs.toSet() - cacheBySlug.keys
 

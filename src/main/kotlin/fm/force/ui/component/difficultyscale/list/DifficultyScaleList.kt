@@ -21,7 +21,6 @@ import kotlinx.coroutines.promise
 import react.*
 import react.dom.title
 import react.router.connected.push
-import redux.RAction
 
 val DifficultyScaleList = functionalComponent<RProps> {
     val (difficultyScalePage, setDifficultyScalePage) = useState<PageWrapper<DifficultyScaleFullDTO>?>(null)

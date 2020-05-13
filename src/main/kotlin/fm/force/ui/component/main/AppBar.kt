@@ -4,7 +4,7 @@ import com.ccfraser.muirwik.components.*
 import com.ccfraser.muirwik.components.button.mIconButton
 import com.ccfraser.muirwik.components.menu.mMenuItemWithIcon
 import fm.force.ui.client.dto.UserFullDTO
-import fm.force.ui.util.IconName
+import fm.force.ui.util.Icon
 import kotlinx.css.zIndex
 import react.RBuilder
 import react.RComponent
@@ -23,7 +23,6 @@ interface AppBarProps : RProps {
     var onResponsiveDrawerOpenToggle: (isOpen: Boolean) -> Unit
 }
 
-
 class AppBar(props: AppBarProps) : RComponent<AppBarProps, RState>(props) {
     private val nextThemeType
         get() =
@@ -40,21 +39,21 @@ class AppBar(props: AppBarProps) : RComponent<AppBarProps, RState>(props) {
                 mToolbar {
                     mHidden(mdUp = true, implementation = MHiddenImplementation.css) {
                         mIconButton(
-                            iconName = IconName.MENU.iconMame,
+                            iconName = Icon.MENU.iconMame,
                             color = MColor.inherit,
                             onClick = { props.onResponsiveDrawerOpenToggle(true) }
                         )
                     }
                     mToolbarTitle("${props.appTitle} - ${props.activeViewDisplayName}")
                     mIconButton(
-                        iconName = IconName.BRIGHTNESS_3.iconMame,
+                        iconName = Icon.BRIGHTNESS_3.iconMame,
                         onClick = { props.onThemeTypeChange(nextThemeType.value) }
                     )
 
-                    iconMenu(IconName.ACCOUNT_CIRCLE_OUTLINE.iconMame) {
+                    iconMenu(Icon.ACCOUNT_CIRCLE_OUTLINE.iconMame) {
                         routeLink("/profile") {
                             mMenuItemWithIcon(
-                                iconName = IconName.PERSON_OUTLINE.iconMame,
+                                iconName = Icon.PERSON_OUTLINE.iconMame,
                                 primaryText = "Profile",
                                 secondaryText = props.currentUser.email,
                                 selected = it.isActive,
@@ -63,14 +62,14 @@ class AppBar(props: AppBarProps) : RComponent<AppBarProps, RState>(props) {
                         }
                         if (props.currentUser.isActive) {
                             mMenuItemWithIcon(
-                                iconName = IconName.ROWING_OUTLINE.iconMame,
+                                iconName = Icon.ROWING_OUTLINE.iconMame,
                                 primaryText = "Log out",
                                 onClick = props.logout
                             )
                         } else {
                             routeLink("/login") {
                                 mMenuItemWithIcon(
-                                    iconName = IconName.FINGERPRINT_OUTLINE.iconMame,
+                                    iconName = Icon.FINGERPRINT_OUTLINE.iconMame,
                                     primaryText = "Log in",
                                     selected = it.isActive,
                                     onClick = it.onClick
@@ -78,7 +77,7 @@ class AppBar(props: AppBarProps) : RComponent<AppBarProps, RState>(props) {
                             }
                             routeLink("/register") {
                                 mMenuItemWithIcon(
-                                    iconName = IconName.PLUS_ONE.iconMame,
+                                    iconName = Icon.PLUS_ONE.iconMame,
                                     primaryText = "Register",
                                     selected = it.isActive,
                                     onClick = it.onClick

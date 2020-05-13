@@ -2,7 +2,7 @@ package fm.force.ui.container
 
 import fm.force.ui.component.field.ReduxAutocomplete
 import fm.force.ui.component.field.ReduxAutocompleteProps
-import fm.force.ui.reducer.State
+import fm.force.ui.reducer.state.QuizState
 import react.RClass
 import react.RProps
 import react.invoke
@@ -23,7 +23,7 @@ private interface ReduxAutocompleteDispatchProps : RProps
 
 fun <T> createReduxAutocompleteComponent() =
     rConnect<
-        State, RAction, WrapperAction,
+        QuizState, RAction, WrapperAction,
         ConnectedReduxAutocompleteProps,
         ReduxAutocompleteStateProps<T>,
         ReduxAutocompleteDispatchProps,

@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class DefaultSearchCriteria(
     val query: String = "",
-    val sort: String = "-createdAt",
+    val sort: String = "-updatedAt",
     val page: Int = 1,
     val pageSize: Int = DEFAULT_PAGE_SIZE
 ) : SearchCriteria {

@@ -164,8 +164,8 @@ tasks.withType<Kotlin2JsCompile>().all {
 docker {
     name = "ncrawler/${project.name}:$version"
     files("$buildDir/distributions")
-    pull (false)
-    noCache (false)
+    pull(false)
+    noCache(false)
     dependsOn(tasks["browserProductionWebpack"])
 }
 

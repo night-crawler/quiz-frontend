@@ -2,9 +2,9 @@ package fm.force.ui.container
 
 import fm.force.ui.component.main.App
 import fm.force.ui.component.main.AppProps
-import fm.force.ui.reducer.State
 import fm.force.ui.reducer.action.BootstrapThunk
 import fm.force.ui.reducer.action.SetThemeType
+import fm.force.ui.reducer.state.QuizState
 import react.RClass
 import react.RProps
 import react.invoke
@@ -24,7 +24,7 @@ private interface AppDispatchProps : RProps {
     var onBootstrap: () -> Unit
 }
 
-private val mapStateToProps: AppStateProps.(State, ConnectedAppProps) -> Unit = { state, props ->
+private val mapStateToProps: AppStateProps.(QuizState, ConnectedAppProps) -> Unit = { state, props ->
     themeType = state.appPreferences.themeType
 }
 
@@ -35,7 +35,7 @@ private val mapDispatchToProps: AppDispatchProps.((RAction) -> WrapperAction, Co
     }
 
 val app: RClass<ConnectedAppProps> =
-    rConnect<State, RAction, WrapperAction, ConnectedAppProps, AppStateProps, AppDispatchProps, AppProps>(
+    rConnect<QuizState, RAction, WrapperAction, ConnectedAppProps, AppStateProps, AppDispatchProps, AppProps>(
         mapStateToProps,
         mapDispatchToProps
     )(App::class.rClass)

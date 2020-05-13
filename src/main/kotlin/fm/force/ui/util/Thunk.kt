@@ -11,8 +11,6 @@ interface Thunk<S, A, R, X> : RAction {
 
 interface ThunkCheckedException
 
-class ThunkAcknowledged(val originalAction: RAction) : RAction
-
 class ThunkError(val originalAction: RAction, val exception: Throwable) : RAction
 
 fun <S, A, WA, X> createThunkMiddleware(

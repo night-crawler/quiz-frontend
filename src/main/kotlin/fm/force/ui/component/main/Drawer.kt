@@ -5,7 +5,7 @@ import com.ccfraser.muirwik.components.list.*
 import com.ccfraser.muirwik.components.styles.Breakpoint
 import com.ccfraser.muirwik.components.styles.down
 import com.ccfraser.muirwik.components.styles.up
-import fm.force.ui.util.IconName
+import fm.force.ui.util.Icon
 import kotlinext.js.js
 import kotlinx.css.Overflow
 import kotlinx.css.WordBreak
@@ -93,34 +93,34 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
     }
 
     private fun RBuilder.renderMiscRouteLinks() {
-        renderLink("/import", "Import", IconName.IMPORT_CONTACTS)
+        renderLink("/import", "Import", Icon.IMPORT_CONTACTS)
     }
 
     private fun RBuilder.renderAuthRouteLinks() {
-        renderLink("/login", "Login", IconName.FINGERPRINT_OUTLINE)
-        renderLink("/register", "Register", IconName.PLUS_ONE)
+        renderLink("/login", "Login", Icon.FINGERPRINT_OUTLINE)
+        renderLink("/register", "Register", Icon.PLUS_ONE)
     }
 
     private fun StyledElementBuilder<MListProps>.renderDifficultyScaleRouteLinks() {
-        renderLink("/difficulty-scales", "Difficulty Scales", IconName.VIEW_LIST)
-        renderLink("/difficulty-scales/create", "Create Difficulty Scale", IconName.ACCESSIBILITY_NEW)
+        renderLink("/difficulty-scales", "Difficulty Scales", Icon.VIEW_LIST)
+        renderLink("/difficulty-scales/create", "Create Difficulty Scale", Icon.ACCESSIBILITY_NEW)
     }
 
     private fun StyledElementBuilder<MListProps>.renderQuizRouteLinks() {
-        renderLink("/quizzes", "Quizzes", IconName.LIST_ALT)
-        renderLink("/quizzes/create", "Create Quiz", IconName.NEW_RELEASES)
+        renderLink("/quizzes", "Quizzes", Icon.LIST_ALT)
+        renderLink("/quizzes/create", "Create Quiz", Icon.NEW_RELEASES)
     }
 
     private fun StyledElementBuilder<MListProps>.renderQuizSessionRouteLinks() {
-        renderLink("/sessions", "Sessions", IconName.LINE_STYLE)
+        renderLink("/sessions", "Sessions", Icon.LINE_STYLE)
     }
 
     private fun StyledElementBuilder<MListProps>.renderQuestionRouteLinks() {
-        renderLink("/questions", "Questions", IconName.FORMAT_LIST_NUMBERED)
-        renderLink("/questions/create", "Create Question", IconName.PLAYLIST_ADD)
+        renderLink("/questions", "Questions", Icon.FORMAT_LIST_NUMBERED)
+        renderLink("/questions/create", "Create Question", Icon.PLAYLIST_ADD)
     }
 
-    private fun RBuilder.renderLink(path: String, name: String, iconName: IconName) {
+    private fun RBuilder.renderLink(path: String, name: String, icon: Icon) {
         routeLink(path) { pathInfo ->
             mListItem(
                 button = true,
@@ -130,7 +130,7 @@ class Drawer(props: DrawerProps) : RComponent<DrawerProps, RState>(props) {
                     pathInfo.onClick(it)
                 }
             ) {
-                mListItemIcon(iconName.iconMame)
+                mListItemIcon(icon.iconMame)
                 mListItemText { +name }
             }
         }

@@ -17,7 +17,7 @@ external interface `T$3` {
 }
 
 @JsModule("definitely-typed")
-external open class Renderer {
+open external class Renderer {
     open var rules: `T$3`
     open fun render(tokens: Array<Token>, options: Any, env: Any): String
     open fun renderAttrs(token: Token): String

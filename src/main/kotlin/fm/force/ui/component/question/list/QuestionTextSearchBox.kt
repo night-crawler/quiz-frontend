@@ -68,7 +68,6 @@ val QuestionTextSearchBox = functionalComponent<QuestionTextSearchBoxProps> { pr
         }
     }
 
-
     mTextField("Search", fullWidth = true, defaultValue = criteria.query, margin = MFormControlMargin.none) {
         ref { if (it != null) props.onHeightChange?.invoke(it.clientHeight) }
         attrs {

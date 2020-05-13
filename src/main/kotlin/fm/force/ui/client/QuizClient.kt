@@ -163,10 +163,10 @@ open class QuizClient(
 
     suspend fun getRemainingSessionQuestionCount(sessionId: Long) =
         fetchAdapter.fetch<RemainingSessionQuestionCount>(
-        HttpMethod.GET, prepareUri("quizSessions/$sessionId/remainingCount"), null,
-        headers = jsonHeaders,
-        buildResponse = { request, response -> buildResponse(request, response) }
-    ).count
+            HttpMethod.GET, prepareUri("quizSessions/$sessionId/remainingCount"), null,
+            headers = jsonHeaders,
+            buildResponse = { request, response -> buildResponse(request, response) }
+        ).count
 
     suspend fun patchAnswer(id: Long, patchDTO: AnswerPatchDTO) = fetchAdapter.fetch<AnswerFullDTO>(
         HttpMethod.PATCH, prepareUri("answers/$id"), patchDTO,
@@ -304,9 +304,9 @@ open class QuizClient(
     )
 
     suspend fun logout() = fetchAdapter.fetch(
-        HttpMethod.POST, prepareUri("auth/logout"),  null,
+        HttpMethod.POST, prepareUri("auth/logout"), null,
         headers = jsonHeaders,
-        buildResponse = { _, _  -> Unit }
+        buildResponse = { _, _ -> Unit }
     )
 
     suspend fun importQuiz(importDTO: QuizImportDTO) = fetchAdapter.fetch<QuizFullDTO>(

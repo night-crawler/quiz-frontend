@@ -33,7 +33,6 @@ val QuizSessionScores = functionalComponent<RProps> {
             this.scores = scores
         }
     }
-
 }
 
 fun RBuilder.sessionScores() = child(QuizSessionScores) {
@@ -62,11 +61,14 @@ fun ComputedScore.Companion.of(scores: Collection<ScoreRestrictedDTO>) =
         incorrect = scores.filter { !it.isCorrect }.map { it.count }.sum()
     )
 
-fun <T> ComputedScore.Companion.ofCollection(collection: Collection<ScoreRestrictedDTO>, keySelector: (t: ScoreRestrictedDTO) -> T ) =
+fun <T> ComputedScore.Companion.ofCollection(
+    collection: Collection<ScoreRestrictedDTO>,
+    keySelector: (t: ScoreRestrictedDTO) -> T
+) =
     collection.groupBy(keySelector)
         .entries.map { (tag, scores) ->
-            tag to ComputedScore.of(scores)
-        }
+        tag to ComputedScore.of(scores)
+    }
         .sortedBy { (_, score) -> -score.total * score.correct }
 
 val QuizSessionScoresTable = functionalComponent<SessionScoresTableProps> { props ->
@@ -120,7 +122,7 @@ fun RBuilder.renderComputedScoreRow(name: String, computedScore: ComputedScore) 
         }
         mTableCell {
             mTypography(variant = MTypographyVariant.caption, color = MTypographyColor.textPrimary) {
-                + "Correct: ${computedScore.correct} of ${computedScore.total}"
+                +"Correct: ${computedScore.correct} of ${computedScore.total}"
                 mLinearProgress(
                     value = computedScore.correctPct,
                     variant = MLinearProgressVariant.determinate,
@@ -128,7 +130,7 @@ fun RBuilder.renderComputedScoreRow(name: String, computedScore: ComputedScore) 
                 )
             }
             mTypography(variant = MTypographyVariant.caption, color = MTypographyColor.textSecondary) {
-                + "Incorrect: ${computedScore.incorrect} of ${computedScore.total}"
+                +"Incorrect: ${computedScore.incorrect} of ${computedScore.total}"
                 mLinearProgress(
                     value = computedScore.incorrectPct,
                     variant = MLinearProgressVariant.determinate,

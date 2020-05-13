@@ -6,8 +6,8 @@ import fm.force.ui.component.main.defaultSubmitErrorHandler
 import fm.force.ui.dto.QuestionEditDTO
 import fm.force.ui.dto.toPatchDTO
 import fm.force.ui.dto.validate
-import fm.force.ui.reducer.State
 import fm.force.ui.reducer.action.ThunkForm
+import fm.force.ui.reducer.state.QuizState
 import mu.KotlinLogging
 import redux.RAction
 import redux.WrapperAction
@@ -22,7 +22,7 @@ class EditQuestionThunk(private val editDTO: QuestionEditDTO) : ThunkForm() {
     override suspend fun run(
         originalAction: RAction,
         dispatch: (RAction) -> WrapperAction,
-        getState: () -> State,
+        getState: () -> QuizState,
         @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
         client: QuizClient
     ): WrapperAction {

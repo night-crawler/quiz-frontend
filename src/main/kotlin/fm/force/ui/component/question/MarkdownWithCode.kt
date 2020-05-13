@@ -17,18 +17,18 @@ import sanitize.html.sanitize
 import styled.css
 import styled.styledDiv
 
-
-private val markdownRenderer = mkMarkdown(jsApply<MarkdownIt.Options> {
-    highlight = { str, lang ->
-        val highlightedCode = try {
-            highlight(str, languages.asDynamic()[lang], lang)
-        } catch (ex: Throwable) {
-            escapeHtml(str)
+private val markdownRenderer = mkMarkdown(
+    jsApply<MarkdownIt.Options> {
+        highlight = { str, lang ->
+            val highlightedCode = try {
+                highlight(str, languages.asDynamic()[lang], lang)
+            } catch (ex: Throwable) {
+                escapeHtml(str)
+            }
+            "<pre class='language-$lang'>$highlightedCode</pre>"
         }
-        "<pre class='language-$lang'>$highlightedCode</pre>"
     }
-})
-
+)
 
 private val sanitizeOptions = jsApply<IOptions> {
     allowedTags = arrayOf(
@@ -49,14 +49,15 @@ interface MarkdownWithCodeProps : RProps {
 class MarkdownWithCode(props: MarkdownWithCodeProps) : RComponent<MarkdownWithCodeProps, RState>(props) {
     override fun RBuilder.render() {
         themeContext.Consumer { theme ->
-        val highlightedCode = markdownRenderer.render(props.code)
-        styledDiv {
-            attrs["dangerouslySetInnerHTML"] = InnerHTML(
-                sanitize(highlightedCode, sanitizeOptions)
-            )
-            css { classes.add(theme.palette.type) }
+            val highlightedCode = markdownRenderer.render(props.code)
+            styledDiv {
+                attrs["dangerouslySetInnerHTML"] = InnerHTML(
+                    sanitize(highlightedCode, sanitizeOptions)
+                )
+                css { classes.add(theme.palette.type) }
+            }
         }
-    }}
+    }
 }
 
 fun RBuilder.markdownWithCode(code: String) = child(MarkdownWithCode::class) {

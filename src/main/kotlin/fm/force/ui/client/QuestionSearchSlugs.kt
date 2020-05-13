@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class QuestionSearchSlugs(
     val tags: String = "",
-    val topics: String =""
+    val topics: String = ""
 ) {
     companion object
 }
@@ -17,8 +17,10 @@ fun QuestionSearchSlugs.Companion.fromQueryString(rawString: String): QuestionSe
     return QuizJson.jsonX.parse(serializer(), s)
 }
 
-val QuestionSearchSlugs.cleanTags get() =
-    tags.split(",").map { it.trim() }.filterNot { it.isEmpty() }
+val QuestionSearchSlugs.cleanTags
+    get() =
+        tags.split(",").map { it.trim() }.filterNot { it.isEmpty() }
 
-val QuestionSearchSlugs.cleanTopics get() =
-    topics.split(",").map { it.trim() }.filterNot { it.isEmpty() }
+val QuestionSearchSlugs.cleanTopics
+    get() =
+        topics.split(",").map { it.trim() }.filterNot { it.isEmpty() }

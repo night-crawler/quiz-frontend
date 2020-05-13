@@ -5,13 +5,11 @@ import fm.force.ui.client.dto.LoginRequestDTO
 import fm.force.ui.client.dto.RegisterRequestDTO
 import fm.force.ui.client.dto.RegisterResponseDTO
 import fm.force.ui.component.main.defaultSubmitErrorHandler
-import fm.force.ui.reducer.State
 import fm.force.ui.reducer.action.*
-
+import fm.force.ui.reducer.state.QuizState
+import react.router.connected.push
 import redux.RAction
 import redux.WrapperAction
-import react.router.connected.push
-
 
 class RegisterStart : RAction
 
@@ -23,7 +21,7 @@ class RegisterThunk(private val registerRequestDTO: RegisterRequestDTO) : ThunkF
     override suspend fun run(
         originalAction: RAction,
         dispatch: (RAction) -> WrapperAction,
-        getState: () -> State,
+        getState: () -> QuizState,
         @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
         client: QuizClient
     ): WrapperAction {

@@ -2,8 +2,10 @@ package fm.force.ui.component
 
 import com.ccfraser.muirwik.components.button.mButton
 import com.ccfraser.muirwik.components.button.mButtonGroup
+import com.ccfraser.muirwik.components.button.mIconButton
 import com.ccfraser.muirwik.components.list.mList
 import com.ccfraser.muirwik.components.list.mListItem
+import com.ccfraser.muirwik.components.list.mListItemSecondaryAction
 import com.ccfraser.muirwik.components.mTextField
 import com.ccfraser.muirwik.components.targetInputValue
 import fm.force.quiz.common.dto.DifficultyScaleFullDTO
@@ -14,8 +16,12 @@ import fm.force.ui.component.field.DifficultyScalesAutocompleteField
 import fm.force.ui.component.field.TagsAutocompleteField
 import fm.force.ui.component.field.TopicsAutocompleteField
 import fm.force.ui.hook.useRouterMatchParamsId
+import fm.force.ui.util.Icon
 import fm.force.ui.util.jsApply
-import react.*
+import react.RProps
+import react.child
+import react.functionalComponent
+import react.useEffect
 
 val SENTINEL = listOf(null)
 
@@ -30,7 +36,9 @@ interface QuizComposerProps : RProps {
     var onDifficultyScaleChanged: (scale: DifficultyScaleFullDTO) -> Unit
     var difficultyScale: DifficultyScaleFullDTO?
     var onTitleChanged: (title: String) -> Unit
+    var onClear: (Any) -> Unit
     var onSave: (Any) -> Unit
+    var onDeleteQuestion: (question: QuestionFullDTO) -> Unit
 }
 
 val QuizComposer = functionalComponent<QuizComposerProps> { props ->
@@ -91,12 +99,17 @@ val QuizComposer = functionalComponent<QuizComposerProps> { props ->
     }
 
     mList {
-        props.questions.forEach {
-            mListItem(primaryText = it.title, secondaryText = it.text)
+        props.questions.forEach { question ->
+            mListItem(primaryText = question.title, secondaryText = question.text) {
+                mListItemSecondaryAction {
+                    mIconButton(Icon.DELETE.iconMame, onClick = { props.onDeleteQuestion(question) })
+                }
+            }
         }
     }
 
     mButtonGroup(fullWidth = true) {
+        mButton("Clear", onClick = props.onClear)
         mButton("Save", onClick = props.onSave)
     }
 }

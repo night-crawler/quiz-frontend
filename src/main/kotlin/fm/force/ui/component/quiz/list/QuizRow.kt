@@ -14,7 +14,7 @@ import fm.force.quiz.common.dto.QuizFullDTO
 import fm.force.ui.component.main.confirmDeleteDialog
 import fm.force.ui.component.main.iconMenu
 import fm.force.ui.component.main.routeLink
-import fm.force.ui.util.IconName
+import fm.force.ui.util.Icon
 import fm.force.ui.util.treeIterator
 import kotlin.js.Date
 import kotlinx.css.marginBottom
@@ -73,7 +73,7 @@ class QuizRow(props: QuizRowProps) : RComponent<QuizRowProps, RState>(props) {
                 routeLink("/quizzes/${quiz.id}/preview") {
                     mIconButton(
                         color = MColor.primary,
-                        iconName = IconName.DIRECTIONS_RUN.iconMame,
+                        iconName = Icon.DIRECTIONS_RUN.iconMame,
                         onClick = it.onClick
                     ) {
                         +"Start Quiz Session"
@@ -98,12 +98,12 @@ class QuizRow(props: QuizRowProps) : RComponent<QuizRowProps, RState>(props) {
     }
 
     private fun StyledElementBuilder<MCardHeaderProps>.renderAction(quiz: QuizFullDTO) =
-        iconMenu(IconName.MORE_VERT.iconMame, shouldClose = ::shouldCloseMenu) {
+        iconMenu(Icon.MORE_VERT.iconMame, shouldClose = ::shouldCloseMenu) {
             routeLink("/quizzes/${quiz.id}/edit") {
-                mMenuItemWithIcon(IconName.EDIT.iconMame, "Edit", onClick = it.onClick)
+                mMenuItemWithIcon(Icon.EDIT.iconMame, "Edit", onClick = it.onClick)
             }
             routeLink("/quizzes/${quiz.id}/compose") {
-                mMenuItemWithIcon(IconName.COMPARE.iconMame, "Compose", onClick = it.onClick)
+                mMenuItemWithIcon(Icon.COMPARE.iconMame, "Compose", onClick = it.onClick)
             }
             confirmDeleteDialog(
                 dialogRef = { dialogRef = findDOMNode(it) },
@@ -114,7 +114,7 @@ class QuizRow(props: QuizRowProps) : RComponent<QuizRowProps, RState>(props) {
                 onConfirm = { handleConfirmDelete(quiz) }
             ) { setIsOpen ->
                 mMenuItemWithIcon(
-                    IconName.REMOVE.iconMame, "Delete",
+                    Icon.REMOVE.iconMame, "Delete",
                     onClick = {
                         setIsOpen(true)
                     }

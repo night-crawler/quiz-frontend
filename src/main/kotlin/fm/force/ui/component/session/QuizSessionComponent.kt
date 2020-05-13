@@ -36,7 +36,6 @@ interface QuizSessionComponentProps : RProps {
     var goLastUnanswered: (Any) -> Unit
 }
 
-
 val QuizSessionComponent = functionalComponent<QuizSessionComponentProps> { props ->
     val sessionId = useRouterMatchParamsId()
 
@@ -123,6 +122,7 @@ val ReportButton = functionalComponent<ReportButtonProps> { props ->
         }
     }
 }
+
 fun RBuilder.reportButton(sessionId: Long) = child(ReportButton) {
     attrs {
         this.sessionId = sessionId

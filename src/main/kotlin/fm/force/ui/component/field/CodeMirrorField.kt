@@ -34,7 +34,6 @@ val CodeMirrorField = functionalComponent<WrappedCodeMirrorFieldProps> { props -
     }
 
     props.meta.error?.let { fieldErrors(it.unsafeCast<List<FieldError>>()) }
-
 }
 
 interface CodeMirrorFieldComponentProps : RProps {
@@ -44,7 +43,7 @@ interface CodeMirrorFieldComponentProps : RProps {
     var onChange: (String) -> Unit
 }
 
-val qwe = functionalComponent<CodeMirrorFieldComponentProps> {props ->
+val qwe = functionalComponent<CodeMirrorFieldComponentProps> { props ->
     var state by UseState(props.value)
     val debouncedText = useDebounce(state, 500)
 
@@ -81,7 +80,8 @@ val qwe = functionalComponent<CodeMirrorFieldComponentProps> {props ->
 }
 
 fun RBuilder.codeMirrorFieldComponent(
-    label: String, mode: CodeLanguage,
+    label: String,
+    mode: CodeLanguage,
     value: String,
     onChange: (String) -> Unit
 ) = child(qwe) {

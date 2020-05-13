@@ -16,15 +16,15 @@ interface SyntaxHighlighterProps : RProps {
 class SyntaxHighlighter(props: SyntaxHighlighterProps) : RComponent<SyntaxHighlighterProps, RState>(props) {
     override fun RBuilder.render() {
         themeContext.Consumer { theme ->
-        child(PrismSyntaxHighlighter::class) {
-            attrs {
-                this.asDynamic().children = props.code
-                language = props.language
-                style = theme.syntaxHighlightStyle
+            child(PrismSyntaxHighlighter::class) {
+                attrs {
+                    this.asDynamic().children = props.code
+                    language = props.language
+                    style = theme.syntaxHighlightStyle
+                }
             }
         }
-    }}
-
+    }
 }
 
 fun RBuilder.syntaxHighlighter(code: String, language: String) {

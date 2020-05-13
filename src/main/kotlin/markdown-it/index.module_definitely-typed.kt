@@ -108,9 +108,8 @@ external interface `T$0` {
     fun normalizeReference(str: String): String
 }
 
-
 @JsModule("markdown-it")
-external fun mkMarkdown() : MarkdownIt
+external fun mkMarkdown(): MarkdownIt
 
 @JsModule("markdown-it")
 external fun mkMarkdown(presetName: String, options: MarkdownIt.Options = definedExternally): MarkdownIt

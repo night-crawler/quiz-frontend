@@ -79,7 +79,6 @@ val reduxLoginForm = reduxForm(
     }
 )(AuthForm::class.js)
 
-
 val reduxRegisterForm = reduxForm(
     jsApply<ConfigProps<RegisterRequestDTO, InjectedFormProps<RegisterRequestDTO, RProps, Any>, Any>> {
         initialValues = RegisterRequestDTO("", "")

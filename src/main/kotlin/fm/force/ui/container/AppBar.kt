@@ -3,10 +3,10 @@ package fm.force.ui.container
 import fm.force.ui.client.dto.UserFullDTO
 import fm.force.ui.component.main.AppBar
 import fm.force.ui.component.main.AppBarProps
-import fm.force.ui.reducer.State
 import fm.force.ui.reducer.action.DrawerOpenToggle
-import fm.force.ui.reducer.action.auth.LogoutThunk
 import fm.force.ui.reducer.action.SetThemeType
+import fm.force.ui.reducer.action.auth.LogoutThunk
+import fm.force.ui.reducer.state.QuizState
 import react.RClass
 import react.RProps
 import react.invoke
@@ -30,7 +30,7 @@ private interface AppBarDispatchProps : RProps {
     var logout: () -> Unit
 }
 
-private val mapStateToProps: AppBarStateProps.(State, AppBarConnectedProps) -> Unit = { state, _ ->
+private val mapStateToProps: AppBarStateProps.(QuizState, AppBarConnectedProps) -> Unit = { state, _ ->
     currentUser = state.currentUser
     appTitle = state.appPreferences.appTitle
     activeViewDisplayName = state.appPreferences.activeViewDisplayName
@@ -47,7 +47,7 @@ private val mapDispatchToProps: AppBarDispatchProps.((RAction) -> WrapperAction,
     }
 
 val appBar: RClass<AppBarConnectedProps> =
-    rConnect<State, RAction, WrapperAction, AppBarConnectedProps, AppBarStateProps, AppBarDispatchProps, AppBarProps>(
+    rConnect<QuizState, RAction, WrapperAction, AppBarConnectedProps, AppBarStateProps, AppBarDispatchProps, AppBarProps>(
         mapStateToProps,
         mapDispatchToProps
     )(AppBar::class.rClass)

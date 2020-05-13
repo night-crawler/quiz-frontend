@@ -8,7 +8,7 @@ import com.ccfraser.muirwik.components.mIcon
 import com.ccfraser.muirwik.components.mTypography
 import com.ccfraser.muirwik.components.themeContext
 import fm.force.quiz.common.dto.QuestionFullDTO
-import fm.force.ui.util.IconName
+import fm.force.ui.util.Icon
 import kotlinx.css.Color
 import kotlinx.css.backgroundColor
 import react.RBuilder
@@ -33,9 +33,9 @@ fun RBuilder.renderQuestionAnswers(question: QuestionFullDTO) {
                     +answer.text
                     mListItemSecondaryAction {
                         if (answer.id in correctAnswerIds)
-                            mIcon(IconName.CHECK.iconMame)
+                            mIcon(Icon.CHECK.iconMame)
                         else
-                            mIcon(IconName.REMOVE_CIRCLE_OUTLINE.iconMame)
+                            mIcon(Icon.REMOVE_CIRCLE_OUTLINE.iconMame)
                     }
                 }
             }

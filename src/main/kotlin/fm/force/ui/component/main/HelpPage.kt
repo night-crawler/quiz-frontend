@@ -10,23 +10,21 @@ import com.ccfraser.muirwik.components.mTypography
 import fm.force.ui.component.misc.readOnlyQuestionCode
 import fm.force.ui.component.question.markdownWithCode
 import fm.force.ui.extension.CodeLanguage
-import kotlinx.css.pct
-import kotlinx.css.width
 import react.RBuilder
 import react.RComponent
 import react.RProps
 import react.RState
-import styled.css
 
 class HelpPage(props: RProps) : RComponent<RProps, RState>(props) {
-    private val codeSample = """
+    private val codeSample =
+        """
         ## This is a header
         ```kotlin
         import fm.force.fun
         
         fun qwe() {}
         ```
-    """.trimIndent()
+        """.trimIndent()
 
     override fun RBuilder.render() {
         mCard {

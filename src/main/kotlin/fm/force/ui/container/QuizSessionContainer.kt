@@ -6,8 +6,8 @@ import fm.force.quiz.common.dto.QuizSessionQuestionAnswerRestrictedDTO
 import fm.force.quiz.common.dto.QuizSessionQuestionRestrictedDTO
 import fm.force.ui.component.session.QuizSessionComponent
 import fm.force.ui.component.session.QuizSessionComponentProps
-import fm.force.ui.reducer.State
 import fm.force.ui.reducer.action.session.*
+import fm.force.ui.reducer.state.QuizState
 import react.RClass
 import react.RProps
 import react.invoke
@@ -38,42 +38,46 @@ private interface QuizSessionContainerDispatchProps : RProps {
     var goLastUnanswered: (Any) -> Unit
 }
 
-private val mapStateToProps: QuizSessionContainerStateProps.(State, QuizSessionContainerConnectedProps) -> Unit = { state, _ ->
-    currentQuestion = state.quizSessionState.questions.getOrNull(state.quizSessionState.seq)
-    totalQuestions = state.quizSessionState.questions.size
-    seq = state.quizSessionState.seq
-    session = state.quizSessionState.session
-    quiz = state.quizSessionState.quiz
-    remainingCount = state.quizSessionState.remainingCount
+private val mapStateToProps: QuizSessionContainerStateProps.(QuizState, QuizSessionContainerConnectedProps) -> Unit =
+    { state, _ ->
+        currentQuestion = state.quizSessionState.questions.getOrNull(state.quizSessionState.seq)
+        totalQuestions = state.quizSessionState.questions.size
+        seq = state.quizSessionState.seq
+        session = state.quizSessionState.session
+        quiz = state.quizSessionState.quiz
+        remainingCount = state.quizSessionState.remainingCount
 
-    isSubmitted = currentQuestion?.id in state.quizSessionState.submittedQuestions
+        isSubmitted = currentQuestion?.id in state.quizSessionState.submittedQuestions
 
-    checkedAnswers = currentQuestion?.let {
-        state.quizSessionState.answerMap[it.id]
-    } ?: setOf()
-    correctAnswers = currentQuestion?.let {
-        state.quizSessionState.correctAnswerMap[it.id]
-    } ?: setOf()
-}
+        checkedAnswers = currentQuestion?.let {
+            state.quizSessionState.answerMap[it.id]
+        } ?: setOf()
+        correctAnswers = currentQuestion?.let {
+            state.quizSessionState.correctAnswerMap[it.id]
+        } ?: setOf()
+    }
 
-private val mapDispatchToProps: QuizSessionContainerDispatchProps.((RAction) -> WrapperAction, QuizSessionContainerConnectedProps) -> Unit =
+private val mapDispatchToProps: QuizSessionContainerDispatchProps.(
+    (RAction) -> WrapperAction,
+    QuizSessionContainerConnectedProps
+) -> Unit =
     { dispatch, _ ->
         bootstrap = { sessionId -> dispatch(SessionBootstrapThunk(sessionId)) }
         setSeq = { seq ->
-            dispatch(SessionSequenceSet(seq))
+            dispatch(SessionSetSequence(seq))
         }
         toggleAnswer = { question, answer ->
-            dispatch(SessionAnswerToggled(question, answer))
+            dispatch(SessionAnswerToggle(question, answer))
         }
         doAnswer = { session, question, answerIds ->
             dispatch(SessionDoAnswerThunk(session, question, answerIds))
         }
-        goFirstUnanswered = { dispatch(GoFirstUnanswered()) }
-        goLastUnanswered = { dispatch(GoLastUnanswered()) }
+        goFirstUnanswered = { dispatch(SessionGoFirstUnanswered()) }
+        goLastUnanswered = { dispatch(SessionGoLastUnanswered()) }
     }
 
 val sessionUI: RClass<QuizSessionContainerConnectedProps> =
-    rConnect<State, RAction, WrapperAction, QuizSessionContainerConnectedProps, QuizSessionContainerStateProps, QuizSessionContainerDispatchProps, QuizSessionComponentProps>(
+    rConnect<QuizState, RAction, WrapperAction, QuizSessionContainerConnectedProps, QuizSessionContainerStateProps, QuizSessionContainerDispatchProps, QuizSessionComponentProps>(
         mapStateToProps,
         mapDispatchToProps
     )(QuizSessionComponent.unsafeCast<RClass<QuizSessionComponentProps>>())

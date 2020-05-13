@@ -10,7 +10,7 @@ import com.ccfraser.muirwik.components.card.mCardHeader
 import com.ccfraser.muirwik.components.mAvatar
 import com.ccfraser.muirwik.components.mIcon
 import fm.force.quiz.common.dto.QuizSessionFullDTO
-import fm.force.ui.util.IconName
+import fm.force.ui.util.Icon
 import fm.force.ui.util.ago
 import kotlinx.css.marginBottom
 import kotlinx.css.px
@@ -69,11 +69,11 @@ class QuizSessionRow(props: QuizSessionRowProps) : RComponent<QuizSessionRowProp
                 onClick = props.onContinue
             ) {
                 if (props.session.isCancelled || props.session.isCompleted) {
-                    mIcon(IconName.REMOVE_RED_EYE.iconMame, MIconColor.inherit)
+                    mIcon(Icon.REMOVE_RED_EYE.iconMame, MIconColor.inherit)
                 } else {
-                    mIcon(IconName.NAVIGATE_NEXT.iconMame, MIconColor.inherit)
-                    mIcon(IconName.NAVIGATE_NEXT.iconMame, MIconColor.inherit)
-                    mIcon(IconName.NAVIGATE_NEXT.iconMame, MIconColor.inherit)
+                    mIcon(Icon.NAVIGATE_NEXT.iconMame, MIconColor.inherit)
+                    mIcon(Icon.NAVIGATE_NEXT.iconMame, MIconColor.inherit)
+                    mIcon(Icon.NAVIGATE_NEXT.iconMame, MIconColor.inherit)
                 }
             }
 
@@ -84,7 +84,7 @@ class QuizSessionRow(props: QuizSessionRowProps) : RComponent<QuizSessionRowProp
                     variant = MButtonVariant.outlined,
                     onClick = props.onShowReport
                 ) {
-                    attrs { endIcon = RBuilder().mIcon(IconName.REPORT.iconMame, MIconColor.inherit) }
+                    attrs { endIcon = RBuilder().mIcon(Icon.REPORT.iconMame, MIconColor.inherit) }
                 }
             }
 
@@ -95,7 +95,7 @@ class QuizSessionRow(props: QuizSessionRowProps) : RComponent<QuizSessionRowProp
                     variant = MButtonVariant.outlined,
                     onClick = props.onCancel
                 ) {
-                    attrs { endIcon = RBuilder().mIcon(IconName.CANCEL.iconMame, MIconColor.inherit) }
+                    attrs { endIcon = RBuilder().mIcon(Icon.CANCEL.iconMame, MIconColor.inherit) }
                 }
                 mButton(
                     caption = "Complete",
@@ -103,7 +103,7 @@ class QuizSessionRow(props: QuizSessionRowProps) : RComponent<QuizSessionRowProp
                     variant = MButtonVariant.outlined,
                     onClick = props.onComplete
                 ) {
-                    attrs { endIcon = RBuilder().mIcon(IconName.CANCEL_SCHEDULE_SEND.iconMame, MIconColor.inherit) }
+                    attrs { endIcon = RBuilder().mIcon(Icon.CANCEL_SCHEDULE_SEND.iconMame, MIconColor.inherit) }
                 }
             }
         }

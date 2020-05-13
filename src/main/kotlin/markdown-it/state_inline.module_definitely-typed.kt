@@ -8,9 +8,7 @@
 
 package markdown.it
 
-external interface `T$1` {
-
-}
+external interface `T$1`
 
 @Suppress("NOTHING_TO_INLINE")
 inline operator fun `T$1`.get(start: Number): Number? = asDynamic()[start]

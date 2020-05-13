@@ -1,13 +1,13 @@
 package fm.force.ui.reducer.action.quizcomposer
 
-import fm.force.ui.reducer.QuizComposer
+import fm.force.quiz.common.dto.QuizPatchDTO
+import fm.force.ui.dto.QuizComposerDTO
 
-fun QuizComposer.Companion.of() =
-    QuizComposer(
-        id = 0,
-        questions = listOf(),
-        tags = listOf(),
-        topics = listOf(),
-        title = "",
-        difficultyScale = null
+fun QuizComposerDTO.toPatchDTO() =
+    QuizPatchDTO(
+        title = title,
+        questions = questions.map { it.id },
+        topics = topics.map { it.id }.toSet(),
+        tags = tags.map { it.id }.toSet(),
+        difficultyScale = difficultyScale?.id
     )

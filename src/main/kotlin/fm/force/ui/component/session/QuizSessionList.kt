@@ -21,7 +21,6 @@ import kotlinx.coroutines.promise
 import react.*
 import react.dom.title
 import react.router.connected.push
-import redux.RAction
 
 val QuizSessionList = functionalComponent<RProps> { props ->
     val (sessionPage, setSessionPage) = useState<PageWrapper<QuizSessionFullDTO>?>(null)

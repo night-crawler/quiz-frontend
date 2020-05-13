@@ -34,7 +34,7 @@ class SnackList(props: SnackListProps) : RComponent<SnackListProps, RState>(prop
 
         mSnackbar(
             altBuilder.div {
-                mIcon(snack.iconName.iconMame, fontSize = MIconFontSize.small)
+                mIcon(snack.icon.iconMame, fontSize = MIconFontSize.small)
                 styledSpan {
                     css {
                         verticalAlign = VerticalAlign.top

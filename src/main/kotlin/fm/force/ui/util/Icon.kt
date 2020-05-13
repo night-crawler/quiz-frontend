@@ -6,7 +6,7 @@ package fm.force.ui.util
  * @property iconMame
  */
 @Suppress("unused")
-enum class IconName(val iconMame: String) {
+enum class Icon(val iconMame: String) {
     PERSON_OUTLINE("person_outline"),
     D3_ROTATION("3d_rotation"),
     ACCESSIBILITY("accessibility"),

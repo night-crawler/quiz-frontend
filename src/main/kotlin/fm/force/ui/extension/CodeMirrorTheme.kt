@@ -4,7 +4,6 @@ import com.ccfraser.muirwik.components.styles.Theme
 import react.syntax.highlighter.style.prism.darculaPrismStyle
 import react.syntax.highlighter.style.prism.prismColorsStyle
 
-
 val Theme.codeMirrorTheme
     get() = when (palette.type) {
         "light" -> "idea"

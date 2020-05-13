@@ -1,7 +1,7 @@
 package fm.force.ui.component.main
 
 import com.ccfraser.muirwik.components.*
-import fm.force.ui.util.IconName
+import fm.force.ui.util.Icon
 import kotlinx.css.*
 import react.RBuilder
 import react.RComponent
@@ -42,7 +42,7 @@ class NotFound(props: RProps) : RComponent<RProps, RState>(props) {
                 +"It's likely this route is quite outdated. But still can you enjoy Material Icons!"
             }
 
-            IconName.values().map {
+            Icon.values().map {
                 mIcon(iconName = it.iconMame, fontSize = MIconFontSize.small)
             }
         }

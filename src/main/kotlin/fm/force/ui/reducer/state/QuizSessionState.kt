@@ -1,4 +1,4 @@
-package fm.force.ui.reducer
+package fm.force.ui.reducer.state
 
 import fm.force.quiz.common.dto.DifficultyScaleFullDTO
 import fm.force.quiz.common.dto.QuizRestrictedDTO
@@ -18,3 +18,16 @@ data class QuizSessionState(
 ) {
     companion object
 }
+
+fun QuizSessionState.Companion.of() =
+    QuizSessionState(
+        seq = 0,
+        questions = listOf(),
+        difficultyScale = null,
+        session = null,
+        answerMap = mapOf(),
+        quiz = null,
+        submittedQuestions = setOf(),
+        correctAnswerMap = mapOf(),
+        remainingCount = 0
+    )

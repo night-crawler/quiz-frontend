@@ -14,7 +14,6 @@ import react.useState
 import redux.form.WrappedFieldProps
 import redux.form.getArrayValue
 
-
 interface TagsAutocompleteFieldProps : WrappedFieldProps {
     var label: String
 }

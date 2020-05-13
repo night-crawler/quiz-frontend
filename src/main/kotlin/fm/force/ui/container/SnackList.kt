@@ -2,9 +2,9 @@ package fm.force.ui.container
 
 import fm.force.ui.component.main.SnackList
 import fm.force.ui.component.main.SnackListProps
-import fm.force.ui.reducer.State
 import fm.force.ui.reducer.action.CloseSnack
 import fm.force.ui.reducer.action.Snack
+import fm.force.ui.reducer.state.QuizState
 import react.RClass
 import react.RProps
 import react.invoke
@@ -23,7 +23,7 @@ private interface SnackListDispatchProps : RProps {
     var onCloseSnack: (key: String) -> Unit
 }
 
-private val mapStateToProps: SnackListStateProps.(State, ConnectedSnackListProps) -> Unit = { state, props ->
+private val mapStateToProps: SnackListStateProps.(QuizState, ConnectedSnackListProps) -> Unit = { state, props ->
     snacks = state.snacks
 }
 
@@ -33,7 +33,7 @@ private val mapDispatchToProps: SnackListDispatchProps.((RAction) -> WrapperActi
     }
 
 val snackList: RClass<ConnectedSnackListProps> =
-    rConnect<State, RAction, WrapperAction, ConnectedSnackListProps, SnackListStateProps, SnackListDispatchProps, SnackListProps>(
+    rConnect<QuizState, RAction, WrapperAction, ConnectedSnackListProps, SnackListStateProps, SnackListDispatchProps, SnackListProps>(
         mapStateToProps,
         mapDispatchToProps
     )(SnackList::class.rClass)

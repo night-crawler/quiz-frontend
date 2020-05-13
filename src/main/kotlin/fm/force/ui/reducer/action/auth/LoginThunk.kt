@@ -4,9 +4,9 @@ import fm.force.ui.client.QuizClient
 import fm.force.ui.client.dto.JwtResponseTokensDTO
 import fm.force.ui.client.dto.LoginRequestDTO
 import fm.force.ui.component.main.defaultSubmitErrorHandler
-import fm.force.ui.reducer.State
 import fm.force.ui.reducer.action.BootstrapThunk
 import fm.force.ui.reducer.action.ThunkForm
+import fm.force.ui.reducer.state.QuizState
 import react.router.connected.push
 import redux.RAction
 import redux.WrapperAction
@@ -21,7 +21,7 @@ class LoginThunk(private val loginRequestDTO: LoginRequestDTO) : ThunkForm() {
     override suspend fun run(
         originalAction: RAction,
         dispatch: (RAction) -> WrapperAction,
-        getState: () -> State,
+        getState: () -> QuizState,
         @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
         client: QuizClient
     ): WrapperAction {
