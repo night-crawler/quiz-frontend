@@ -3,7 +3,6 @@ package fm.force.ui.component.difficultyscale.list
 import com.ccfraser.muirwik.components.table.mTablePagination
 import com.ccfraser.muirwik.components.targetValue
 import fm.force.quiz.common.dto.DifficultyScaleFullDTO
-import fm.force.ui.ReduxStore
 import fm.force.ui.client.DefaultSearchCriteria
 import fm.force.ui.client.dto.PageWrapper
 import fm.force.ui.client.fromQueryString
@@ -13,11 +12,10 @@ import fm.force.ui.component.main.loadingCard
 import fm.force.ui.component.main.noElements
 import fm.force.ui.component.main.textSearchBox
 import fm.force.ui.hook.UseState
+import fm.force.ui.hook.callApi
 import fm.force.ui.hook.useClient
 import fm.force.ui.hook.useDispatch
 import fm.force.ui.util.RouterContext
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.promise
 import react.*
 import react.dom.title
 import react.router.connected.push
@@ -60,9 +58,9 @@ val DifficultyScaleList = functionalComponent<RProps> {
                 key = "difficultyScale:${difficultyScale.id}"
                 this.difficultyScale = difficultyScale
                 onDelete = {
-                    GlobalScope.promise {
-                        ReduxStore.DEFAULT.client.deleteDifficultyScale(it.id)
-                        ReduxStore.DEFAULT.client.findDifficultyScales(searchCriteria).apply(setDifficultyScalePage)
+                    callApi {
+                        deleteDifficultyScale(it.id)
+                        findDifficultyScales(searchCriteria).apply(setDifficultyScalePage)
                     }
                 }
             }

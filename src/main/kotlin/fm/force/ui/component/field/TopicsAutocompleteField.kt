@@ -3,12 +3,10 @@ package fm.force.ui.component.field
 import com.ccfraser.muirwik.components.mTextField
 import fm.force.quiz.common.dto.TopicFullDTO
 import fm.force.quiz.common.dto.TopicPatchDTO
-import fm.force.ui.ReduxStore
+import fm.force.ui.hook.callApi
 import fm.force.ui.hook.useClient
 import fm.force.ui.hook.useDebounce
 import kotlinext.js.Object
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.promise
 import mui.lab.labAutocompleteMultipleField
 import react.dom.span
 import react.functionalComponent
@@ -39,9 +37,8 @@ val TopicsAutocompleteField = functionalComponent<TopicsAutocompleteFieldProps> 
             getOptionLabel = { it.title }
             onChange = { _, value, reason, _ ->
                 if (reason == "create-option") {
-                    GlobalScope.promise {
-                        val topic = ReduxStore.DEFAULT.client
-                            .getOrCreateTopic(TopicPatchDTO(searchText.trim()))
+                    callApi {
+                        val topic = getOrCreateTopic(TopicPatchDTO(searchText.trim()))
                         props.input.onChange(props.input.getArrayValue<TopicFullDTO>() + listOf(topic))
                         Unit
                     }

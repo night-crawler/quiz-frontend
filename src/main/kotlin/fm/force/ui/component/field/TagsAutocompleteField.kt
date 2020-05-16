@@ -2,11 +2,9 @@ package fm.force.ui.component.field
 
 import fm.force.quiz.common.dto.TagFullDTO
 import fm.force.quiz.common.dto.TagPatchDTO
-import fm.force.ui.ReduxStore
+import fm.force.ui.hook.callApi
 import fm.force.ui.hook.useClient
 import fm.force.ui.hook.useDebounce
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.promise
 import mui.lab.labAutocompleteMultipleField
 import react.dom.span
 import react.functionalComponent
@@ -37,8 +35,8 @@ val TagsAutocompleteField = functionalComponent<TagsAutocompleteFieldProps> { pr
             getOptionLabel = { it.name }
             onChange = { _, value, reason, _ ->
                 if (reason == "create-option") {
-                    GlobalScope.promise {
-                        val tag = ReduxStore.DEFAULT.client.getOrCreateTag(TagPatchDTO(searchText.trim()))
+                    callApi {
+                        val tag = getOrCreateTag(TagPatchDTO(searchText.trim()))
                         props.input.onChange(props.input.getArrayValue<TagFullDTO>() + listOf(tag))
                         Unit
                     }

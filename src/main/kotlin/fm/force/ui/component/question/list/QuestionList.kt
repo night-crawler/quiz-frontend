@@ -6,7 +6,6 @@ import com.ccfraser.muirwik.components.mTypography
 import com.ccfraser.muirwik.components.table.mTablePagination
 import com.ccfraser.muirwik.components.targetValue
 import fm.force.quiz.common.dto.QuestionFullDTO
-import fm.force.ui.ReduxStore
 import fm.force.ui.client.dto.PageWrapper
 import fm.force.ui.client.toQueryString
 import fm.force.ui.component.main.helmet
@@ -14,10 +13,9 @@ import fm.force.ui.component.main.loadingCard
 import fm.force.ui.component.main.noElements
 import fm.force.ui.container.questionRow
 import fm.force.ui.hook.UseState
+import fm.force.ui.hook.callApi
 import fm.force.ui.hook.useClient
 import fm.force.ui.hook.useDispatch
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.promise
 import react.*
 import react.dom.title
 import react.router.connected.push
@@ -74,9 +72,9 @@ val QuestionList = functionalComponent<QuestionListProps> { props ->
                 key = "question:${question.id}"
                 this.question = question
                 onDelete = {
-                    GlobalScope.promise {
-                        ReduxStore.DEFAULT.client.deleteQuestion(it.id)
-                        ReduxStore.DEFAULT.client.findQuestions(searchCriteria!!).apply(setQuestionPage)
+                    callApi {
+                        deleteQuestion(it.id)
+                        findQuestions(searchCriteria!!).apply(setQuestionPage)
                     }
                 }
             }

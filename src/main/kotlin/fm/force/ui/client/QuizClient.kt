@@ -81,6 +81,18 @@ open class QuizClient(
         buildResponse = { _, _ -> Unit }
     )
 
+    suspend fun deleteTag(id: Long) = fetchAdapter.fetch(
+        HttpMethod.DELETE, prepareUri("tags/$id"), null,
+        headers = jsonHeaders,
+        buildResponse = { _, _ -> Unit }
+    )
+
+    suspend fun deleteTopic(id: Long) = fetchAdapter.fetch(
+        HttpMethod.DELETE, prepareUri("topics/$id"), null,
+        headers = jsonHeaders,
+        buildResponse = { _, _ -> Unit }
+    )
+
     suspend fun deleteQuiz(id: Long) = fetchAdapter.fetch(
         HttpMethod.DELETE, prepareUri("quizzes/$id"), null,
         headers = jsonHeaders,
@@ -101,6 +113,18 @@ open class QuizClient(
 
     suspend fun patchQuiz(id: Long, patchDTO: QuizPatchDTO) = fetchAdapter.fetch<QuizFullDTO>(
         HttpMethod.PATCH, prepareUri("quizzes/$id"), patchDTO,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
+    suspend fun patchTag(id: Long, patchDTO: TagPatchDTO) = fetchAdapter.fetch<TagFullDTO>(
+        HttpMethod.PATCH, prepareUri("tags/$id"), patchDTO,
+        headers = jsonHeaders,
+        buildResponse = { request, response -> buildResponse(request, response) }
+    )
+
+    suspend fun patchTopic(id: Long, patchDTO: TopicPatchDTO) = fetchAdapter.fetch<TopicFullDTO>(
+        HttpMethod.PATCH, prepareUri("topics/$id"), patchDTO,
         headers = jsonHeaders,
         buildResponse = { request, response -> buildResponse(request, response) }
     )
@@ -267,6 +291,22 @@ open class QuizClient(
         val params = mapOf("query" to text, "sort" to "name", "slugs" to slugs)
         return fetchAdapter.fetch<PageDTO>(
             HttpMethod.GET, prepareUri("tags", params = params), null,
+            headers = jsonHeaders,
+            buildResponse = { request: Request, response: Response -> buildResponse(request, response) }
+        ).toTypedPage()
+    }
+
+    suspend fun findTags(criteria: DefaultSearchCriteria): PageWrapper<TagFullDTO> {
+        return fetchAdapter.fetch<PageDTO>(
+            HttpMethod.GET, prepareUri("tags", params = criteria.toMap()), null,
+            headers = jsonHeaders,
+            buildResponse = { request: Request, response: Response -> buildResponse(request, response) }
+        ).toTypedPage()
+    }
+
+    suspend fun findTopics(criteria: DefaultSearchCriteria): PageWrapper<TopicFullDTO> {
+        return fetchAdapter.fetch<PageDTO>(
+            HttpMethod.GET, prepareUri("topics", params = criteria.toMap()), null,
             headers = jsonHeaders,
             buildResponse = { request: Request, response: Response -> buildResponse(request, response) }
         ).toTypedPage()

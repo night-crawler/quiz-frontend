@@ -1,8 +1,9 @@
-package fm.force.ui.component.session
+package fm.force.ui.component.tag.list
 
+import com.ccfraser.muirwik.components.list.mList
 import com.ccfraser.muirwik.components.table.mTablePagination
 import com.ccfraser.muirwik.components.targetValue
-import fm.force.quiz.common.dto.QuizSessionFullDTO
+import fm.force.quiz.common.dto.TagFullDTO
 import fm.force.ui.client.DefaultSearchCriteria
 import fm.force.ui.client.dto.PageWrapper
 import fm.force.ui.client.fromQueryString
@@ -20,64 +21,59 @@ import react.*
 import react.dom.title
 import react.router.connected.push
 
-val QuizSessionList = functionalComponent<RProps> {
-    val (sessionPage, setSessionPage) = useState<PageWrapper<QuizSessionFullDTO>?>(null)
+val TagList = functionalComponent<RProps> {
+    val (tagPage, setTagPage) = useState<PageWrapper<TagFullDTO>?>(null)
     val routerContext = useContext(RouterContext)
     val dispatch = useDispatch()
 
     var searchCriteria by UseState(DefaultSearchCriteria.fromQueryString(routerContext.location.search))
 
     useClient(listOf(searchCriteria.hashCode())) {
-        findSessions(searchCriteria).apply(setSessionPage)
+        findTags(searchCriteria).apply(setTagPage)
     }
 
     useEffect(listOf(searchCriteria.hashCode())) {
-        dispatch(push("/sessions?${searchCriteria.toQueryString()}"))
+        dispatch(push("/tags?${searchCriteria.toQueryString()}"))
+        setTagPage(null)
     }
 
-    helmet { title("All sessions") }
+    helmet { title("All tags") }
 
     textSearchBox(
         initialCriteria = searchCriteria,
         onSearchCriteriaChange = { searchCriteria = it.copy(page = 1) }
     )
 
-    if (sessionPage == null) {
+    if (tagPage == null) {
         loadingCard()
         return@functionalComponent
     }
 
-    if (sessionPage.totalElements == 0L) {
+    if (tagPage.totalElements == 0L) {
         noElements()
         return@functionalComponent
     }
 
-    sessionPage.content.forEach { session ->
-        child(QuizSessionRow::class) {
-            attrs {
-                key = "session:${session.id}"
-                this.session = session
-                onContinue = { dispatch(push("/sessions/${session.id}/test")) }
-                onShowReport = { dispatch(push("/sessions/${session.id}/report")) }
-                onCancel = {
-                    callApi {
-                        cancelSession(session.id)
-                        findSessions(searchCriteria).apply(setSessionPage)
-                    }
-                }
-                onComplete = {
-                    callApi {
-                        completeSession(session.id)
-                        findSessions(searchCriteria).apply(setSessionPage)
+    mList {
+        tagPage.content.forEach { tag ->
+            child(TagRow::class) {
+                attrs {
+                    key = "tag:${tag.id}"
+                    this.tag = tag
+                    onDelete = {
+                        callApi {
+                            deleteTag(it.id)
+                            findTags(searchCriteria).apply(setTagPage)
+                        }
                     }
                 }
             }
         }
     }
     mTablePagination(
-        rowsPerPage = sessionPage.pageSize,
+        rowsPerPage = tagPage.pageSize,
         page = searchCriteria.page - 1,
-        count = sessionPage.totalElements.toInt(),
+        count = tagPage.totalElements.toInt(),
         onChangePage = { _, page ->
             searchCriteria = searchCriteria.copy(page = page + 1)
         },
@@ -87,4 +83,4 @@ val QuizSessionList = functionalComponent<RProps> {
     )
 }
 
-fun RBuilder.quizSessionList() = child(QuizSessionList) { }
+fun RBuilder.tagList() = child(TagList) { }

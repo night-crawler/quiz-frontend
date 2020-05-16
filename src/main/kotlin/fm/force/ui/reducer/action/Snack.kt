@@ -5,6 +5,7 @@ import com.ccfraser.muirwik.components.MSnackbarHorizAnchor
 import com.ccfraser.muirwik.components.MSnackbarVertAnchor
 import fm.force.ui.util.Icon
 import redux.RAction
+import redux.WrapperAction
 
 enum class SnackType {
     INFO, WARNING, ERROR
@@ -23,3 +24,5 @@ data class Snack(
 
 class CloseSnack(val key: String) : RAction
 class ShowSnack(val snack: Snack) : RAction
+
+fun Snack.dispatch(dispatch: (RAction) -> WrapperAction) = dispatch(ShowSnack(this))

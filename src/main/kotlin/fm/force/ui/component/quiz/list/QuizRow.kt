@@ -67,17 +67,18 @@ class QuizRow(props: QuizRowProps) : RComponent<QuizRowProps, RState>(props) {
                         }
                     }
                 }
-                mTypography(gutterBottom = true) {
+                mTypography {
                     +"Difficulty Scale: ${quiz.difficultyScale?.name ?: "-"}"
                 }
-                routeLink("/quizzes/${quiz.id}/preview") {
-                    mIconButton(
-                        color = MColor.primary,
-                        iconName = Icon.DIRECTIONS_RUN.iconMame,
-                        onClick = it.onClick
-                    ) {
-                        +"Start Quiz Session"
-                    }
+            }
+
+            routeLink("/quizzes/${quiz.id}/preview") {
+                mIconButton(
+                    color = MColor.primary,
+                    onClick = it.onClick
+                ) {
+                    mIcon(Icon.DIRECTIONS_RUN.iconMame)
+                    +"Start Quiz Session"
                 }
             }
 

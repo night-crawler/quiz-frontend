@@ -3,7 +3,6 @@ package fm.force.ui.component.quiz.list
 import com.ccfraser.muirwik.components.table.mTablePagination
 import com.ccfraser.muirwik.components.targetValue
 import fm.force.quiz.common.dto.QuizFullDTO
-import fm.force.ui.ReduxStore
 import fm.force.ui.client.DefaultSearchCriteria
 import fm.force.ui.client.dto.PageWrapper
 import fm.force.ui.client.fromQueryString
@@ -13,23 +12,22 @@ import fm.force.ui.component.main.loadingCard
 import fm.force.ui.component.main.noElements
 import fm.force.ui.component.main.textSearchBox
 import fm.force.ui.hook.UseState
+import fm.force.ui.hook.callApi
 import fm.force.ui.hook.useClient
 import fm.force.ui.hook.useDispatch
 import fm.force.ui.util.RouterContext
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.promise
 import react.*
 import react.dom.title
 import react.router.connected.push
 
-val QuizList = functionalComponent<RProps> { props ->
+val QuizList = functionalComponent<RProps> {
     val (quizPage, setQuizPage) = useState<PageWrapper<QuizFullDTO>?>(null)
     val routerContext = useContext(RouterContext)
     val dispatch = useDispatch()
 
     var searchCriteria by UseState(DefaultSearchCriteria.fromQueryString(routerContext.location.search))
 
-    useClient {
+    useClient(listOf(searchCriteria.hashCode())) {
         findQuizzes(searchCriteria).apply(setQuizPage)
     }
 
@@ -60,9 +58,9 @@ val QuizList = functionalComponent<RProps> { props ->
                 key = "quiz:${quiz.id}"
                 this.quiz = quiz
                 onDelete = {
-                    GlobalScope.promise {
-                        ReduxStore.DEFAULT.client.deleteQuiz(it.id)
-                        ReduxStore.DEFAULT.client.findQuizzes(searchCriteria).apply(setQuizPage)
+                    callApi {
+                        deleteQuiz(it.id)
+                        findQuizzes(searchCriteria).apply(setQuizPage)
                     }
                 }
             }

@@ -104,7 +104,7 @@ class HelpPage(props: RProps) : RComponent<RProps, RState>(props) {
                 mTypography(variant = MTypographyVariant.h6) { +"4. Sessions" }
                 mList {
                     mListItem {
-                        +"On the page with you quizzes click `Start session` button. "
+                        +"On the page with your quizzes click `Start session` button. "
                         +"It will give you a preview with all the questions of the quiz."
                     }
                     mListItem {
@@ -113,7 +113,7 @@ class HelpPage(props: RProps) : RComponent<RProps, RState>(props) {
                         +"Quiz session store only answered questions. "
                         +"All sessions are completable, so you can resume it clicking the continue button. "
                         +"When you will have answered to all questions of the quiz, you'll see the report button. "
-                        +"There you'll gen a simple analysis by tags and topics."
+                        +"There you'll get a simple analysis by tags and topics."
                     }
                 }
             }

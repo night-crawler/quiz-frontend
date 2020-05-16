@@ -12,14 +12,12 @@ import com.ccfraser.muirwik.components.list.mListItem
 import com.ccfraser.muirwik.components.mAvatar
 import com.ccfraser.muirwik.components.mTypography
 import fm.force.quiz.common.dto.QuizRestrictedDTO
-import fm.force.ui.ReduxStore
 import fm.force.ui.component.main.helmet
 import fm.force.ui.component.main.loadingCard
+import fm.force.ui.hook.callApi
 import fm.force.ui.hook.useClient
 import fm.force.ui.hook.useDispatch
 import fm.force.ui.util.RouterContext
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.css.LinearDimension
 import kotlinx.css.width
 import org.w3c.dom.events.Event
@@ -53,8 +51,8 @@ val QuizPreview = functionalComponent<RProps> {
 
     @Suppress("UNUSED_PARAMETER")
     fun handleStartSession(e: Event) {
-        GlobalScope.launch {
-            ReduxStore.DEFAULT.client.startSession(quiz.id).let {
+        callApi {
+            startSession(quiz.id).let {
                 dispatch(push(("/sessions/${it.id}/test")))
             }
         }

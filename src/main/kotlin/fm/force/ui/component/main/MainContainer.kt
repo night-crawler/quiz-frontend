@@ -14,6 +14,8 @@ import fm.force.ui.component.quiz.list.quizList
 import fm.force.ui.component.quiz.quizPreview
 import fm.force.ui.component.session.quizSessionList
 import fm.force.ui.component.session.sessionScores
+import fm.force.ui.component.tag.list.tagList
+import fm.force.ui.component.topic.list.topicList
 import fm.force.ui.container.questionList
 import fm.force.ui.container.quizComposer
 import fm.force.ui.container.sessionUI
@@ -51,6 +53,10 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
             renderQuizRoutes()
             renderDifficultyScaleRoutes()
             renderQuizSessionRoutes()
+
+            renderTagRoutes()
+            renderTopicRoutes()
+
             renderMisc()
 
             route("/", exact = true) {
@@ -127,6 +133,20 @@ class MainContainer(props: MainContainerProps) : RComponent<MainContainerProps, 
         route("/questions/:id/edit") {
             deferredDispatch(ChangeAppViewName("Edit Question"))
             editQuestionForm()
+        }
+    }
+
+    private fun RBuilder.renderTagRoutes() {
+        route("/tags", exact = true) {
+            deferredDispatch(ChangeAppViewName("Tags"))
+            tagList()
+        }
+    }
+
+    private fun RBuilder.renderTopicRoutes() {
+        route("/topics", exact = true) {
+            deferredDispatch(ChangeAppViewName("Topics"))
+            topicList()
         }
     }
 
