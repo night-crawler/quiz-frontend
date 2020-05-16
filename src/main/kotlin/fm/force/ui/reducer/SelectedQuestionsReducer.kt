@@ -1,6 +1,7 @@
 package fm.force.ui.reducer
 
 import fm.force.quiz.common.dto.QuestionFullDTO
+import fm.force.ui.reducer.action.auth.LogoutSuccess
 import redux.RAction
 
 class SelectedQuestionsSelectToggled(val question: QuestionFullDTO) : RAction
@@ -16,5 +17,6 @@ fun selectedQuestionsReducer(state: Set<QuestionFullDTO> = setOf(), action: RAct
         is SelectedQuestionsSelectedAllOnPage -> state + action.questions
         is SelectedQuestionsAllUnselected -> setOf()
         is SelectedQuestionsSentToComposer -> setOf()
+        is LogoutSuccess -> setOf()
         else -> state
     }

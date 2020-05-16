@@ -2,6 +2,7 @@ package fm.force.ui.reducer
 
 import fm.force.ui.dto.QuizComposerDTO
 import fm.force.ui.dto.of
+import fm.force.ui.reducer.action.auth.LogoutSuccess
 import fm.force.ui.reducer.action.quizcomposer.*
 import redux.RAction
 
@@ -25,5 +26,6 @@ fun quizComposerReducer(state: QuizComposerDTO = QuizComposerDTO.of(), action: R
         is QuizComposerDeleteQuestion -> state.copy(questions = state.questions - action.question)
         is QuizComposerClearQuestions -> state.copy(questions = listOf())
         is QuizComposerClear -> QuizComposerDTO.of()
+        is LogoutSuccess -> QuizComposerDTO.of()
         else -> state
     }

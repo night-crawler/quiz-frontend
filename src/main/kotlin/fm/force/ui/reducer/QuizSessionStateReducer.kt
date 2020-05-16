@@ -1,5 +1,6 @@
 package fm.force.ui.reducer
 
+import fm.force.ui.reducer.action.auth.LogoutSuccess
 import fm.force.ui.reducer.action.session.*
 import fm.force.ui.reducer.state.QuizSessionState
 import fm.force.ui.reducer.state.of
@@ -49,5 +50,6 @@ fun quizSessionStateReducer(state: QuizSessionState = QuizSessionState.of(), act
                 )
             }
         }
+        is LogoutSuccess -> QuizSessionState.of()
         else -> state
     }

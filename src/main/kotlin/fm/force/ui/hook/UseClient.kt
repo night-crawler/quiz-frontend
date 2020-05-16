@@ -1,15 +1,10 @@
 package fm.force.ui.hook
 
 import com.ccfraser.muirwik.components.MSnackbarVertAnchor
-import fm.force.quiz.common.dto.ErrorMessage
-import fm.force.quiz.common.dto.ErrorResponse
-import fm.force.quiz.common.dto.FieldError
-import fm.force.quiz.common.serializer.QuizJson
 import fm.force.ui.ReduxStore
-import fm.force.ui.client.FetchClientNetworkError
 import fm.force.ui.client.FetchError
 import fm.force.ui.client.QuizClient
-import fm.force.ui.client.isJson
+import fm.force.ui.extension.toPlainString
 import fm.force.ui.reducer.action.Snack
 import fm.force.ui.reducer.action.SnackType
 import fm.force.ui.reducer.action.dispatch
@@ -23,33 +18,6 @@ import redux.RAction
 import redux.WrapperAction
 
 val SENTINEL = listOf(null)
-
-fun ErrorResponse.toPlainString(): String {
-    val fieldErrors = this.errors.filterIsInstance<FieldError>()
-    val nonFieldErrors = errors.filterIsInstance<ErrorMessage>()
-    val parts = fieldErrors.map { "${it.fieldName}: ${it.message}" } + nonFieldErrors.map { it.message }
-    return parts.joinToString("\n")
-}
-
-fun FetchError.toPlainString(): String {
-    if (this is FetchClientNetworkError) {
-        return "[$status] Server is down or no internet connection"
-    }
-
-    if (this.response == null) {
-        return "[$status] Response is empty"
-    }
-
-    if (!this.response.isJson()) {
-        return "[$status] Server response type is not JSON"
-    }
-
-    return try {
-        "[$status]" + QuizJson.jsonX.parse(ErrorResponse.serializer(), this.responseText).toPlainString()
-    } catch (exc: Throwable) {
-        return "[$status] Failed to parse a server response: $exc"
-    }
-}
 
 suspend fun defaultNetworkErrorHandler(dispatch: (RAction) -> WrapperAction, error: Throwable) {
     val errorText = if (error is FetchError) error.toPlainString() else error.toString()
