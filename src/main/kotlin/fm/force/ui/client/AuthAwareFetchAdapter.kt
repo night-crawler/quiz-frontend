@@ -46,7 +46,11 @@ class AuthAwareFetchAdapter(private val adapter: FetchAdapter) : FetchAdapter by
         var authHeaders = prepareAuthHeaders()
         return try {
             adapter.fetch(method, uri, body, headers + authHeaders, buildResponse)
-        } catch (exc: UnauthorizedError) {
+        } catch (exc: FetchError) {
+            if (exc.status != HttpStatusCode.Unauthorized) {
+                throw exc
+            }
+
             authHeaders = prepareAuthHeaders(forceRefresh = true)
             adapter.fetch(method, uri, body, headers + authHeaders, buildResponse)
         }
