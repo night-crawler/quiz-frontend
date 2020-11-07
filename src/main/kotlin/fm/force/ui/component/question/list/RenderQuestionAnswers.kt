@@ -8,6 +8,7 @@ import com.ccfraser.muirwik.components.mIcon
 import com.ccfraser.muirwik.components.mTypography
 import com.ccfraser.muirwik.components.themeContext
 import fm.force.quiz.common.dto.QuestionFullDTO
+import fm.force.ui.component.question.markdownWithCode
 import fm.force.ui.util.Icon
 import kotlinx.css.Color
 import kotlinx.css.backgroundColor
@@ -30,7 +31,7 @@ fun RBuilder.renderQuestionAnswers(question: QuestionFullDTO) {
             css(themeStyles.list)
             question.answers.forEach { answer ->
                 mListItem {
-                    +answer.text
+                    markdownWithCode(answer.text)
                     mListItemSecondaryAction {
                         if (answer.id in correctAnswerIds)
                             mIcon(Icon.CHECK.iconMame)
