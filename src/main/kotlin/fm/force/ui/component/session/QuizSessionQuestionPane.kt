@@ -16,6 +16,7 @@ import react.*
 import react.dom.div
 import styled.StyledElementBuilder
 import styled.css
+import kotlin.text.Typography.nbsp
 
 interface QuizSessionQuestionPaneProps : RProps {
     var quizTitle: String
@@ -209,7 +210,8 @@ class QuizSessionQuestionPane(props: QuizSessionQuestionPaneProps) :
                                         }
                                     }
                                 }
-                            +"$numberPrefix${answer.text}"
+                            +"$numberPrefix$nbsp"
+                            markdownWithCode(answer.text)
                         }
                     }
                 }
