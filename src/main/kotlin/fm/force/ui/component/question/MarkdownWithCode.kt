@@ -32,7 +32,10 @@ private val markdownRenderer = mkMarkdown(
 
 private val sanitizeOptions = jsApply<IOptions> {
     allowedTags = arrayOf(
-        "b", "i", "em", "strong", "a", "h1", "h2", "h3", "h4", "h5", "h6",
+        "b", "i", "em", "strong",
+        "a",
+        "h1", "h2", "h3", "h4", "h5", "h6",
+        "hr",
         "p", "blockquote", "pre", "code",
         "ol", "ul", "li",
         "img",
