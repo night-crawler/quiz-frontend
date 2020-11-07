@@ -210,8 +210,7 @@ class QuizSessionQuestionPane(props: QuizSessionQuestionPaneProps) :
                                         }
                                     }
                                 }
-                            +"$numberPrefix$nbsp"
-                            markdownWithCode(answer.text)
+                            markdownWithCode("$numberPrefix$nbsp${answer.text}")
                         }
                     }
                 }
