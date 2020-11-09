@@ -48,6 +48,9 @@ private val sanitizeOptions = jsApply<IOptions> {
         a = arrayOf("href", "title")
         pre = arrayOf("class")
     }
+    allowedSchemesByTag = jsApply {
+        img = arrayOf("data", "http", "https")
+    }
 }
 
 interface MarkdownWithCodeProps : RProps {
