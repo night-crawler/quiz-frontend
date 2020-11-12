@@ -211,7 +211,7 @@ class QuizSessionQuestionPane(props: QuizSessionQuestionPaneProps) :
                                     }
                                 }
                             val prefixText = when {
-                                answer.text.trim().startsWith("````") -> "**`$numberPrefix:`** \n"
+                                answer.text.trim().startsWith("```") -> "**`$numberPrefix:`** \n"
                                 else -> "**`$numberPrefix`**$nbsp"
                             }
                             markdownWithCode("$prefixText${answer.text}")
