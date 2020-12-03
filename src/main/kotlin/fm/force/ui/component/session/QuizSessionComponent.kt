@@ -63,15 +63,13 @@ val QuizSessionComponent = functionalComponent<QuizSessionComponentProps> { prop
     useKey("Enter", handleDoAnswer, jsApply {}, arrayOf(props))
 
     // must create all hooks here
-    (1..10).forEach { num ->
-        val bindKey = "${num % 10}"
+    props.currentQuestion?.answers?.sortedBy { it.id }?.subList(0, 10)?.forEachIndexed { index, answer ->
+        val bindKey = "${(index + 1) % 10}"
         useKey(
             bindKey,
-            { _ ->
+            {
                 if (!props.isSubmitted)
-                    props.currentQuestion?.answers?.getOrNull(num - 1)?.let {
-                        props.toggleAnswer(props.currentQuestion!!, it)
-                    }
+                    props.toggleAnswer(props.currentQuestion!!, answer)
             },
             jsApply {}, arrayOf(props)
         )
