@@ -63,7 +63,11 @@ val QuizSessionComponent = functionalComponent<QuizSessionComponentProps> { prop
     useKey("Enter", handleDoAnswer, jsApply {}, arrayOf(props))
 
     // must create all hooks here
-    props.currentQuestion?.answers?.sortedBy { it.id }?.subList(0, 10)?.forEachIndexed { index, answer ->
+    props.currentQuestion
+        ?.answers
+        ?.sortedBy { it.id }
+        ?.subList(0, listOf(props.currentQuestion?.answers?.size ?: 0, 10).min() ?: 0)
+        ?.forEachIndexed { index, answer ->
         val bindKey = "${(index + 1) % 10}"
         useKey(
             bindKey,
