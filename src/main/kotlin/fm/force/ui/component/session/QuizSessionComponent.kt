@@ -68,16 +68,16 @@ val QuizSessionComponent = functionalComponent<QuizSessionComponentProps> { prop
         ?.sortedBy { it.id }
         ?.subList(0, listOf(props.currentQuestion?.answers?.size ?: 0, 10).min() ?: 0)
         ?.forEachIndexed { index, answer ->
-        val bindKey = "${(index + 1) % 10}"
-        useKey(
-            bindKey,
-            {
-                if (!props.isSubmitted)
-                    props.toggleAnswer(props.currentQuestion!!, answer)
-            },
-            jsApply {}, arrayOf(props)
-        )
-    }
+            val bindKey = "${(index + 1) % 10}"
+            useKey(
+                bindKey,
+                {
+                    if (!props.isSubmitted)
+                        props.toggleAnswer(props.currentQuestion!!, answer)
+                },
+                jsApply {}, arrayOf(props)
+            )
+        }
 
     val currentQuestion = props.currentQuestion
     val session = props.session
