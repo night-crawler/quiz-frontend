@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "fm.force"
-version = "1.0-SNAPSHOT"
+version = "1.0.1-SNAPSHOT"
 
 val kotlinVersion: String by extra
 val reactVersion: String by extra
