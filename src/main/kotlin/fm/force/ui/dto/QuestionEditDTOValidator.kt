@@ -15,13 +15,6 @@ fun QuestionEditDTO.validate() {
         )
     }
 
-    if (text.isFalsy) {
-        throw SubmissionError.of(
-            "text",
-            ErrorMessage("Text must not be empty")
-        )
-    }
-
     if (answers.isFalsy) {
         throw SubmissionError.of(
             "answers._error",
