@@ -3,7 +3,6 @@ import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     id("org.jetbrains.kotlin.js") version "1.3.70"
-//    id("org.jetbrains.kotlin.multiplatform") version "1.3.70"
     id("com.palantir.docker") version "0.25.0"
     kotlin("plugin.serialization") version "1.3.70"
     id("org.jlleitschuh.gradle.ktlint") version "9.1.1"
@@ -24,16 +23,14 @@ val ktorClientVersion: String by extra
 
 repositories {
     mavenCentral()
+    jcenter()
     maven { url = uri("https://dl.bintray.com/kotlin/kotlin-eap") }
     maven { url = uri("https://kotlin.bintray.com/kotlin-js-wrappers/") }
     maven { url = uri("https://dl.bintray.com/kotlin/kotlinx.html/") }
-    maven { url = uri("https://dl.bintray.com/cfraser/muirwik") }
 }
 
 kotlin {
     target {
-//        produceExecutable()
-
         browser {
             @UseExperimental(org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalDceDsl::class)
             dceTask {
